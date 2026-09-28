@@ -4,9 +4,10 @@ import { PRIMARY_NAV, SITE } from "@/lib/navigation";
 import { LogoMark } from "./Logo";
 
 const LEARN_LINKS = [
-  { label: "What Is Electricity?", href: "/learn/electricity/what-is-electricity" },
-  { label: "Voltage", href: "/learn/electricity/voltage" },
-  { label: "Current", href: "/learn/electricity/current" },
+  { label: "Matter & Charge", href: "/learn/fundamentals/matter-and-charge" },
+  { label: "Voltage", href: "/learn/fundamentals/voltage" },
+  { label: "Ohm's Law", href: "/learn/fundamentals/ohms-law" },
+  { label: "Short Circuit", href: "/learn/fundamentals/short-circuit" },
 ];
 
 const LAB_LINKS = [
@@ -42,7 +43,7 @@ export function SiteFooter() {
       </Container>
       <Container className="flex flex-col gap-2 border-t border-line py-6 text-xs text-ink-subtle sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} CircuitForge. Built for curious builders.</p>
-        <p className="font-mono">v0.1 · electricity fundamentals</p>
+        <p className="font-mono">v0.2 · electronics fundamentals</p>
       </Container>
     </footer>
   );

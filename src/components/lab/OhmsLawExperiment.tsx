@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Flame } from "lucide-react";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { Readout } from "@/components/ui/Readout";
 import type { FlowDirection } from "@/components/circuit";
 import { currentFrom, powerFrom } from "@/lib/electronics";
@@ -92,7 +92,7 @@ export function OhmsLawExperiment() {
       <div className="space-y-5">
         <ExperimentPanel title="Controls">
           <div className="space-y-6">
-            <Slider
+            <InteractiveSlider
               label="Voltage"
               value={voltage}
               {...OHMS_LAW_LIMITS.voltage}
@@ -102,7 +102,7 @@ export function OhmsLawExperiment() {
               minLabel="0 V"
               maxLabel="24 V"
             />
-            <Slider
+            <InteractiveSlider
               label="Resistance"
               value={resistance}
               {...OHMS_LAW_LIMITS.resistance}

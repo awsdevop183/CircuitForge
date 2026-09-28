@@ -2,10 +2,29 @@ import { EMPTY_PROGRESS, type ProgressState, type ProgressStore } from "./types"
 
 const STORAGE_KEY = "circuitforge.progress.v1";
 
-function isProgressState(value: unknown): value is ProgressState {
-  if (typeof value !== "object" || value === null) return false;
-  const completed = (value as { completedLessons?: unknown }).completedLessons;
-  return typeof completed === "object" && completed !== null;
+/** Module slugs renamed since earlier releases, so old progress carries over. */
+const RENAMED_MODULES: Readonly<Record<string, string>> = { electricity: "fundamentals" };
+
+function migrateKey(key: string): string {
+  const [moduleSlug, ...rest] = key.split("/");
+  const renamed = moduleSlug ? RENAMED_MODULES[moduleSlug] : undefined;
+  return renamed ? [renamed, ...rest].join("/") : key;
+}
+
+function migrateRecord<T>(record: unknown): Record<string, T> {
+  if (typeof record !== "object" || record === null) return {};
+  return Object.fromEntries(Object.entries(record as Record<string, T>).map(([k, v]) => [migrateKey(k), v]));
+}
+
+/** Accept any older/partial shape and return a complete, current ProgressState. */
+function normalize(value: unknown): ProgressState {
+  if (typeof value !== "object" || value === null) return EMPTY_PROGRESS;
+  const raw = value as Partial<Record<keyof ProgressState, unknown>>;
+  return {
+    completedLessons: migrateRecord<string>(raw.completedLessons),
+    quizResults: migrateRecord(raw.quizResults),
+    currentLessonKey: typeof raw.currentLessonKey === "string" ? migrateKey(raw.currentLessonKey) : null,
+  };
 }
 
 /** Progress persisted in the browser. Safe to import on the server (no-ops there). */
@@ -19,10 +38,7 @@ export function createLocalProgressStore(): ProgressStore {
     loaded = true;
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed: unknown = JSON.parse(raw);
-        if (isProgressState(parsed)) state = parsed;
-      }
+      if (raw) state = normalize(JSON.parse(raw));
     } catch {
       // Storage unavailable (private mode, blocked cookies) — progress stays in memory.
     }
@@ -36,6 +52,12 @@ export function createLocalProgressStore(): ProgressStore {
       // Ignore write failures; in-memory state still updates the UI.
     }
     listeners.forEach((listener) => listener());
+  };
+
+  const update = (change: (current: ProgressState) => ProgressState | null) => {
+    load();
+    const next = change(state);
+    if (next) commit(next);
   };
 
   const onStorage = (event: StorageEvent) => {
@@ -67,16 +89,26 @@ export function createLocalProgressStore(): ProgressStore {
       };
     },
     markLessonComplete(key) {
-      load();
-      if (state.completedLessons[key]) return;
-      commit({ completedLessons: { ...state.completedLessons, [key]: new Date().toISOString() } });
+      update((s) =>
+        s.completedLessons[key] ? null : { ...s, completedLessons: { ...s.completedLessons, [key]: new Date().toISOString() } },
+      );
     },
     markLessonIncomplete(key) {
-      load();
-      if (!state.completedLessons[key]) return;
-      const { [key]: _removed, ...rest } = state.completedLessons;
-      void _removed;
-      commit({ completedLessons: rest });
+      update((s) => {
+        if (!s.completedLessons[key]) return null;
+        const completedLessons = { ...s.completedLessons };
+        delete completedLessons[key];
+        return { ...s, completedLessons };
+      });
+    },
+    recordQuizResult(key, correct, total) {
+      update((s) => ({
+        ...s,
+        quizResults: { ...s.quizResults, [key]: { correct, total, completedAt: new Date().toISOString() } },
+      }));
+    },
+    setCurrentLesson(key) {
+      update((s) => (s.currentLessonKey === key ? null : { ...s, currentLessonKey: key }));
     },
     reset() {
       commit(EMPTY_PROGRESS);

@@ -17,7 +17,7 @@ export default function LearnPage() {
       <PageHeader
         eyebrow="Learning dashboard"
         title="Your path from electrons to intelligence."
-        description="Nine modules, each building on the last. Start with electricity — every lesson is visual, interactive and short enough to finish in one sitting."
+        description="Nine modules, each building on the last. Start with Electronics Fundamentals — every lesson is visual, interactive and short enough to finish in one sitting."
       >
         <ContinueLearning />
       </PageHeader>

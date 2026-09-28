@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { GitMerge, Minus, Unplug } from "lucide-react";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { Readout } from "@/components/ui/Readout";
 import { powerFrom, solveParallel, solveSeries } from "@/lib/electronics";
 import { formatAmps, formatOhms, formatVolts, formatWatts } from "@/lib/format";
@@ -177,7 +177,7 @@ export function SeriesParallelExperiment() {
           <div className="space-y-6">
             <SegmentedControl label="Wiring" options={MODE_OPTIONS} value={mode} onChange={changeMode} />
             <SegmentedControl label="Supply voltage" options={SUPPLY_OPTIONS} value={supply} onChange={setSupply} size="sm" />
-            <Slider
+            <InteractiveSlider
               label="Bulb 1 resistance"
               value={resistances[0]}
               min={10}
@@ -187,7 +187,7 @@ export function SeriesParallelExperiment() {
               format={(v) => formatOhms(v)}
               color="var(--color-electric)"
             />
-            <Slider
+            <InteractiveSlider
               label="Bulb 2 resistance"
               value={resistances[1]}
               min={10}

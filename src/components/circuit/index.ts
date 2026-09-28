@@ -4,9 +4,18 @@
  * Compose diagrams inside a <CircuitCanvas>: draw <Wire>s first, then
  * <CurrentFlow>, then parts, so part bodies sit on top of the conductors.
  */
-export { CircuitCanvas, useCircuitIds } from "./CircuitCanvas";
-export { CircuitPart, type PartProps, type PlacementProps, type LabelPlacement } from "./CircuitPart";
+export { CircuitCanvas, CircuitCanvas as CircuitDiagram, useCircuitIds } from "./CircuitCanvas";
+export {
+  CircuitPart,
+  CircuitPart as CircuitComponent,
+  type PartProps,
+  type PlacementProps,
+  type LabelPlacement,
+} from "./CircuitPart";
+export { Ground, type GroundKind } from "./Ground";
 export { Battery } from "./Battery";
+export { AcSource } from "./AcSource";
+export { Fuse } from "./Fuse";
 export { Resistor } from "./Resistor";
 export { Led, DiodeShape } from "./Led";
 export { Diode } from "./Diode";

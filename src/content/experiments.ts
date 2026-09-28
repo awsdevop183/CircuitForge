@@ -15,7 +15,7 @@ export const EXPERIMENTS: readonly Experiment[] = [
   {
     slug: "ohms-law",
     title: "Ohm's Law",
-    summary: "Drive a resistor with a variable supply and watch current respond instantly to voltage and resistance.",
+    summary: "Solve for voltage, current or resistance, run preset experiments, and watch a live circuit respond to every change.",
     concepts: ["Voltage", "Current", "Resistance", "Power"],
     difficulty: "beginner",
     estimatedMinutes: 10,

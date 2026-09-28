@@ -21,7 +21,7 @@ export function ExperimentCard({ experiment, index }: { experiment: Experiment; 
         </span>
         <span className="font-mono text-xs text-ink-subtle">EXP-{String(index + 1).padStart(2, "0")}</span>
       </div>
-      <h3 className="mt-5 text-xl font-semibold text-ink">{experiment.title}</h3>
+      <h2 className="mt-5 text-xl font-semibold text-ink">{experiment.title}</h2>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{experiment.summary}</p>
       <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Concepts">
         {experiment.concepts.map((concept) => (

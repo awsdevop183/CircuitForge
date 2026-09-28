@@ -24,6 +24,8 @@ export interface CircuitPartProps extends PlacementProps {
   labelOffset?: number;
   /** Make the part reachable with the keyboard so its label can be read. Default true. */
   focusable?: boolean;
+  /** Draw attention to the part (e.g. while a lesson is talking about it). */
+  highlighted?: boolean;
   children: ReactNode;
 }
 
@@ -43,6 +45,7 @@ export function CircuitPart({
   labelPlacement = "top",
   labelOffset = 34,
   focusable = true,
+  highlighted = false,
   children,
 }: CircuitPartProps) {
   const [active, setActive] = useState(false);
@@ -84,6 +87,23 @@ export function CircuitPart({
           strokeDasharray="4 4"
           opacity={0}
         />
+        {highlighted ? (
+          <motion.rect
+            x={-46}
+            y={-28}
+            width={92}
+            height={56}
+            rx={12}
+            fill="#22d3ee"
+            fillOpacity={0.08}
+            stroke={CIRCUIT_COLORS.amber}
+            strokeWidth={2}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.6, repeat: Infinity }}
+            aria-hidden="true"
+          />
+        ) : null}
         {children}
       </g>
       <AnimatePresence>
@@ -127,4 +147,4 @@ export function CircuitPart({
 
 /** Common props accepted by every placed part. */
 export type PartProps = PlacementProps &
-  Partial<Pick<CircuitPartProps, "name" | "detail" | "labelPlacement" | "labelOffset" | "focusable">>;
+  Partial<Pick<CircuitPartProps, "name" | "detail" | "labelPlacement" | "labelOffset" | "focusable" | "highlighted">>;

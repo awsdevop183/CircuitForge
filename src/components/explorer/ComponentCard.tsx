@@ -35,7 +35,7 @@ export function ComponentCard({ component }: { component: ElectronicComponent })
             <p className="font-mono text-xs text-ink-subtle">
               {component.designator} · {COMPONENT_CATEGORY_LABELS[component.category]}
             </p>
-            <h3 className="mt-1 text-xl font-semibold text-ink">{component.name}</h3>
+            <h2 className="mt-1 text-xl font-semibold text-ink">{component.name}</h2>
           </div>
           <ArrowUpRight
             className="size-5 text-ink-subtle transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan"

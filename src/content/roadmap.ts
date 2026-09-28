@@ -12,11 +12,11 @@ export interface RoadmapStage {
 /** The full CircuitForge journey, from first principles to intelligent machines. */
 export const ROADMAP: readonly RoadmapStage[] = [
   {
-    title: "Electricity",
-    description: "Charge, voltage, current, resistance and power.",
+    title: "Electronics Fundamentals",
+    description: "Charge, voltage, current, resistance, power, AC/DC and ground.",
     outcome: "Explain why a circuit works — and why one doesn't.",
     icon: "zap",
-    moduleSlug: "electricity",
+    moduleSlug: "fundamentals",
   },
   {
     title: "Components",

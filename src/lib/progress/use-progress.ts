@@ -21,12 +21,18 @@ export function useProgress() {
     [state],
   );
 
+  const quizResult = useCallback((key: string) => state.quizResults[key], [state]);
+
   return {
     state,
     isComplete,
     countComplete,
+    quizResult,
+    currentLessonKey: state.currentLessonKey,
     markLessonComplete: progressStore.markLessonComplete,
     markLessonIncomplete: progressStore.markLessonIncomplete,
+    recordQuizResult: progressStore.recordQuizResult,
+    setCurrentLesson: progressStore.setCurrentLesson,
     reset: progressStore.reset,
   };
 }

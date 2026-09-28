@@ -14,7 +14,7 @@ export function ProjectTimeline({ projects }: { projects: readonly Project[] }) 
         <li key={project.slug} className="relative grid grid-cols-[48px_1fr] gap-4 sm:grid-cols-[56px_1fr] sm:gap-6">
           <span
             className={cn(
-              "relative z-10 flex size-12 items-center justify-center rounded-xl border-2 bg-base sm:size-14",
+              "relative z-10 flex size-12 items-center justify-center rounded-xl border-2 bg-page sm:size-14",
               project.available ? "border-cyan text-cyan shadow-[0_0_20px_-4px_rgb(34_211_238/0.7)]" : "border-line-strong text-ink-subtle",
             )}
           >

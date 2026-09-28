@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Boxes, FlaskConical, Hammer, Lock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Boxes, FlaskConical, Hammer } from "lucide-react";
 import { ModuleCardAction } from "@/components/learn/ModuleCardAction";
+import { ModuleLessonPath } from "@/components/learn/ModuleLessonPath";
+import { SafetyNotice } from "@/components/ui/SafetyNotice";
 import { ModuleProgress } from "@/components/lesson/ModuleProgress";
-import { ComingSoonBadge, DifficultyBadge, DurationBadge, PreviewBadge, Badge } from "@/components/ui/Badge";
+import { ComingSoonBadge, DifficultyBadge, PreviewBadge, Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
-import { MODULES, availableLessons, getModule, lessonHref } from "@/content/curriculum";
+import { MODULES, availableLessons, getModule } from "@/content/curriculum";
 import type { ResourceLink } from "@/content/types";
 
 interface ModulePageProps {
@@ -75,7 +77,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
           </div>
           <div className="panel space-y-4 rounded-2xl p-5">
             <DifficultyBadge difficulty={learningModule.difficulty} />
-            {hasLessons ? <ModuleProgress module={learningModule} /> : null}
+            {hasLessons ? <ModuleProgress module={learningModule} variant="full" /> : null}
             <ModuleCardAction module={learningModule} />
           </div>
         </header>
@@ -84,42 +86,13 @@ export default async function ModulePage({ params }: ModulePageProps) {
           <h2 id="lessons-heading" className="text-2xl font-semibold text-ink">
             Lessons
           </h2>
-          <ol className="mt-6 space-y-3">
-            {learningModule.lessons.map((lesson, lessonIndex) => {
-              const body = (
-                <>
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-line-strong bg-surface-high font-mono text-sm text-ink-muted">
-                    {String(lessonIndex + 1).padStart(2, "0")}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-semibold text-ink">{lesson.title}</span>
-                    <span className="mt-0.5 block text-sm text-ink-muted">{lesson.summary}</span>
-                  </span>
-                  <span className="hidden shrink-0 items-center gap-2 sm:flex">
-                    <DurationBadge minutes={lesson.estimatedMinutes} />
-                    {lesson.available ? (
-                      <ArrowRight className="size-5 text-cyan transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                    ) : (
-                      <ComingSoonBadge />
-                    )}
-                  </span>
-                  {!lesson.available ? <Lock className="size-4 shrink-0 text-ink-subtle sm:hidden" aria-label="Coming soon" /> : null}
-                </>
-              );
-              return (
-                <li key={lesson.slug}>
-                  {lesson.available ? (
-                    <Link href={lessonHref(learningModule.slug, lesson.slug)} className="panel group flex items-center gap-4 rounded-xl p-4 transition-colors hover:border-cyan/45">
-                      {body}
-                    </Link>
-                  ) : (
-                    <div className="panel flex items-center gap-4 rounded-xl p-4 opacity-65">{body}</div>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
+          <p className="mt-2 text-ink-muted">Each lesson builds on the one before it — work through them in order.</p>
+          <div className="mt-6">
+            <ModuleLessonPath module={learningModule} />
+          </div>
         </section>
+
+        {hasLessons ? <SafetyNotice topic="general" className="mt-14" /> : null}
 
         {learningModule.resources?.length ? (
           <section aria-labelledby="resources-heading" className="mt-14">

@@ -23,6 +23,11 @@ interface CurrentFlowProps {
   color?: string;
   /** Opacity when active, useful for de-emphasising secondary branches. */
   intensity?: number;
+  /**
+   * Alternating current: instead of drifting one way, charges swing back and
+   * forth. `frequency` in Hz (slowed down for teaching), `amplitude` in SVG units.
+   */
+  alternating?: { frequency: number; amplitude: number };
 }
 
 /**
@@ -41,16 +46,25 @@ export function CurrentFlow({
   size = 5,
   color,
   intensity = 1,
+  alternating,
 }: CurrentFlowProps) {
   const pathRef = useRef<SVGPathElement>(null);
   const offset = useRef(0);
+  const elapsed = useRef(0);
   const reduceMotion = useReducedMotion();
   const inView = useInView(pathRef, { margin: "80px" });
   const dotColor = color ?? (direction === "electron" ? CIRCUIT_COLORS.cyanSoft : CIRCUIT_COLORS.amber);
 
   useAnimationFrame((_, delta) => {
     const path = pathRef.current;
-    if (!path || !active || reduceMotion || !inView || speed <= 0) return;
+    if (!path || !active || reduceMotion || !inView) return;
+    if (alternating) {
+      elapsed.current += Math.min(delta, 64) / 1000;
+      const swing = alternating.amplitude * Math.sin(2 * Math.PI * alternating.frequency * elapsed.current);
+      path.style.strokeDashoffset = `${swing}`;
+      return;
+    }
+    if (speed <= 0) return;
     // Decreasing the dash offset moves dashes forward along the path.
     const sign = direction === "conventional" ? -1 : 1;
     offset.current = (offset.current + (sign * speed * Math.min(delta, 64)) / 1000) % spacing;

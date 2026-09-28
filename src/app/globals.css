@@ -7,7 +7,7 @@
 @theme {
   /* Surfaces — deep near-black with a slight blue cast */
   --color-void: #04060a;
-  --color-base: #070a10;
+  --color-page: #070a10;
   --color-surface: #0b1018;
   --color-surface-raised: #101722;
   --color-surface-high: #162030;
@@ -59,7 +59,7 @@
   }
 
   body {
-    background-color: var(--color-base);
+    background-color: var(--color-page);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useAnimationFrame, useInView } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { CircuitCanvas, CurrentFlow } from "@/components/circuit";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { Readout } from "@/components/ui/Readout";
 
 /** Electrons in one coulomb of charge. */
@@ -50,7 +50,7 @@ export function ChargeCounter() {
       </CircuitCanvas>
 
       <div className="mt-6 grid gap-5 md:grid-cols-[1fr_1.2fr] md:items-end">
-        <Slider
+        <InteractiveSlider
           label="Current"
           value={amps}
           min={0}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CircuitCanvas, CurrentFlow } from "@/components/circuit";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 
 const TANK_TOP = 30;
 const TANK_BOTTOM = 190;
@@ -79,7 +79,7 @@ export function WaterTankAnalogy() {
       </CircuitCanvas>
 
       <div className="space-y-5">
-        <Slider
+        <InteractiveSlider
           label="Height difference"
           value={difference}
           min={0}

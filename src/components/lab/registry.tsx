@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import { OhmsLawExperiment } from "./OhmsLawExperiment";
+import { OhmsLawLab } from "./OhmsLawLab";
 import { SeriesParallelExperiment } from "./SeriesParallelExperiment";
 
 /**
@@ -7,6 +7,6 @@ import { SeriesParallelExperiment } from "./SeriesParallelExperiment";
  * implementation. Add new experiments here.
  */
 export const EXPERIMENT_COMPONENTS: Readonly<Record<string, ComponentType>> = {
-  "ohms-law": OhmsLawExperiment,
+  "ohms-law": OhmsLawLab,
   "series-parallel": SeriesParallelExperiment,
 };

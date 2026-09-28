@@ -8,7 +8,7 @@ import { useProgress } from "@/lib/progress/use-progress";
 
 /** Start / Continue / Review / Explore button, depending on progress and status. */
 export function ModuleCardAction({ module }: { module: LearningModule }) {
-  const { isComplete } = useProgress();
+  const { isComplete, currentLessonKey } = useProgress();
   const lessons = availableLessons(module);
 
   if (lessons.length === 0) {
@@ -28,8 +28,10 @@ export function ModuleCardAction({ module }: { module: LearningModule }) {
     );
   }
 
-  const nextLesson = lessons.find((lesson) => !isComplete(lessonKey(module.slug, lesson.slug)));
-  const started = lessons.some((lesson) => isComplete(lessonKey(module.slug, lesson.slug)));
+  // Resume the lesson the learner last opened (if unfinished), otherwise the first unfinished one.
+  const current = lessons.find((lesson) => lessonKey(module.slug, lesson.slug) === currentLessonKey && !isComplete(currentLessonKey));
+  const nextLesson = current ?? lessons.find((lesson) => !isComplete(lessonKey(module.slug, lesson.slug)));
+  const started = Boolean(current) || lessons.some((lesson) => isComplete(lessonKey(module.slug, lesson.slug)));
   const target = nextLesson ?? lessons[0]!;
   const label = !started ? "Start module" : nextLesson ? "Continue" : "Review";
 

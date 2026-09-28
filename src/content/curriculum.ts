@@ -7,66 +7,35 @@ import type { LearningModule, LessonSummary } from "./types";
 export const MODULES: readonly LearningModule[] = [
   {
     number: "01",
-    slug: "electricity",
-    title: "Electricity",
-    description: "Voltage, current, resistance, power and electrical fundamentals.",
-    topics: ["Charge", "Voltage", "Current", "Resistance", "Power"],
+    slug: "fundamentals",
+    title: "Electronics Fundamentals",
+    description: "From matter and charge to voltage, current, resistance, Ohm's law, power, AC/DC, ground and circuits.",
+    topics: ["Charge", "Circuits", "Voltage", "Current", "Resistance", "Ohm's law", "Power", "AC/DC", "Ground"],
     difficulty: "beginner",
     status: "available",
     icon: "zap",
     lessons: [
-      {
-        slug: "what-is-electricity",
-        title: "What Is Electricity?",
-        summary: "Charge, electrons, conductors, insulators and why a circuit must be closed.",
-        estimatedMinutes: 12,
-        difficulty: "beginner",
-        available: true,
-      },
-      {
-        slug: "voltage",
-        title: "Voltage",
-        summary: "The electrical ‘push’: potential difference, terminals and voltage sources.",
-        estimatedMinutes: 12,
-        difficulty: "beginner",
-        available: true,
-      },
-      {
-        slug: "current",
-        title: "Current",
-        summary: "How much charge flows, which way it goes, and a first look at V = I × R.",
-        estimatedMinutes: 15,
-        difficulty: "beginner",
-        available: true,
-      },
-      {
-        slug: "resistance",
-        title: "Resistance",
-        summary: "Why materials oppose current, and how resistors put that to work.",
-        estimatedMinutes: 12,
-        difficulty: "beginner",
-        available: false,
-      },
-      {
-        slug: "power",
-        title: "Power & Energy",
-        summary: "Watts, heat and why components have power ratings.",
-        estimatedMinutes: 12,
-        difficulty: "beginner",
-        available: false,
-      },
-      {
-        slug: "ohms-law-in-practice",
-        title: "Ohm's Law in Practice",
-        summary: "Solve real circuits with V = I × R and check your answers in the lab.",
-        estimatedMinutes: 15,
-        difficulty: "beginner",
-        available: false,
-      },
+      lesson("matter-and-charge", "What Is Matter and Electric Charge?", "Everything is made of atoms — and atoms carry positive and negative charge.", 10),
+      lesson("the-electron", "What Is an Electron?", "Meet the tiny, mobile particle that makes electricity possible.", 10),
+      lesson("conductors-and-insulators", "Conductors vs Insulators", "Why electrons move easily through copper but not through rubber.", 10),
+      lesson("what-is-electricity", "What Is Electricity?", "Electricity is moving charge — and it carries energy from place to place.", 10),
+      lesson("what-is-a-circuit", "What Is a Circuit?", "A complete loop for charge: source, path, load and control.", 12),
+      lesson("voltage", "Voltage", "The difference in electric potential between two points — the push behind current.", 12),
+      lesson("current", "Current", "How much charge flows each second, and which way it goes.", 12),
+      lesson("resistance", "Resistance", "How components and materials limit current — and why that's useful.", 12),
+      lesson("ohms-law", "Ohm's Law", "V = I × R: calculate any one of voltage, current or resistance.", 15),
+      lesson("electrical-power", "Electrical Power", "Watts, P = V × I, and how much energy devices really use.", 12),
+      lesson("dc-vs-ac", "DC vs AC", "Current that flows one way vs current that swaps direction.", 12),
+      lesson("open-vs-closed-circuits", "Open vs Closed Circuits", "Switches, breaks and faults: why one gap stops everything.", 10),
+      lesson("short-circuit", "Short Circuit", "What happens when current bypasses the load — and why it's dangerous.", 10),
+      lesson("ground", "Ground / 0 V", "Ground is a reference point — and it means different things in different systems.", 12),
+      lesson("series-and-parallel", "Series vs Parallel Circuits", "Two ways to connect components, and how current and voltage share out.", 15),
     ],
     resources: [
-      { label: "Ohm's Law experiment", href: "/lab/ohms-law", kind: "lab" },
-      { label: "Battery", href: "/components/battery", kind: "component" },
+      { label: "Ohm's Law Lab", href: "/lab/ohms-law", kind: "lab" },
+      { label: "Series vs Parallel experiment", href: "/lab/series-parallel", kind: "lab" },
+      { label: "Resistor deep-dive", href: "/components/resistor", kind: "component" },
+      { label: "Project: LED Circuit", href: "/projects/led-circuit", kind: "project" },
     ],
   },
   {
@@ -102,7 +71,7 @@ export const MODULES: readonly LearningModule[] = [
     status: "preview",
     icon: "circuit",
     lessons: [
-      planned("series-and-parallel", "Series & Parallel", "How current and voltage split across loads.", 15, "beginner"),
+      planned("kirchhoffs-laws", "Kirchhoff’s Laws", "Tracking current and voltage around any network.", 15, "intermediate"),
       planned("voltage-dividers", "Voltage Dividers", "Two resistors that make any voltage you need.", 14, "beginner"),
       planned("switching-circuits", "Switching Circuits", "Buttons, pull-ups and transistor switches.", 16, "intermediate"),
       planned("rc-timing", "RC Timing", "Capacitors and resistors as a clock.", 16, "intermediate"),
@@ -219,6 +188,10 @@ export const MODULES: readonly LearningModule[] = [
   },
 ];
 
+function lesson(slug: string, title: string, summary: string, estimatedMinutes: number): LessonSummary {
+  return { slug, title, summary, estimatedMinutes, difficulty: "beginner", available: true };
+}
+
 function planned(
   slug: string,
   title: string,
@@ -287,4 +260,4 @@ export function allAvailableLessonParams(): { moduleSlug: string; lessonSlug: st
 }
 
 /** The first lesson a new learner should open. */
-export const FIRST_LESSON_HREF = lessonHref("electricity", "what-is-electricity");
+export const FIRST_LESSON_HREF = lessonHref("fundamentals", "matter-and-charge");

@@ -76,7 +76,7 @@ export function SiteHeader() {
       className={cn(
         "sticky top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300",
         scrolled || menuOpen
-          ? "border-line bg-base/95 backdrop-blur-xl"
+          ? "border-line bg-page/95 backdrop-blur-xl"
           : "border-transparent bg-transparent",
       )}
     >
@@ -144,7 +144,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: "calc(100dvh - 4rem)" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-y-auto border-t border-line bg-base/95 backdrop-blur-xl lg:hidden"
+            className="overflow-y-auto border-t border-line bg-page/95 backdrop-blur-xl lg:hidden"
           >
             <nav aria-label="Mobile" className="mx-auto flex max-w-7xl flex-col px-4 pb-10 pt-4 sm:px-6">
               <ul className="flex flex-col">

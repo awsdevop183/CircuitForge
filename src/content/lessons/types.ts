@@ -14,6 +14,16 @@ export interface LessonSection {
   content: ReactNode;
 }
 
+/** A real-world analogy. Every analogy breaks down somewhere — say where. */
+export interface LessonAnalogy {
+  title: string;
+  content: ReactNode;
+  /** Where the analogy stops matching real electricity. */
+  limits?: string[];
+}
+
+export type QuestionType = "multiple-choice" | "true-false" | "identify" | "predict";
+
 export interface QuizOption {
   id: string;
   label: string;
@@ -21,10 +31,13 @@ export interface QuizOption {
 
 export interface QuizQuestion {
   id: string;
+  type: QuestionType;
   prompt: string;
+  /** Optional diagram shown with the question (e.g. "identify this symbol"). */
+  visual?: ReactNode;
   options: QuizOption[];
   correctOptionId: string;
-  /** Shown after answering — explains why the answer is right. */
+  /** Shown after answering — explains *why* the answer is right. */
   explanation: string;
 }
 
@@ -38,9 +51,17 @@ export interface NextConcept {
 export interface LessonContent {
   moduleSlug: string;
   lessonSlug: string;
-  /** What the learner will be able to do. */
-  objectives: string[];
+  /** The one thing the learner should be able to do after this lesson. */
+  objective: string;
+  /** Supporting goals (optional). */
+  objectives?: string[];
+  /** What the learner should already know — earlier lessons in the module. */
+  buildsOn?: string[];
   sections: LessonSection[];
+  analogy: LessonAnalogy;
+  /** The single most important idea of the lesson. */
+  keyTakeaway: string;
+  /** A short recap list. */
   takeaways: string[];
   quickCheck: QuizQuestion[];
   next: NextConcept;

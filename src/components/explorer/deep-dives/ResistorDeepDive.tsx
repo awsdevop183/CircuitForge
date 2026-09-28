@@ -7,7 +7,7 @@ import { ResistorIllustration } from "@/components/illustrations/ResistorIllustr
 import { OhmsLawCircuit } from "@/components/lab/OhmsLawCircuit";
 import { Callout } from "@/components/ui/Callout";
 import { Readout } from "@/components/ui/Readout";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { currentFrom, powerFrom } from "@/lib/electronics";
 import { formatAmps, formatOhms } from "@/lib/format";
 import { cn } from "@/lib/cn";
@@ -121,7 +121,7 @@ function ResistorInCircuit() {
           <OhmsLawCircuit voltage={voltage} resistance={resistance} current={current} power={powerFrom(voltage, current)} maxCurrent={voltage / 50} />
         </div>
         <div className="space-y-4">
-          <Slider label="Resistance" value={resistance} min={50} max={2000} step={10} onChange={setResistance} format={(r) => formatOhms(r)} color="var(--color-electric)" minLabel="50 Ω" maxLabel="2 kΩ" />
+          <InteractiveSlider label="Resistance" value={resistance} min={50} max={2000} step={10} onChange={setResistance} format={(r) => formatOhms(r)} color="var(--color-electric)" minLabel="50 Ω" maxLabel="2 kΩ" />
           <div className="grid grid-cols-2 gap-3">
             <Readout label="Supply" value="5.0" unit="V" tone="amber" />
             <Readout label="Current" value={formatAmps(current, 3)} tone="cyan" />

@@ -11,12 +11,12 @@ export function FinalCtaSection() {
           <div className="bg-circuit-grid absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" aria-hidden="true" />
           <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan to-transparent" aria-hidden="true" />
           <div className="relative">
-            <p className="eyebrow text-amber">Lesson 01 · 12 minutes</p>
+            <p className="eyebrow text-amber">Module 01 · 15 lessons</p>
             <h2 id="final-cta-heading" className="mx-auto mt-4 max-w-2xl text-balance text-3xl font-semibold text-ink sm:text-5xl">
               Your first circuit is one click away.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-ink-muted">
-              Start with what electricity actually is — then close the switch and watch it flow.
+              Start with what everything is made of — then build up, one visual step at a time, to your first real circuits.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <ButtonLink href={FIRST_LESSON_HREF} size="lg">

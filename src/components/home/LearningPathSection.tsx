@@ -69,7 +69,7 @@ function PathStage({ module, index }: { module: LearningModule; index: number })
       {/* Node on the trace */}
       <div className={cn("relative flex justify-center pt-5 lg:col-start-2 lg:row-start-1")}>
         <motion.span
-          className="relative z-10 flex size-10 items-center justify-center rounded-full border-2 bg-base font-mono text-xs font-semibold"
+          className="relative z-10 flex size-10 items-center justify-center rounded-full border-2 bg-page font-mono text-xs font-semibold"
           initial={{ borderColor: "#263447", color: "#7f8ea4", boxShadow: "0 0 0 0 rgba(34,211,238,0)" }}
           whileInView={{ borderColor: "#22d3ee", color: "#e8eef6", boxShadow: "0 0 22px -2px rgba(34,211,238,0.7)" }}
           viewport={{ once: true, margin: "0px 0px -35% 0px" }}

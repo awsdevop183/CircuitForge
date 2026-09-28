@@ -4,21 +4,28 @@ import { CircleCheck, RotateCcw } from "lucide-react";
 import type { QuizQuestion } from "@/content/lessons/types";
 import { useProgress } from "@/lib/progress/use-progress";
 import { Button } from "@/components/ui/Button";
-import { QuickCheck } from "./QuickCheck";
+import { KnowledgeCheck } from "./KnowledgeCheck";
 
 interface LessonCompletionProps {
   progressKey: string;
   questions: readonly QuizQuestion[];
 }
 
-/** Quick check plus completion state. Answering everything correctly completes the lesson. */
+/** Knowledge check plus completion state. Finishing the questions completes the lesson. */
 export function LessonCompletion({ progressKey, questions }: LessonCompletionProps) {
-  const { isComplete, markLessonComplete, markLessonIncomplete } = useProgress();
+  const { isComplete, quizResult, markLessonComplete, markLessonIncomplete, recordQuizResult } = useProgress();
   const complete = isComplete(progressKey);
+  const lastResult = quizResult(progressKey);
 
   return (
     <div className="space-y-6">
-      <QuickCheck questions={questions} onAllCorrect={() => markLessonComplete(progressKey)} />
+      <KnowledgeCheck
+        questions={questions}
+        onComplete={(correct, total) => {
+          recordQuizResult(progressKey, correct, total);
+          markLessonComplete(progressKey);
+        }}
+      />
       <div
         className={
           complete
@@ -29,9 +36,14 @@ export function LessonCompletion({ progressKey, questions }: LessonCompletionPro
       >
         <p className="flex items-center gap-3 text-sm text-ink-muted">
           <CircleCheck className={complete ? "size-5 shrink-0 text-positive" : "size-5 shrink-0 text-ink-subtle"} aria-hidden="true" />
-          {complete
-            ? "Lesson complete — your progress is saved on this device."
-            : "Answer every question correctly to complete this lesson, or mark it done yourself."}
+          <span>
+            {complete ? "Lesson complete — saved on this device." : "Answer every question to complete this lesson."}
+            {lastResult ? (
+              <span className="block font-mono text-xs text-ink-subtle">
+                Last knowledge check: {lastResult.correct}/{lastResult.total} correct
+              </span>
+            ) : null}
+          </span>
         </p>
         {complete ? (
           <Button variant="ghost" size="sm" onClick={() => markLessonIncomplete(progressKey)}>

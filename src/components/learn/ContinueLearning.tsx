@@ -4,25 +4,29 @@ import Link from "next/link";
 import { ArrowRight, Trophy } from "lucide-react";
 import { MODULES, availableLessons, lessonHref, lessonKey } from "@/content/curriculum";
 import { useProgress } from "@/lib/progress/use-progress";
-import { ProgressBar } from "@/components/ui/ProgressBar";
+import { ModuleProgress } from "@/components/lesson/ModuleProgress";
 
 /** Overall progress plus a jump-back-in link to the next unfinished lesson. */
 export function ContinueLearning() {
-  const { isComplete, countComplete } = useProgress();
+  const { isComplete, countComplete, currentLessonKey } = useProgress();
   const all = MODULES.flatMap((module) => availableLessons(module).map((lesson) => ({ module, lesson })));
   const done = countComplete(all.map(({ module, lesson }) => lessonKey(module.slug, lesson.slug)));
-  const next = all.find(({ module, lesson }) => !isComplete(lessonKey(module.slug, lesson.slug)));
+  const resume = all.find(({ module, lesson }) => {
+    const key = lessonKey(module.slug, lesson.slug);
+    return key === currentLessonKey && !isComplete(key);
+  });
+  const next = resume ?? all.find(({ module, lesson }) => !isComplete(lessonKey(module.slug, lesson.slug)));
 
   return (
     <div className="panel-raised grid gap-6 rounded-2xl p-5 sm:p-6 md:grid-cols-[1fr_1.3fr] md:items-center">
-      <ProgressBar value={done} max={all.length} label="Lessons completed" />
+      <ModuleProgress module={MODULES[0]!} variant="full" />
       {next ? (
         <Link
           href={lessonHref(next.module.slug, next.lesson.slug)}
           className="group flex items-center justify-between gap-4 rounded-xl border border-cyan/35 bg-cyan/5 p-4 transition-colors hover:border-cyan/70"
         >
           <span>
-            <span className="eyebrow block text-cyan">{done === 0 ? "Start here" : "Up next"}</span>
+            <span className="eyebrow block text-cyan">{resume ? "Resume your current lesson" : done === 0 ? "Start here" : "Up next"}</span>
             <span className="mt-1 block font-semibold text-ink">
               {next.module.number} · {next.lesson.title}
             </span>

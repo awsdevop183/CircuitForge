@@ -27,13 +27,14 @@ interface Material {
 }
 
 const MATERIALS: readonly Material[] = [
-  { id: "copper", name: "Copper wire", kind: "conductor", conductivity: 1, color: "#d08a4f", note: "Metals have free electrons that drift easily from atom to atom." },
-  { id: "foil", name: "Aluminium foil", kind: "conductor", conductivity: 0.95, color: "#cbd5e1", note: "Another metal — lots of free electrons, so the bulb lights fully." },
-  { id: "graphite", name: "Pencil lead", kind: "partial", conductivity: 0.4, color: "#4b5563", note: "Graphite (carbon) conducts, but not as well as metal. The bulb glows dimly." },
+  { id: "copper", name: "Copper", kind: "conductor", conductivity: 1, color: "#d08a4f", note: "Metals have free electrons that drift easily from atom to atom. Copper is used in almost every wire." },
+  { id: "aluminium", name: "Aluminium", kind: "conductor", conductivity: 0.9, color: "#cbd5e1", note: "Another metal with plenty of free electrons. Light and cheap — used in overhead power lines." },
+  { id: "silver", name: "Silver", kind: "conductor", conductivity: 1, color: "#e5e7eb", note: "The best conductor of all metals — but expensive, so it's used only where it really matters, like switch contacts." },
+  { id: "graphite", name: "Pencil lead", kind: "partial", conductivity: 0.4, color: "#4b5563", note: "Graphite (carbon) conducts, but much less well than metal. The bulb glows dimly." },
   { id: "salt-water", name: "Salt water", kind: "partial", conductivity: 0.3, color: "#38bdf8", note: "Dissolved salt makes charged particles that can move. Pure water barely conducts." },
-  { id: "rubber", name: "Rubber", kind: "insulator", conductivity: 0, color: "#1f2937", note: "Electrons are tightly bound to their atoms. Nothing can flow — that's why cables are coated in it." },
-  { id: "glass", name: "Glass", kind: "insulator", conductivity: 0, color: "#a5f3fc", note: "An excellent insulator, used to hold high-voltage power lines." },
-  { id: "wood", name: "Dry wood", kind: "insulator", conductivity: 0, color: "#a16207", note: "Dry wood insulates. Wet wood can conduct — water changes everything." },
+  { id: "rubber", name: "Rubber", kind: "insulator", conductivity: 0, color: "#1f2937", note: "Electrons are held tightly by their atoms, so nothing can flow. Used for gloves and cable coatings." },
+  { id: "plastic", name: "Plastic", kind: "insulator", conductivity: 0, color: "#a78bfa", note: "The coloured coating on wires is plastic — it keeps the current inside the copper and away from you." },
+  { id: "glass", name: "Glass", kind: "insulator", conductivity: 0, color: "#a5f3fc", note: "An excellent insulator, used to hold high-voltage power lines away from their towers." },
 ];
 
 const KIND_LABEL: Record<MaterialClass, string> = {

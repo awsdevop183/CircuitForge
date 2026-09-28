@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Readout } from "@/components/ui/Readout";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Slider } from "@/components/ui/Slider";
+import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { currentFrom, powerFrom } from "@/lib/electronics";
 import { formatAmps, formatFixed } from "@/lib/format";
 
@@ -31,7 +31,7 @@ export function LabTeaserSection() {
                 title="Turn the voltage up. Watch the current respond."
                 description="This is a live circuit, not a picture. Drag the slider and the charge speeds up, the meters update, and the resistor warms."
               />
-              <Slider
+              <InteractiveSlider
                 label="Supply voltage"
                 value={voltage}
                 min={0}

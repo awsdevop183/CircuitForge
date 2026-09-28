@@ -13,7 +13,7 @@ export const DIGIT_COLORS: readonly BandColor[] = [
   { name: "Red", hex: "#dc2626", ink: "#fff" },
   { name: "Orange", hex: "#f97316", ink: "#111" },
   { name: "Yellow", hex: "#facc15", ink: "#111" },
-  { name: "Green", hex: "#16a34a", ink: "#fff" },
+  { name: "Green", hex: "#16a34a", ink: "#04110a" },
   { name: "Blue", hex: "#2563eb", ink: "#fff" },
   { name: "Violet", hex: "#7c3aed", ink: "#fff" },
   { name: "Grey", hex: "#6b7280", ink: "#fff" },

@@ -32,9 +32,10 @@ npm run dev        # http://localhost:3000
 | `/`                          | Landing page: animated live circuit hero, the learning method, the 9-stage path, a lab teaser        |
 | `/learn`                     | Learning dashboard: module cards with progress and a "continue where you left off" card              |
 | `/learn/[module]`            | Module overview: lessons, status, and related tools you can use now                                   |
-| `/learn/electricity/*`       | Three full lessons: **What Is Electricity?**, **Voltage**, **Current**                                |
+| `/learn/fundamentals`        | Module 01 — Electronics Fundamentals: progress, lesson path with quiz scores, safety guidance          |
+| `/learn/fundamentals/*`      | 15 full lessons, from matter and charge through Ohm's law, power, AC/DC, ground and series/parallel   |
 | `/lab`                       | Interactive lab index                                                                                |
-| `/lab/ohms-law`              | Voltage/resistance sliders, live circuit, formula, power and heat, I–V graph, auto-checked challenges |
+| `/lab/ohms-law`              | Ohm's Law Lab (solve for V, I or R, presets, warnings) plus free exploration with challenges          |
 | `/lab/series-parallel`       | Switch between series and parallel wiring, adjust bulbs, remove a bulb, compare measurements          |
 | `/components`                | Searchable, filterable library of 9 components (schematic symbol and real-world illustration)         |
 | `/components/resistor`       | Deep-dive: interactive colour-code reader, resistor-in-circuit demo                                   |
@@ -44,7 +45,29 @@ npm run dev        # http://localhost:3000
 | `/projects/led-circuit`      | Full beginner build guide with wiring diagram, resistor calculation and steps                         |
 | `/roadmap`                   | The complete journey (11 stages) and the planned platform features                                    |
 
-Every lesson follows the same learning loop: **Concept → Visual Explanation → Interactive Experiment → Real-World Example → Quick Check → Next Concept**. Each also has key takeaways, "Try it yourself" prompts, an estimated time, a difficulty rating, a scroll-spy outline, a reading-progress bar and previous/next navigation.
+Every lesson follows the same learning loop: **Concept → Visual Explanation → Interactive Experiment → Real-World Example → Quick Check → Next Concept**. Each also has a learning objective, "builds on" prerequisites, a real-world analogy that says where it breaks down, a key takeaway, "Try it yourself" prompts, an estimated time and difficulty, a scroll-spy outline and previous/next navigation.
+
+### Module 01 — Electronics Fundamentals
+
+| # | Lesson | Main interactive |
+|---|--------|------------------|
+| 1 | What Is Matter and Electric Charge? | `MatterZoom` (object → atom → nucleus), charge attraction/repulsion |
+| 2 | What Is an Electron? | `AtomExplorer` (particles, ions, orbit vs electron-cloud models) |
+| 3 | Conductors vs Insulators | `MaterialTester` (copper, aluminium, silver vs rubber, plastic, glass) |
+| 4 | What Is Electricity? | `ElectronDrift` (random motion vs drift), electron chain |
+| 5 | What Is a Circuit? | `CircuitExplorer` with anatomy mode, symbol legend |
+| 6 | Voltage | `PotentialDifference` (two points, voltmeter), water analogy with limits |
+| 7 | Current | Charge counter, conventional vs electron flow, `CircuitExplorer` with V/R/I |
+| 8 | Resistance | `ResistanceExplorer` (resistance ↑ → current ↓), wire length/thickness |
+| 9 | Ohm's Law | `OhmsLawCalculator` (solve V/I/R, presets A–C, warnings), I–V graph |
+| 10 | Electrical Power | `PowerVisualizer` (P = V × I, power meter, device comparison), power-as-area |
+| 11 | DC vs AC | `DcAcExplorer` + `WaveformVisualizer` |
+| 12 | Open vs Closed Circuits | `CircuitExplorer` with cuttable wires |
+| 13 | Short Circuit | `ShortCircuitDemo` (internal resistance, fuse that blows) |
+| 14 | Ground / 0 V | `GroundReference` (move the reference), `GroundTypes` (reference / earth / chassis) |
+| 15 | Series vs Parallel | Computed worked example, series/parallel lab experiment |
+
+Knowledge checks use four question types (multiple choice, true/false, identify, predict). After every answer the correct option is revealed and explained. Safety messaging (`SafetyNotice`) covers short circuits, batteries, high current, capacitors, AC and mains.
 
 ## Project structure
 
@@ -55,7 +78,8 @@ src/
 │   ├── circuit/             # ⚡ The circuit visual language (reusable SVG parts)
 │   ├── illustrations/       # Real-world component artwork (SVG)
 │   ├── lesson/              # Lesson layout: stages, outline, quick check, takeaways, completion
-│   ├── lessons/             # Interactive visuals used inside lessons (per topic + shared)
+│   ├── simulations/         # Reusable interactive simulations (CircuitExplorer, OhmsLawCalculator, …)
+│   ├── lessons/             # Smaller lesson visuals (per topic + shared)
 │   ├── lab/                 # Lab framework (panels, challenges, graphs) and experiments
 │   ├── explorer/            # Component explorer and deep-dives
 │   ├── learn/               # Dashboard cards and progress
@@ -63,9 +87,10 @@ src/
 │   ├── projects/            # Project timeline and build diagrams
 │   ├── layout/              # Header, mobile menu, footer, page header
 │   └── ui/                  # Design-system primitives (Button, Badge, Slider, SegmentedControl…)
-├── content/                 # Typed, serialisable content: curriculum, lessons, components, experiments, projects, roadmap
+├── content/                 # Typed content: curriculum, lessons (content/lessons/fundamentals/*), components, experiments, projects, roadmap
 └── lib/
     ├── electronics.ts       # Pure physics: Ohm's law, series/parallel solvers, RC, LED resistor, E12
+    ├── circuit-sim.ts       # Single-loop solver: switches, breaks, LEDs, fuses, shorts, node voltages
     ├── format.ts            # SI-prefix formatting (20 mA, 4.7 kΩ…)
     ├── progress/            # Progress store interface + localStorage implementation + hook
     └── navigation.ts        # Nav config and site metadata
@@ -85,7 +110,8 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 </CircuitCanvas>
 ```
 
-- **Parts:** `Battery`, `Resistor` (with heat glow), `Led`, `Lamp`, `Capacitor` (with charge), `Switch` (keyboard-operable), `Diode`, `Transistor`, `Mosfet`, `Relay`, `Ammeter`
+- **Parts:** `Battery`, `AcSource`, `Resistor` (with heat glow), `Led`, `Lamp`, `Capacitor` (with charge), `Switch` (keyboard-operable), `Fuse`, `Ground` (reference / earth / chassis), `Diode`, `Transistor`, `Mosfet`, `Relay`, `Ammeter`
+- **Aliases:** `CircuitDiagram` (= `CircuitCanvas`) and `CircuitComponent` (= `CircuitPart`); any part accepts `highlighted`
 - **Conductors and annotation:** `Wire`, `CurrentFlow`, `DirectionArrow`, `VoltageIndicator`, `CircuitNode`, `CircuitLabel`
 - **Conventions:** every two-terminal part is centred on its origin with terminals at ±40 units, positioned with `x`, `y` and `rotation`. `terminalsOf()`, `pathThrough()` and `rectLoop()` help with the geometry.
 - **Layering:** draw wires, then flow, then parts. Part bodies mask the wire beneath them.
@@ -96,7 +122,9 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 
 - **Content is data.** Modules, lessons, components, experiments and projects are typed objects in `src/content`. Only lesson bodies contain JSX, and they're kept in one file per lesson, so moving to MDX or a CMS later is mechanical.
 - **Registries map slugs to interactive implementations.** See `content/lessons/index.ts`, `components/lab/registry.tsx` and `components/explorer/deep-dives/registry.tsx`. To add an experiment: add data in `content/experiments.ts`, build the component, and register it.
-- **Progress is behind an interface** (`lib/progress/types.ts`). Today it's `localStorage`. An account-backed store can implement the same `ProgressStore` interface without changing any UI.
+- **Circuit behaviour lives in one place.** `lib/circuit-sim.ts` solves every single-loop simulation, so the circuit explorer, short-circuit demo and ground lesson can't disagree.
+- **Progress is behind an interface** (`lib/progress/types.ts`). Today it's `localStorage`, tracking completed lessons, the current lesson and knowledge-check results. An account-backed store can implement the same `ProgressStore` interface without changing any UI. Older `electricity/*` progress keys are migrated automatically, and old URLs redirect.
+- **Lesson building blocks:** `LessonLayout`, `LessonHeader`, `LearningObjective`, `ConceptCard`, `AnalogyCard`, `KnowledgeCheck`, `KeyTakeaway`, `NextLesson`, `InteractiveSlider` (linear or logarithmic), `SafetyNotice`.
 - **Physics is pure and UI-free** (`lib/electronics.ts`), ready for unit tests and future simulators.
 - **Quick checks are data** (`QuizQuestion[]`), ready for a future quiz/assessment engine.
 
@@ -110,7 +138,7 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 
 ## What's next
 
-1. More lessons: resistance, power, then Module 02 and 03 lessons built on the existing deep-dives and lab experiments
+1. Module 02 (Components) lessons, built on the existing resistor/LED/capacitor deep-dives
 2. More lab experiments: voltage divider, RC charging, LED driver, logic gates (already listed as coming soon)
 3. A drag-and-drop circuit builder on top of the circuit visual language and `lib/electronics.ts`
 4. Unit tests for `lib/electronics.ts` and component tests for the lab
