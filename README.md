@@ -37,10 +37,13 @@ npm run dev        # http://localhost:3000
 | `/lab`                       | Interactive lab index                                                                                |
 | `/lab/ohms-law`              | Ohm's Law Lab (solve for V, I or R, presets, warnings) plus free exploration with challenges          |
 | `/lab/series-parallel`       | Switch between series and parallel wiring, adjust bulbs, remove a bulb, compare measurements          |
-| `/components`                | Searchable, filterable library of 9 components (schematic symbol and real-world illustration)         |
-| `/components/resistor`       | Deep-dive: interactive colour-code reader, resistor-in-circuit demo                                   |
-| `/components/led`            | Deep-dive: polarity, a series-resistor calculator (E12 values), "flip the LED" and "remove the resistor" |
-| `/components/capacitor`      | Deep-dive: real-time RC charge/discharge with a live voltage curve and τ markers                      |
+| `/learn/components`          | Module 02 — Electronic Components: lesson path, challenge and game results                            |
+| `/learn/components/*`        | 14 lessons: 12 components, "Build Your First Circuit" and the Component Challenge                     |
+| `/components`                | Library of 11 components, filterable by Passive / Active / Electromechanical / Power / Input / Output |
+| `/components/[slug]`         | Every component: symbol, visual, interactive demo, specs, uses, beginner mistakes, safety, related     |
+| `/components/compare`        | Resistor vs potentiometer, diode vs LED, transistor vs MOSFET, transistor vs relay                   |
+| `/components/symbol-trainer` | Symbol Trainer: 15 random questions per round from 21 symbols, explained after every answer           |
+| `/components/identify`       | Identify the Component: see a real part and decide what it's used for                                |
 | `/projects`                  | Project progression from LED Circuit to Robotics + AI                                                |
 | `/projects/led-circuit`      | Full beginner build guide with wiring diagram, resistor calculation and steps                         |
 | `/roadmap`                   | The complete journey (11 stages) and the planned platform features                                    |
@@ -69,6 +72,29 @@ Every lesson follows the same learning loop: **Concept → Visual Explanation �
 
 Knowledge checks use four question types (multiple choice, true/false, identify, predict). After every answer the correct option is revealed and explained. Safety messaging (`SafetyNotice`) covers short circuits, batteries, high current, capacitors, AC and mains.
 
+### Module 02 — Electronic Components
+
+Every lesson follows **See the component → understand its behaviour → interact with it → use it in a circuit**, and ends with "Where you'll find it" and a prominent "Common beginner mistakes" section with safety notices.
+
+| # | Lesson | Main interactive (`components/component-lab`) |
+|---|--------|------------------|
+| 1 | What Is an Electronic Component? | `ComponentJobs` (each part's job and "without it"), `ComponentSorter` |
+| 2 | The Resistor | `ResistorLab` (I = V ÷ R, 100 Ω / 1 kΩ / 10 kΩ bars), colour-code reader, `VoltageDivider` |
+| 3 | The LED | `LedCircuitLab` (brightness, current, safety meter, remove-the-resistor), LED anatomy |
+| 4 | The Capacitor | `RcChargingComparison` (τ = RC, pinned comparison curve, ½CV²), polarity |
+| 5 | The Diode | `DiodeLab` (forward/reverse bars), `HalfWaveRectifier` |
+| 6 | The Transistor | `TransistorSwitch` (Input LOW/HIGH → transistor → LED; amplifier mode) |
+| 7 | The MOSFET | `MosfetSwitch` (GPIO → gate resistor + pull-down → MOSFET → motor, flyback diode) |
+| 8 | The Relay | `RelayDemo` (animated coil, COM/NO/NC, isolated 5 V control and 12 V battery load) |
+| 9 | The Potentiometer | `PotentiometerLab` with the keyboard-operable `RotaryKnob` |
+| 10 | Switches | `SwitchLab` (toggle, push NO, push NC placed into the circuit) |
+| 11 | The Battery | `BatteryModel` (voltage vs capacity; the circuit sets the current; runtime) |
+| 12 | The Voltage Regulator | `RegulatorDemo` (linear vs switching, dropout, heat) |
+| 13 | Build Your First Circuit | `FirstCircuitBuilder` (CircuitExplorer + missions) |
+| 14 | Component Challenge | `ComponentChallenge` (place parts, test with `solveLoop`, solution after an attempt) |
+
+Progress tracks lessons, knowledge-check scores, game scores (`games/*`) and challenge attempts and completion (`challenges`). Modules can declare tracked `activities`, which the module page shows with their results.
+
 ## Project structure
 
 ```
@@ -81,7 +107,9 @@ src/
 │   ├── simulations/         # Reusable interactive simulations (CircuitExplorer, OhmsLawCalculator, …)
 │   ├── lessons/             # Smaller lesson visuals (per topic + shared)
 │   ├── lab/                 # Lab framework (panels, challenges, graphs) and experiments
-│   ├── explorer/            # Component explorer and deep-dives
+│   ├── explorer/            # Component explorer, symbol library, experiment registry, deep-dives
+│   ├── component-lab/       # Module 02 interactives + ComponentQuiz, ComponentComparison, ComponentSpecification…
+│   ├── visuals/             # ResistorVisual, LEDVisual… aliases for the component illustrations
 │   ├── learn/               # Dashboard cards and progress
 │   ├── home/                # Landing-page sections
 │   ├── projects/            # Project timeline and build diagrams
@@ -91,6 +119,7 @@ src/
 └── lib/
     ├── electronics.ts       # Pure physics: Ohm's law, series/parallel solvers, RC, LED resistor, E12
     ├── circuit-sim.ts       # Single-loop solver: switches, breaks, LEDs, fuses, shorts, node voltages
+    ├── digital.ts           # Logic levels and thresholds (3.3 V / 5 V) — groundwork for Digital Electronics
     ├── format.ts            # SI-prefix formatting (20 mA, 4.7 kΩ…)
     ├── progress/            # Progress store interface + localStorage implementation + hook
     └── navigation.ts        # Nav config and site metadata
@@ -110,7 +139,7 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 </CircuitCanvas>
 ```
 
-- **Parts:** `Battery`, `AcSource`, `Resistor` (with heat glow), `Led`, `Lamp`, `Capacitor` (with charge), `Switch` (keyboard-operable), `Fuse`, `Ground` (reference / earth / chassis), `Diode`, `Transistor`, `Mosfet`, `Relay`, `Ammeter`
+- **Parts:** `Battery`, `AcSource`, `Resistor` (with heat glow), `Led`, `Lamp`, `Capacitor` (with charge), `Switch` (keyboard-operable), `Fuse`, `Ground` (reference / earth / chassis), `Diode`, `Transistor`, `Mosfet`, `Relay`, `Ammeter`, `Potentiometer`, `VoltageRegulator`, `Motor`, `PushButton` (NO/NC, press-and-hold)
 - **Aliases:** `CircuitDiagram` (= `CircuitCanvas`) and `CircuitComponent` (= `CircuitPart`); any part accepts `highlighted`
 - **Conductors and annotation:** `Wire`, `CurrentFlow`, `DirectionArrow`, `VoltageIndicator`, `CircuitNode`, `CircuitLabel`
 - **Conventions:** every two-terminal part is centred on its origin with terminals at ±40 units, positioned with `x`, `y` and `rotation`. `terminalsOf()`, `pathThrough()` and `rectLoop()` help with the geometry.
@@ -121,7 +150,8 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 ## Architecture notes (built to extend)
 
 - **Content is data.** Modules, lessons, components, experiments and projects are typed objects in `src/content`. Only lesson bodies contain JSX, and they're kept in one file per lesson, so moving to MDX or a CMS later is mechanical.
-- **Registries map slugs to interactive implementations.** See `content/lessons/index.ts`, `components/lab/registry.tsx` and `components/explorer/deep-dives/registry.tsx`. To add an experiment: add data in `content/experiments.ts`, build the component, and register it.
+- **Registries map slugs to interactive implementations.** See `content/lessons/index.ts`, `components/lab/registry.tsx`, `components/explorer/experiments.tsx` and `components/explorer/deep-dives/registry.tsx`. The schematic `SYMBOL_LIBRARY` (`explorer/ComponentSymbol.tsx`) feeds both the explorer and the Symbol Trainer.
+- **Games are data.** `ComponentQuiz` runs any `QuizQuestion[]` one at a time, shuffled on start, with explanations and saved scores. The next module can reuse it for logic-gate and truth-table games. To add an experiment: add data in `content/experiments.ts`, build the component, and register it.
 - **Circuit behaviour lives in one place.** `lib/circuit-sim.ts` solves every single-loop simulation, so the circuit explorer, short-circuit demo and ground lesson can't disagree.
 - **Progress is behind an interface** (`lib/progress/types.ts`). Today it's `localStorage`, tracking completed lessons, the current lesson and knowledge-check results. An account-backed store can implement the same `ProgressStore` interface without changing any UI. Older `electricity/*` progress keys are migrated automatically, and old URLs redirect.
 - **Lesson building blocks:** `LessonLayout`, `LessonHeader`, `LearningObjective`, `ConceptCard`, `AnalogyCard`, `KnowledgeCheck`, `KeyTakeaway`, `NextLesson`, `InteractiveSlider` (linear or logarithmic), `SafetyNotice`.
@@ -138,9 +168,10 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 
 ## What's next
 
-1. Module 02 (Components) lessons, built on the existing resistor/LED/capacitor deep-dives
-2. More lab experiments: voltage divider, RC charging, LED driver, logic gates (already listed as coming soon)
-3. A drag-and-drop circuit builder on top of the circuit visual language and `lib/electronics.ts`
-4. Unit tests for `lib/electronics.ts` and component tests for the lab
-5. Accounts and synced progress, implementing `ProgressStore` against an API
-6. Microcontroller simulation (Arduino/ESP32 GPIO, PWM, ADC) for Module 05
+1. Module 04 — Digital Electronics: logic levels (`lib/digital.ts`), gates and truth tables, reusing `ComponentQuiz`, `TransistorSwitch` and `PushButton`
+2. Module 03 — Circuits (currently a preview): Kirchhoff's laws, dividers and RC timing
+3. More lab experiments: voltage divider, RC charging, LED driver, logic gates (already listed as coming soon)
+4. A drag-and-drop circuit builder (the Component Challenge's slot board is a first step) on top of the circuit visual language and `lib/electronics.ts`
+5. Unit tests for `lib/electronics.ts` and component tests for the lab
+6. Accounts and synced progress, implementing `ProgressStore` against an API
+7. Microcontroller simulation (Arduino/ESP32 GPIO, PWM, ADC) for Module 05

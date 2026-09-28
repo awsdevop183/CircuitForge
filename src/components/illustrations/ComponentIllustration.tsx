@@ -189,6 +189,43 @@ export function RelayIllustration({ className }: IllustrationProps) {
   );
 }
 
+
+/** Rotary potentiometer seen from the front; `position` 0–1 turns the knob. */
+export function PotentiometerIllustration({ className, position = 0.5 }: IllustrationProps & { position?: number }) {
+  const angle = -135 + Math.max(0, Math.min(1, position)) * 270;
+  return (
+    <Frame className={className}>
+      {[62, 80, 98].map((x) => (
+        <line key={x} x1={x} y1="92" x2={x} y2="116" stroke={LEG} strokeWidth="3" strokeLinecap="round" />
+      ))}
+      <rect x="44" y="60" width="72" height="34" rx="4" fill="#1d4ed8" />
+      <circle cx="80" cy="50" r="30" fill="#334155" stroke="#64748b" strokeWidth="2" />
+      <circle cx="80" cy="50" r="20" fill="#0f172a" stroke="#475569" strokeWidth="2" />
+      <line x1="80" y1="50" x2="80" y2="32" stroke="#f5a524" strokeWidth="4" strokeLinecap="round" transform={`rotate(${angle} 80 50)`} />
+    </Frame>
+  );
+}
+
+/** A TO-220 linear regulator such as the 7805. */
+export function VoltageRegulatorIllustration({ className }: IllustrationProps) {
+  return (
+    <Frame className={className}>
+      {[66, 80, 94].map((x) => (
+        <line key={x} x1={x} y1="80" x2={x} y2="116" stroke={LEG} strokeWidth="3" strokeLinecap="round" />
+      ))}
+      <rect x="54" y="6" width="52" height="36" rx="3" fill="#cbd5e1" />
+      <circle cx="80" cy="22" r="7" fill="#070a10" />
+      <rect x="54" y="38" width="52" height="44" rx="2" fill="#18181b" />
+      <text x="80" y="60" fontSize="8" fill="#a1a1aa" fontFamily="var(--font-mono)" textAnchor="middle">
+        L7805
+      </text>
+      <text x="80" y="72" fontSize="6" fill="#71717a" fontFamily="var(--font-mono)" textAnchor="middle">
+        IN GND OUT
+      </text>
+    </Frame>
+  );
+}
+
 const ILLUSTRATIONS: Record<string, (props: IllustrationProps) => ReactNode> = {
   resistor: ({ className }) => <ResistorIllustration className={className} />,
   led: (props) => <LedIllustration {...props} lit />,
@@ -199,6 +236,8 @@ const ILLUSTRATIONS: Record<string, (props: IllustrationProps) => ReactNode> = {
   transistor: TransistorIllustration,
   mosfet: MosfetIllustration,
   relay: RelayIllustration,
+  potentiometer: PotentiometerIllustration,
+  "voltage-regulator": VoltageRegulatorIllustration,
 };
 
 /** Realistic illustration for a component slug, or null if none exists. */

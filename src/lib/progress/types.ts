@@ -11,6 +11,12 @@ export interface QuizResult {
   completedAt: string;
 }
 
+export interface ChallengeResult {
+  attempts: number;
+  /** Set once the challenge has been solved. */
+  completedAt: string | null;
+}
+
 export interface ProgressState {
   /** Lesson key (`module/lesson`) → ISO timestamp of completion. */
   completedLessons: Readonly<Record<string, string>>;
@@ -18,6 +24,8 @@ export interface ProgressState {
   quizResults: Readonly<Record<string, QuizResult>>;
   /** The lesson the learner opened most recently ("current lesson"). */
   currentLessonKey: string | null;
+  /** Challenge id → attempts and completion (e.g. "components/component-challenge"). */
+  challenges: Readonly<Record<string, ChallengeResult>>;
 }
 
 export interface ProgressStore {
@@ -28,6 +36,7 @@ export interface ProgressStore {
   markLessonIncomplete(key: string): void;
   recordQuizResult(key: string, correct: number, total: number): void;
   setCurrentLesson(key: string): void;
+  recordChallengeAttempt(id: string, solved: boolean): void;
   reset(): void;
 }
 
@@ -35,4 +44,5 @@ export const EMPTY_PROGRESS: ProgressState = {
   completedLessons: {},
   quizResults: {},
   currentLessonKey: null,
+  challenges: {},
 };

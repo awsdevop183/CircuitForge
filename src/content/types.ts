@@ -47,6 +47,15 @@ export interface ResourceLink {
   kind: "lab" | "component" | "project" | "lesson";
 }
 
+/** A practice activity whose result is tracked in progress (games, build challenges). */
+export interface ModuleActivity {
+  kind: "challenge" | "quiz";
+  /** Progress id: challenges[id] or quizResults[id]. */
+  id: string;
+  label: string;
+  href: string;
+}
+
 export interface LearningModule {
   /** Two-digit display index, e.g. "01". */
   number: string;
@@ -60,4 +69,6 @@ export interface LearningModule {
   lessons: LessonSummary[];
   /** Things a learner can already explore that relate to this module. */
   resources?: ResourceLink[];
+  /** Tracked practice activities shown on the module page. */
+  activities?: ModuleActivity[];
 }

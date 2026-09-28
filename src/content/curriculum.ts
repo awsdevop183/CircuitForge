@@ -42,23 +42,37 @@ export const MODULES: readonly LearningModule[] = [
     number: "02",
     slug: "components",
     title: "Components",
-    description: "Resistors, capacitors, diodes, LEDs, transistors, MOSFETs, relays and more.",
-    topics: ["Resistors", "Capacitors", "Diodes", "LEDs", "Transistors", "MOSFETs", "Relays"],
+    description: "See, understand and use the parts every circuit is built from — resistors, LEDs, capacitors, diodes, transistors, MOSFETs, relays and more.",
+    topics: ["Resistors", "LEDs", "Capacitors", "Diodes", "Transistors", "MOSFETs", "Relays", "Switches", "Batteries", "Regulators"],
     difficulty: "beginner",
-    status: "preview",
+    status: "available",
     icon: "components",
     lessons: [
-      planned("resistors", "Resistors", "Colour codes, tolerances and power ratings.", 12, "beginner"),
-      planned("capacitors", "Capacitors", "Storing charge, charging curves and filtering.", 14, "beginner"),
-      planned("diodes-and-leds", "Diodes & LEDs", "One-way current, forward voltage and lighting LEDs safely.", 14, "beginner"),
-      planned("transistors", "Transistors", "Using a small current to control a bigger one.", 16, "intermediate"),
-      planned("mosfets", "MOSFETs", "Voltage-controlled switches for real loads.", 16, "intermediate"),
-      planned("relays", "Relays", "Switching isolated, high-power circuits with a coil.", 12, "intermediate"),
+      lesson("what-is-a-component", "What Is an Electronic Component?", "Every part has a job: passive and active components working together.", 10),
+      lesson("resistor", "The Resistor", "Limit current, read colour bands and divide voltages.", 14),
+      lesson("led", "The LED", "Light an LED safely — and see why it needs a resistor.", 14),
+      lesson("capacitor", "The Capacitor", "Store charge, watch it charge up and meet the RC time constant.", 14),
+      lesson("diode", "The Diode", "A one-way valve for current: bias, rectification and protection.", 12),
+      lesson("transistor", "The Transistor", "Use a small signal to switch a bigger current.", 15, "intermediate"),
+      lesson("mosfet", "The MOSFET", "A voltage-controlled switch for motors and other real loads.", 14, "intermediate"),
+      lesson("relay", "The Relay", "A coil and a magnet that switch a completely separate circuit.", 12, "intermediate"),
+      lesson("potentiometer", "The Potentiometer", "A knob that turns into an adjustable voltage.", 10),
+      lesson("switches", "Switches", "Open, closed, toggle, push-to-make and push-to-break.", 10),
+      lesson("battery", "The Battery", "Voltage vs capacity — and why the circuit decides the current.", 12),
+      lesson("voltage-regulator", "The Voltage Regulator", "Turn a wobbly 12 V into a steady 5 V.", 12, "intermediate"),
+      lesson("build-your-first-circuit", "Build Your First Circuit", "Battery, switch, resistor and LED — working together.", 15),
+      lesson("component-challenge", "Component Challenge", "Build a working LED circuit from a box of parts.", 15),
     ],
     resources: [
-      { label: "Resistor deep-dive", href: "/components/resistor", kind: "component" },
-      { label: "LED deep-dive", href: "/components/led", kind: "component" },
-      { label: "Capacitor deep-dive", href: "/components/capacitor", kind: "component" },
+      { label: "Component Explorer", href: "/components", kind: "component" },
+      { label: "Compare components", href: "/components/compare", kind: "component" },
+      { label: "Symbol Trainer", href: "/components/symbol-trainer", kind: "component" },
+      { label: "Identify the Component", href: "/components/identify", kind: "component" },
+    ],
+    activities: [
+      { kind: "challenge", id: "components/component-challenge", label: "Component Challenge", href: "/learn/components/component-challenge" },
+      { kind: "quiz", id: "games/symbol-trainer", label: "Symbol Trainer", href: "/components/symbol-trainer" },
+      { kind: "quiz", id: "games/identify", label: "Identify the Component", href: "/components/identify" },
     ],
   },
   {
@@ -188,8 +202,14 @@ export const MODULES: readonly LearningModule[] = [
   },
 ];
 
-function lesson(slug: string, title: string, summary: string, estimatedMinutes: number): LessonSummary {
-  return { slug, title, summary, estimatedMinutes, difficulty: "beginner", available: true };
+function lesson(
+  slug: string,
+  title: string,
+  summary: string,
+  estimatedMinutes: number,
+  difficulty: LessonSummary["difficulty"] = "beginner",
+): LessonSummary {
+  return { slug, title, summary, estimatedMinutes, difficulty, available: true };
 }
 
 function planned(

@@ -14,6 +14,20 @@ import { openVsClosedCircuits } from "./fundamentals/12-open-vs-closed-circuits"
 import { shortCircuit } from "./fundamentals/13-short-circuit";
 import { ground } from "./fundamentals/14-ground";
 import { seriesAndParallel } from "./fundamentals/15-series-and-parallel";
+import { whatIsAComponent } from "./components/01-what-is-a-component";
+import { resistorLesson } from "./components/02-resistor";
+import { ledLesson } from "./components/03-led";
+import { capacitorLesson } from "./components/04-capacitor";
+import { diodeLesson } from "./components/05-diode";
+import { transistorLesson } from "./components/06-transistor";
+import { mosfetLesson } from "./components/07-mosfet";
+import { relayLesson } from "./components/08-relay";
+import { potentiometerLesson } from "./components/09-potentiometer";
+import { switchesLesson } from "./components/10-switches";
+import { batteryLesson } from "./components/11-battery";
+import { voltageRegulatorLesson } from "./components/12-voltage-regulator";
+import { buildYourFirstCircuit } from "./components/13-build-your-first-circuit";
+import { componentChallenge } from "./components/14-component-challenge";
 import type { LessonContent } from "./types";
 
 /** Every lesson with full content, in module order. */
@@ -33,6 +47,20 @@ export const ALL_LESSONS: readonly LessonContent[] = [
   shortCircuit,
   ground,
   seriesAndParallel,
+  whatIsAComponent,
+  resistorLesson,
+  ledLesson,
+  capacitorLesson,
+  diodeLesson,
+  transistorLesson,
+  mosfetLesson,
+  relayLesson,
+  potentiometerLesson,
+  switchesLesson,
+  batteryLesson,
+  voltageRegulatorLesson,
+  buildYourFirstCircuit,
+  componentChallenge,
 ];
 
 const LESSONS: Readonly<Record<string, LessonContent>> = Object.fromEntries(

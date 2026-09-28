@@ -176,10 +176,10 @@ export const seriesAndParallel: LessonContent = {
     },
   ],
   next: {
-    title: "Module complete — build something real",
+    title: "Module complete — meet the components",
     description:
-      "You've finished Electronics Fundamentals. Put it all together: build a real LED circuit, choosing the resistor with Ohm's law — or keep experimenting in the lab.",
-    href: "/projects/led-circuit",
-    cta: "Build the LED Circuit project",
+      "You've finished Electronics Fundamentals. Next, meet the parts that circuits are built from — resistors, LEDs, capacitors, transistors and more — and use each one in a working circuit.",
+    href: "/learn/components/what-is-a-component",
+    cta: "Start Module 02: Electronic Components",
   },
 };

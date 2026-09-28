@@ -3,17 +3,17 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
-import { COMPONENTS, COMPONENT_CATEGORY_LABELS, type ComponentCategory } from "@/content/component-library";
+import { COMPONENTS, COMPONENT_TAG_DESCRIPTIONS, COMPONENT_TAG_LABELS, type ComponentTag } from "@/content/component-library";
 import { cn } from "@/lib/cn";
 import { ComponentCard } from "./ComponentCard";
 
-type CategoryFilter = ComponentCategory | "all";
+type CategoryFilter = ComponentTag | "all";
 
 const FILTERS: { value: CategoryFilter; label: string }[] = [
   { value: "all", label: "All" },
-  ...(Object.keys(COMPONENT_CATEGORY_LABELS) as ComponentCategory[]).map((value) => ({
+  ...(Object.keys(COMPONENT_TAG_LABELS) as ComponentTag[]).map((value) => ({
     value,
-    label: COMPONENT_CATEGORY_LABELS[value],
+    label: COMPONENT_TAG_LABELS[value],
   })),
 ];
 
@@ -25,9 +25,9 @@ export function ComponentExplorer() {
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return COMPONENTS.filter((component) => {
-      if (category !== "all" && component.category !== category) return false;
+      if (category !== "all" && !component.tags.includes(category)) return false;
       if (!needle) return true;
-      return [component.name, component.summary, ...component.uses].some((text) =>
+      return [component.name, component.job, component.summary, ...component.uses].some((text) =>
         text.toLowerCase().includes(needle),
       );
     });
@@ -38,7 +38,7 @@ export function ComponentExplorer() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div
           role="group"
-          aria-label="Filter by category"
+          aria-label="Filter by component family"
           className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0"
         >
           {FILTERS.map((filter) => (
@@ -76,6 +76,7 @@ export function ComponentExplorer() {
 
       <p className="mt-6 text-sm text-ink-subtle" aria-live="polite">
         Showing {results.length} of {COMPONENTS.length} components
+        {category !== "all" ? <span className="text-ink-muted"> · {COMPONENT_TAG_LABELS[category]}: {COMPONENT_TAG_DESCRIPTIONS[category]}</span> : null}
       </p>
 
       <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

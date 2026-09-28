@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { lessonHref, lessonKey, type LessonLocation } from "@/content/curriculum";
 import type { LessonContent, LessonStage } from "@/content/lessons/types";
 import { AnalogyCard } from "./AnalogyCard";
+import { BeginnerMistakes, WhereYoullFindIt } from "./ComponentLessonBlocks";
 import { KeyTakeaway } from "./KeyTakeaway";
 import { LessonCompletion } from "./LessonCompletion";
 import { LessonHeader } from "./LessonHeader";
@@ -16,6 +17,8 @@ import { NextLesson } from "./NextLesson";
 import { ReadingProgress } from "./ReadingProgress";
 import { STAGES } from "./stages";
 
+const WHERE_ID = "where-youll-find-it";
+const MISTAKES_ID = "beginner-mistakes";
 const TAKEAWAY_ID = "key-takeaway";
 const QUICK_CHECK_ID = "knowledge-check";
 const NEXT_ID = "next-lesson";
@@ -36,6 +39,8 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
 
   const outline: OutlineItem[] = [
     ...content.sections.map((section) => ({ id: section.id, title: section.title, label: STAGES[section.stage].label })),
+    ...(content.whereFound?.length ? [{ id: WHERE_ID, title: "Where you'll find it", label: STAGES["real-world"].label }] : []),
+    ...(content.mistakes?.length ? [{ id: MISTAKES_ID, title: "Common beginner mistakes", label: "Avoid" }] : []),
     { id: TAKEAWAY_ID, title: "Key takeaway", label: "Summary" },
     { id: QUICK_CHECK_ID, title: "Knowledge check", label: STAGES["quick-check"].label },
     { id: NEXT_ID, title: content.next.title, label: STAGES.next.label },
@@ -45,6 +50,7 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
   for (const section of content.sections) {
     stageAnchors[section.stage] ??= section.id;
   }
+  if (content.whereFound?.length) stageAnchors["real-world"] ??= WHERE_ID;
 
   return (
     <>
@@ -64,6 +70,14 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
               {index === 0 ? <AnalogyCard analogy={content.analogy} /> : null}
             </LessonSectionBlock>
           ))}
+
+          {content.whereFound?.length ? (
+            <LessonSectionBlock id={WHERE_ID} stage="real-world" title="Where you'll find it">
+              <WhereYoullFindIt places={content.whereFound} />
+            </LessonSectionBlock>
+          ) : null}
+
+          {content.mistakes?.length ? <BeginnerMistakes id={MISTAKES_ID} mistakes={content.mistakes} safety={content.safety} /> : null}
 
           <section id={TAKEAWAY_ID} aria-labelledby={`${TAKEAWAY_ID}-heading`} className="border-t border-line py-12 sm:py-14">
             <p className="eyebrow text-amber">Summary</p>

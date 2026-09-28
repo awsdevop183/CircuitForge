@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Boxes, FlaskConical, Hammer } from "lucide-react";
 import { ModuleCardAction } from "@/components/learn/ModuleCardAction";
+import { ModuleActivities } from "@/components/learn/ModuleActivities";
 import { ModuleLessonPath } from "@/components/learn/ModuleLessonPath";
 import { SafetyNotice } from "@/components/ui/SafetyNotice";
 import { ModuleProgress } from "@/components/lesson/ModuleProgress";
@@ -91,6 +92,18 @@ export default async function ModulePage({ params }: ModulePageProps) {
             <ModuleLessonPath module={learningModule} />
           </div>
         </section>
+
+        {learningModule.activities?.length ? (
+          <section aria-labelledby="activities-heading" className="mt-14">
+            <h2 id="activities-heading" className="text-2xl font-semibold text-ink">
+              Challenges and games
+            </h2>
+            <p className="mt-2 text-ink-muted">Put the module into practice. Your results are saved on this device.</p>
+            <div className="mt-6">
+              <ModuleActivities activities={learningModule.activities} />
+            </div>
+          </section>
+        ) : null}
 
         {hasLessons ? <SafetyNotice topic="general" className="mt-14" /> : null}
 

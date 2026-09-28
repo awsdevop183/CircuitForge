@@ -1,0 +1,173 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, CircleCheck, CircleX, Play, RotateCcw, Trophy } from "lucide-react";
+import type { QuizQuestion } from "@/content/lessons/types";
+import { useProgress } from "@/lib/progress/use-progress";
+import { cn } from "@/lib/cn";
+
+interface ComponentQuizProps {
+  /** Shown on the start screen. */
+  title: string;
+  intro: string;
+  questions: readonly QuizQuestion[];
+  /** Progress key for the best score, e.g. "games/symbol-trainer". */
+  progressKey: string;
+  /** How many questions per round (default: all). */
+  roundLength?: number;
+}
+
+function shuffle<T>(items: readonly T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j]!, copy[i]!];
+  }
+  return copy;
+}
+
+/**
+ * A one-question-at-a-time game. Questions and options are shuffled when a
+ * round starts (on click, so server and client render the same start screen),
+ * and every answer is explained before moving on.
+ */
+export function ComponentQuiz({ title, intro, questions, progressKey, roundLength }: ComponentQuizProps) {
+  const { quizResult, recordQuizResult } = useProgress();
+  const best = quizResult(progressKey);
+  const [round, setRound] = useState<QuizQuestion[] | null>(null);
+  const [index, setIndex] = useState(0);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  const start = () => {
+    const chosen = shuffle(questions).slice(0, roundLength ?? questions.length);
+    setRound(chosen.map((q) => ({ ...q, options: q.type === "true-false" ? q.options : shuffle(q.options) })));
+    setIndex(0);
+    setPicked(null);
+    setScore(0);
+    setFinished(false);
+  };
+
+  if (!round) {
+    return (
+      <div className="flex flex-col items-start gap-4 p-5 sm:p-8">
+        <h2 className="text-2xl font-semibold text-ink">{title}</h2>
+        <p className="max-w-xl text-ink-muted">{intro}</p>
+        <p className="font-mono text-sm text-ink-subtle">
+          {roundLength ?? questions.length} questions · random order
+          {best ? ` · best score ${best.correct}/${best.total}` : ""}
+        </p>
+        <button type="button" onClick={start} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-cyan px-5 text-sm font-semibold text-void hover:bg-cyan-soft">
+          <Play className="size-4" aria-hidden="true" />
+          Start
+        </button>
+      </div>
+    );
+  }
+
+  if (finished) {
+    const perfect = score === round.length;
+    return (
+      <div className="flex flex-col items-center gap-4 p-8 text-center">
+        <Trophy className={cn("size-12", perfect ? "text-amber" : "text-ink-subtle")} aria-hidden="true" />
+        <h2 className="text-2xl font-semibold text-ink" role="status">
+          You scored {score} / {round.length}
+        </h2>
+        <p className="max-w-md text-ink-muted">
+          {perfect
+            ? "Perfect round! You can recognise these without thinking."
+            : score >= round.length * 0.7
+              ? "Great work. Play again to lock in the ones you missed."
+              : "Every round makes these more familiar. Read the explanations and try again."}
+        </p>
+        <button type="button" onClick={start} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-cyan px-5 text-sm font-semibold text-void hover:bg-cyan-soft">
+          <RotateCcw className="size-4" aria-hidden="true" />
+          Play again
+        </button>
+      </div>
+    );
+  }
+
+  const question = round[index]!;
+  const answered = picked !== null;
+  const correct = picked === question.correctOptionId;
+  const correctLabel = question.options.find((o) => o.id === question.correctOptionId)?.label;
+  const last = index === round.length - 1;
+
+  const choose = (optionId: string) => {
+    if (answered) return;
+    setPicked(optionId);
+    const nextScore = score + (optionId === question.correctOptionId ? 1 : 0);
+    setScore(nextScore);
+    if (last) recordQuizResult(progressKey, nextScore, round.length);
+  };
+
+  const advance = () => {
+    if (last) {
+      setFinished(true);
+      return;
+    }
+    setIndex(index + 1);
+    setPicked(null);
+  };
+
+  return (
+    <div className="p-4 sm:p-6">
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-mono text-xs text-ink-subtle">
+          Question {index + 1} / {round.length}
+        </p>
+        <p className="font-mono text-xs text-ink-subtle">Score {score}</p>
+      </div>
+      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+        <motion.div className="h-full origin-left rounded-full bg-cyan" initial={false} animate={{ scaleX: (index + (answered ? 1 : 0)) / round.length }} />
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.fieldset key={question.id} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.2 }} className="mt-5">
+          <legend className="text-lg font-medium text-ink">{question.prompt}</legend>
+          {question.visual ? <div className="mt-4 flex justify-center rounded-xl border border-line bg-void/40 p-5">{question.visual}</div> : null}
+          <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            {question.options.map((option) => {
+              const isSelected = picked === option.id;
+              const isCorrect = option.id === question.correctOptionId;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  disabled={answered}
+                  aria-pressed={isSelected}
+                  onClick={() => choose(option.id)}
+                  className={cn(
+                    "flex min-h-12 items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors disabled:cursor-default",
+                    !answered && "border-line-strong bg-void/40 text-ink hover:border-cyan/60 hover:bg-cyan/5",
+                    answered && isCorrect && "border-positive/60 bg-positive/10 text-ink",
+                    answered && isSelected && !isCorrect && "border-negative/60 bg-negative/10 text-ink",
+                    answered && !isSelected && !isCorrect && "border-line bg-void/20 text-ink-subtle",
+                  )}
+                >
+                  <span>{option.label}</span>
+                  {answered && isCorrect ? <CircleCheck className="size-5 shrink-0 text-positive" aria-label="Correct answer" /> : null}
+                  {answered && isSelected && !isCorrect ? <CircleX className="size-5 shrink-0 text-negative" aria-label="Your answer, incorrect" /> : null}
+                </button>
+              );
+            })}
+          </div>
+          {answered ? (
+            <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-start sm:justify-between">
+              <p className="text-sm leading-relaxed text-ink-muted" role="status">
+                <strong className={correct ? "text-positive" : "text-negative"}>{correct ? "Correct. " : `Not quite — it's “${correctLabel}”. `}</strong>
+                {question.explanation}
+              </p>
+              <button type="button" onClick={advance} autoFocus className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-lg bg-cyan px-4 text-sm font-semibold text-void hover:bg-cyan-soft">
+                {last ? "See your score" : "Next question"}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </button>
+            </div>
+          ) : null}
+        </motion.fieldset>
+      </AnimatePresence>
+    </div>
+  );
+}

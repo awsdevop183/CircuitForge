@@ -24,6 +24,7 @@ function normalize(value: unknown): ProgressState {
     completedLessons: migrateRecord<string>(raw.completedLessons),
     quizResults: migrateRecord(raw.quizResults),
     currentLessonKey: typeof raw.currentLessonKey === "string" ? migrateKey(raw.currentLessonKey) : null,
+    challenges: migrateRecord(raw.challenges),
   };
 }
 
@@ -106,6 +107,21 @@ export function createLocalProgressStore(): ProgressStore {
         ...s,
         quizResults: { ...s.quizResults, [key]: { correct, total, completedAt: new Date().toISOString() } },
       }));
+    },
+    recordChallengeAttempt(id, solved) {
+      update((s) => {
+        const previous = s.challenges[id] ?? { attempts: 0, completedAt: null };
+        return {
+          ...s,
+          challenges: {
+            ...s.challenges,
+            [id]: {
+              attempts: previous.attempts + 1,
+              completedAt: previous.completedAt ?? (solved ? new Date().toISOString() : null),
+            },
+          },
+        };
+      });
     },
     setCurrentLesson(key) {
       update((s) => (s.currentLessonKey === key ? null : { ...s, currentLessonKey: key }));

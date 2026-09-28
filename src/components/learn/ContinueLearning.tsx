@@ -16,10 +16,17 @@ export function ContinueLearning() {
     return key === currentLessonKey && !isComplete(key);
   });
   const next = resume ?? all.find(({ module, lesson }) => !isComplete(lessonKey(module.slug, lesson.slug)));
+  // Show progress for the module the learner is working through (or the last one, when everything is done).
+  const focusModule = next?.module ?? all[all.length - 1]?.module ?? MODULES[0]!;
 
   return (
     <div className="panel-raised grid gap-6 rounded-2xl p-5 sm:p-6 md:grid-cols-[1fr_1.3fr] md:items-center">
-      <ModuleProgress module={MODULES[0]!} variant="full" />
+      <div>
+        <ModuleProgress module={focusModule} variant="full" />
+        <p className="mt-3 font-mono text-xs text-ink-subtle">
+          All modules: {done} / {all.length} lessons complete
+        </p>
+      </div>
       {next ? (
         <Link
           href={lessonHref(next.module.slug, next.lesson.slug)}

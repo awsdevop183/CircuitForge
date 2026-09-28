@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
+import type { SafetyTopic } from "@/components/ui/SafetyNotice";
 
 /**
  * Every lesson follows the same learning loop:
@@ -48,6 +49,20 @@ export interface NextConcept {
   cta: string;
 }
 
+/** A place the learner will meet this component in everyday life. */
+export interface WhereFound {
+  icon: ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" }>;
+  place: string;
+  detail: string;
+}
+
+export interface BeginnerMistake {
+  mistake: string;
+  /** What goes wrong. */
+  consequence?: string;
+  fix: string;
+}
+
 export interface LessonContent {
   moduleSlug: string;
   lessonSlug: string;
@@ -63,6 +78,12 @@ export interface LessonContent {
   keyTakeaway: string;
   /** A short recap list. */
   takeaways: string[];
+  /** "Where you'll find it" — shown before the summary. */
+  whereFound?: WhereFound[];
+  /** "Common beginner mistakes" — shown prominently before the summary. */
+  mistakes?: BeginnerMistake[];
+  /** Safety reminders shown with the mistakes. */
+  safety?: SafetyTopic[];
   quickCheck: QuizQuestion[];
   next: NextConcept;
 }

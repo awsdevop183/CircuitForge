@@ -22,7 +22,7 @@ export interface CircuitPartProps extends PlacementProps {
   labelPlacement?: LabelPlacement;
   /** Distance from the part centre to the hover label. */
   labelOffset?: number;
-  /** Make the part reachable with the keyboard so its label can be read. Default true. */
+  /** Make the part reachable with the keyboard so its label can be read. Default true. When false, no hover label is shown. */
   focusable?: boolean;
   /** Draw attention to the part (e.g. while a lesson is talking about it). */
   highlighted?: boolean;
@@ -107,7 +107,8 @@ export function CircuitPart({
         {children}
       </g>
       <AnimatePresence>
-        {active ? (
+        {/* Non-focusable parts are decorative (legends, quiz symbols): no name tag, which could give answers away. */}
+        {active && focusable ? (
           <motion.g
             key="label"
             initial={{ opacity: 0, y: 4 }}

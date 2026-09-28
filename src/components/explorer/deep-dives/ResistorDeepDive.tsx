@@ -23,6 +23,23 @@ import { DeepDiveSection } from "./DeepDiveSection";
 const TARGET_OHMS = 220;
 
 export function ResistorDeepDive() {
+  return (
+    <div className="space-y-16">
+      <DeepDiveSection
+        eyebrow="Interactive"
+        title="Read the colour code"
+        description="Resistors are too small to print numbers on, so their value is painted as coloured bands. Pick colours and watch the resistor — and its value — change."
+      >
+        <ResistorColorCodeReader />
+      </DeepDiveSection>
+
+      <ResistorInCircuit />
+    </div>
+  );
+}
+
+/** Pick four colour bands and read the resistor's value. */
+export function ResistorColorCodeReader() {
   const [first, setFirst] = useState(1);
   const [second, setSecond] = useState(0);
   const [multiplier, setMultiplier] = useState(2);
@@ -34,12 +51,6 @@ export function ResistorDeepDive() {
   const foundTarget = ohms === TARGET_OHMS;
 
   return (
-    <div className="space-y-16">
-      <DeepDiveSection
-        eyebrow="Interactive"
-        title="Read the colour code"
-        description="Resistors are too small to print numbers on, so their value is painted as coloured bands. Pick colours and watch the resistor — and its value — change."
-      >
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <div className="panel-raised flex flex-col items-center justify-center rounded-2xl p-6">
             <ResistorIllustration
@@ -98,10 +109,6 @@ export function ResistorDeepDive() {
             </Callout>
           </div>
         </div>
-      </DeepDiveSection>
-
-      <ResistorInCircuit />
-    </div>
   );
 }
 

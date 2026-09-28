@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useState, type KeyboardEvent } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CircleCheck, CircleOff, Lightbulb, LightbulbOff, Power, RotateCcw, Scissors, Waypoints } from "lucide-react";
 import {
@@ -27,6 +27,7 @@ import {
   ledBrightness,
   solveLoop,
   type LoopElement,
+  type LoopStatus,
 } from "@/lib/circuit-sim";
 import { formatAmps, formatFixed, formatOhms } from "@/lib/format";
 import { cn } from "@/lib/cn";
@@ -62,6 +63,16 @@ const SEGMENTS: Record<SegmentId, { name: string; d: string; gap: { x: number; y
   "wire-d": { name: "return wire", d: `M ${RIGHT} ${MID_Y + 40} L ${RIGHT} ${BOTTOM} L ${LEFT} ${BOTTOM} L ${LEFT} ${MID_Y + 40}`, gap: { x: 330, y: BOTTOM, vertical: false } },
 };
 
+/** A snapshot of the circuit, reported to parents that want to react to it (e.g. missions). */
+export interface CircuitExplorerState {
+  closed: boolean;
+  voltage: number;
+  resistance: number;
+  current: number;
+  status: LoopStatus;
+  ledOverdriven: boolean;
+}
+
 export interface CircuitExplorerProps {
   /** Which parts appear in the loop. Battery and wires are always present. */
   parts?: { switch?: boolean; resistor?: boolean; led?: boolean; ground?: boolean };
@@ -79,6 +90,8 @@ export interface CircuitExplorerProps {
   /** Show the source / path / load / control anatomy chips. */
   anatomy?: boolean;
   title?: string;
+  /** Called whenever the circuit's state changes. */
+  onStateChange?: (state: CircuitExplorerState) => void;
 }
 
 /**
@@ -93,6 +106,7 @@ export function CircuitExplorer({
   readouts = false,
   anatomy = false,
   title = "Circuit explorer",
+  onStateChange,
 }: CircuitExplorerProps) {
   const { switch: hasSwitch = true, resistor: hasResistor = true, led: hasLed = true, ground: hasGround = false } = parts;
   const [voltage, setVoltage] = useState(initial.voltage ?? 9);
@@ -117,6 +131,10 @@ export function CircuitExplorer({
   const current = solution.current;
   const overdriven = hasLed && current > LED_MAX_CURRENT;
   const maxCurrent = controls.voltage ? controls.voltage[1] / (controls.resistance?.[0] ?? resistance) : voltage / resistance;
+
+  useEffect(() => {
+    onStateChange?.({ closed, voltage, resistance, current, status: solution.status, ledOverdriven: overdriven });
+  }, [onStateChange, closed, voltage, resistance, current, solution.status, overdriven]);
 
   const toggleSegment = (segment: SegmentId) =>
     setCut((previous) => {

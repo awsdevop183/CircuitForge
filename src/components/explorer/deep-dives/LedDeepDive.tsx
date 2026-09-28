@@ -82,24 +82,7 @@ export function LedDeepDive() {
         title="Which leg is which?"
         description="An LED only works one way round. Current must enter the anode and leave the cathode."
       >
-        <div className="grid items-center gap-6 md:grid-cols-[1fr_1.2fr]">
-          <div className="panel-raised flex justify-center rounded-2xl p-6">
-            <LedIllustration lit color={color.hex} className="h-56 w-auto" />
-          </div>
-          <ul className="space-y-3">
-            {[
-              { title: "Anode (+) — the longer leg", body: "Connect towards the positive side of the supply." },
-              { title: "Cathode (−) — the shorter leg", body: "Also marked by a flat edge on the rim. Connect towards negative." },
-              { title: "Forward voltage", body: `This ${color.label.toLowerCase()} LED needs about ${formatVolts(color.forwardVoltage)} across it before it lights.` },
-              { title: "Always use a resistor", body: "An LED has almost no resistance of its own once it's on. Something else must limit the current." },
-            ].map((item) => (
-              <li key={item.title} className="panel rounded-xl p-4">
-                <p className="font-semibold text-ink">{item.title}</p>
-                <p className="mt-1 text-sm text-ink-muted">{item.body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <LedAnatomy color={color.hex} label={color.label} forwardVoltage={color.forwardVoltage} />
       </DeepDiveSection>
 
       <DeepDiveSection
@@ -261,5 +244,29 @@ function ToggleButton({
       {icon}
       {children}
     </button>
+  );
+}
+
+/** LED legs, markings and forward voltage, with the realistic LED illustration. */
+export function LedAnatomy({ color = "#ef4444", label = "Red", forwardVoltage = 2 }: { color?: string; label?: string; forwardVoltage?: number }) {
+  return (
+    <div className="grid items-center gap-6 md:grid-cols-[1fr_1.2fr]">
+      <div className="panel-raised flex justify-center rounded-2xl p-6">
+        <LedIllustration lit color={color} className="h-56 w-auto" />
+      </div>
+      <ul className="space-y-3">
+        {[
+          { title: "Anode (+) — the longer leg", body: "Connect towards the positive side of the supply." },
+          { title: "Cathode (−) — the shorter leg", body: "Also marked by a flat edge on the rim. Connect towards negative." },
+          { title: "Forward voltage", body: `This ${label.toLowerCase()} LED needs about ${formatVolts(forwardVoltage)} across it before it lights.` },
+          { title: "Always use a resistor", body: "An LED has almost no resistance of its own once it's on. Something else must limit the current." },
+        ].map((item) => (
+          <li key={item.title} className="panel rounded-xl p-4">
+            <p className="font-semibold text-ink">{item.title}</p>
+            <p className="mt-1 text-sm text-ink-muted">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

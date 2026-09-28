@@ -22,12 +22,15 @@ export function useProgress() {
   );
 
   const quizResult = useCallback((key: string) => state.quizResults[key], [state]);
+  const challengeResult = useCallback((id: string) => state.challenges[id], [state]);
 
   return {
     state,
     isComplete,
     countComplete,
     quizResult,
+    challengeResult,
+    recordChallengeAttempt: progressStore.recordChallengeAttempt,
     currentLessonKey: state.currentLessonKey,
     markLessonComplete: progressStore.markLessonComplete,
     markLessonIncomplete: progressStore.markLessonIncomplete,

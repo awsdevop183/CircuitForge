@@ -2,7 +2,17 @@ import { ShieldAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-export type SafetyTopic = "general" | "short-circuit" | "batteries" | "high-current" | "capacitors" | "mains" | "ac";
+export type SafetyTopic =
+  | "general"
+  | "short-circuit"
+  | "batteries"
+  | "high-current"
+  | "capacitors"
+  | "mains"
+  | "ac"
+  | "ratings"
+  | "polarity"
+  | "heat";
 
 const MESSAGES: Record<SafetyTopic, { title: string; points: string[] }> = {
   general: {
@@ -51,6 +61,30 @@ const MESSAGES: Record<SafetyTopic, { title: string; points: string[] }> = {
       "Household mains (120 V or 230 V AC) can drive a lethal current through your body.",
       "Never open, probe or experiment with mains-powered devices, sockets or wiring.",
       "Mains work is for qualified electricians only.",
+    ],
+  },
+  ratings: {
+    title: "Stay inside the ratings",
+    points: [
+      "Every component has maximum ratings: voltage, current and power. Exceed them and it can overheat, fail or burn.",
+      "Check P = V × I for resistors, the current limit for LEDs, and the voltage rating for capacitors before you build.",
+      "Beginners: stick to battery-powered circuits of 12 V or less.",
+    ],
+  },
+  polarity: {
+    title: "Mind the polarity",
+    points: [
+      "LEDs, diodes, electrolytic capacitors and batteries only work one way round.",
+      "An electrolytic capacitor connected backwards can overheat, bulge or burst.",
+      "Double-check + and − before connecting power.",
+    ],
+  },
+  heat: {
+    title: "Components can get hot",
+    points: [
+      "Resistors, regulators, transistors and motors turn wasted energy into heat.",
+      "Touch-test carefully (or not at all): if something is too hot to hold, disconnect the power.",
+      "Hot parts need a bigger rating, a heatsink or a more efficient design.",
     ],
   },
   ac: {
