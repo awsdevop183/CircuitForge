@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* CircuitForge design tokens                                          */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Surfaces — deep near-black with a slight blue cast */
+  --color-void: #04060a;
+  --color-base: #070a10;
+  --color-surface: #0b1018;
+  --color-surface-raised: #101722;
+  --color-surface-high: #162030;
+
+  /* Lines & borders */
+  --color-line: #1a2432;
+  --color-line-strong: #263447;
+
+  /* Text */
+  --color-ink: #e8eef6;
+  --color-ink-muted: #a3b1c4;
+  --color-ink-subtle: #7f8ea4;
+
+  /* Accents */
+  --color-cyan: #22d3ee;
+  --color-cyan-soft: #67e8f9;
+  --color-cyan-deep: #0891b2;
+  --color-electric: #38bdf8;
+  --color-amber: #f5a524;
+  --color-amber-soft: #fcd34d;
+  --color-orange: #fb923c;
+  --color-positive: #34d399;
+  --color-negative: #f87171;
+  --color-copper: #d08a4f;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Motion */
+  --ease-circuit: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Shadows / glows */
+  --shadow-glow-cyan: 0 0 0 1px rgb(34 211 238 / 0.25), 0 0 24px -4px rgb(34 211 238 / 0.45);
+  --shadow-glow-amber: 0 0 0 1px rgb(245 165 36 / 0.3), 0 0 24px -4px rgb(245 165 36 / 0.45);
+  --shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgb(34 211 238 / 0.3);
+    color: var(--color-ink);
+  }
+
+  /* Visible, consistent focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* SVG elements get a glow ring instead of a box outline */
+  svg :focus-visible {
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reusable utilities                                                  */
+/* ------------------------------------------------------------------ */
+
+/* Subtle PCB-style grid used for page and panel backgrounds */
+@utility bg-circuit-grid {
+  background-image:
+    linear-gradient(to right, rgb(56 189 248 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(56 189 248 / 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Fine dotted breadboard grid for circuit canvases. Its solid base matches
+   PANEL_BACKGROUND so part bodies blend seamlessly into the board. */
+@utility bg-breadboard {
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(rgb(148 178 214 / 0.13) 1px, transparent 1.2px);
+  background-size: 20px 20px;
+}
+
+/* Glass / brushed-metal panel */
+@utility panel {
+  position: relative;
+  border: 1px solid var(--color-line);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.028), rgb(255 255 255 / 0.008)),
+    var(--color-surface);
+  box-shadow: var(--shadow-panel);
+}
+
+@utility panel-raised {
+  position: relative;
+  border: 1px solid var(--color-line-strong);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0.01)),
+    var(--color-surface-raised);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Small mono label used for section indices, units, readouts */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ */
+/* Circuit styling hooks (used by the SVG circuit visual language)     */
+/* ------------------------------------------------------------------ */
+
+.circuit-part {
+  cursor: default;
+  outline: none;
+}
+
+.circuit-part:focus-visible .circuit-part__focus,
+.circuit-part:has(:focus-visible) .circuit-part__focus {
+  opacity: 1;
+}
+
+/* Native range input styling for lab sliders */
+.range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2.25rem;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+.range-input:focus-visible {
+  outline: none;
+}
+
+.range-input::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--range-color, var(--color-cyan)) 0%,
+    var(--range-color, var(--color-cyan)) var(--range-fill, 0%),
+    var(--color-line-strong) var(--range-fill, 0%),
+    var(--color-line-strong) 100%
+  );
+}
+
+.range-input::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line-strong);
+}
+
+.range-input::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--range-color, var(--color-cyan));
+}
+
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  border: 3px solid var(--range-color, var(--color-cyan));
+  box-shadow: 0 0 14px -2px var(--range-color, var(--color-cyan));
+  transition: transform 150ms var(--ease-circuit);
+}
+
+.range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  border: 3px solid var(--range-color, var(--color-cyan));
+  box-shadow: 0 0 14px -2px var(--range-color, var(--color-cyan));
+}
+
+.range-input:hover::-webkit-slider-thumb,
+.range-input:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+.range-input:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.range-input:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
+
+@keyframes trace-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes trace-run {
+  from {
+    stroke-dashoffset: 940;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes electron-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(1.5px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 1.5px);
+  }
+  75% {
+    transform: translate(-1.5px, -0.5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.animate-trace-pulse {
+  animation: trace-pulse 4s ease-in-out infinite;
+}
+
+.animate-electron-jiggle {
+  animation: electron-drift 1.6s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
