@@ -40,6 +40,8 @@ export interface QuizQuestion {
   correctOptionId: string;
   /** Shown after answering — explains *why* the answer is right. */
   explanation: string;
+  /** Optional category, e.g. "Binary", shown in games and quizzes. */
+  topic?: string;
 }
 
 export interface NextConcept {

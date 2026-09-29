@@ -16,7 +16,13 @@ export function ModuleActivities({ activities }: { activities: readonly ModuleAc
         if (activity.kind === "challenge") {
           const result = challengeResult(activity.id);
           done = Boolean(result?.completedAt);
-          if (result) status = done ? `Completed · ${result.attempts} ${result.attempts === 1 ? "attempt" : "attempts"}` : `${result.attempts} attempts so far`;
+          if (activity.parts) {
+            const solved = activity.parts.filter((id) => challengeResult(id)?.completedAt).length;
+            done = solved === activity.parts.length;
+            status = solved ? `${solved}/${activity.parts.length} solved` : status;
+          } else if (result) {
+            status = done ? `Completed · ${result.attempts} ${result.attempts === 1 ? "attempt" : "attempts"}` : `${result.attempts} attempts so far`;
+          }
         } else {
           const result = quizResult(activity.id);
           if (result) {

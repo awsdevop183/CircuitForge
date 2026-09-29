@@ -28,6 +28,13 @@ import { batteryLesson } from "./components/11-battery";
 import { voltageRegulatorLesson } from "./components/12-voltage-regulator";
 import { buildYourFirstCircuit } from "./components/13-build-your-first-circuit";
 import { componentChallenge } from "./components/14-component-challenge";
+import { analogVsDigital } from "./digital/01-analog-vs-digital";
+import { digitalSignals } from "./digital/02-digital-signals";
+import { binaryLesson } from "./digital/03-binary";
+import { logicLevels } from "./digital/04-logic-levels";
+import { logicGatesLesson } from "./digital/05-logic-gates";
+import { andGate, nandGate, norGate, notGate, orGate, xnorGate, xorGate } from "./digital/06-12-gates";
+import { combiningGates, digitalInComputers, flipFlops, fullAdderLesson, halfAdderLesson, registers, truthTables, whatIsMemory } from "./digital/13-20";
 import type { LessonContent } from "./types";
 
 /** Every lesson with full content, in module order. */
@@ -61,6 +68,26 @@ export const ALL_LESSONS: readonly LessonContent[] = [
   voltageRegulatorLesson,
   buildYourFirstCircuit,
   componentChallenge,
+  analogVsDigital,
+  digitalSignals,
+  binaryLesson,
+  logicLevels,
+  logicGatesLesson,
+  notGate,
+  andGate,
+  orGate,
+  nandGate,
+  norGate,
+  xorGate,
+  xnorGate,
+  truthTables,
+  combiningGates,
+  halfAdderLesson,
+  fullAdderLesson,
+  whatIsMemory,
+  flipFlops,
+  registers,
+  digitalInComputers,
 ];
 
 const LESSONS: Readonly<Record<string, LessonContent>> = Object.fromEntries(

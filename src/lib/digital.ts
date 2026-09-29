@@ -1,7 +1,8 @@
 /**
- * Digital logic helpers. Module 02 uses logic levels to drive transistor and
- * MOSFET switches from a "GPIO" pin; the Digital Electronics module will build
- * gates, truth tables and timing diagrams on the same types.
+ * Logic levels. Module 02 uses them to drive transistor and MOSFET switches
+ * from a "GPIO" pin; Module 03 (Digital Electronics) uses the thresholds to
+ * show that HIGH and LOW are voltage ranges. Gates and truth tables live in
+ * lib/logic.ts.
  */
 
 export type LogicLevel = "LOW" | "HIGH";

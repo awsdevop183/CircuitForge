@@ -54,6 +54,8 @@ export interface ModuleActivity {
   id: string;
   label: string;
   href: string;
+  /** Progress ids of the steps inside a multi-part challenge, shown as "3/5". */
+  parts?: string[];
 }
 
 export interface LearningModule {

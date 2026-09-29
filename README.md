@@ -44,6 +44,10 @@ npm run dev        # http://localhost:3000
 | `/components/compare`        | Resistor vs potentiometer, diode vs LED, transistor vs MOSFET, transistor vs relay                   |
 | `/components/symbol-trainer` | Symbol Trainer: 15 random questions per round from 21 symbols, explained after every answer           |
 | `/components/identify`       | Identify the Component: see a real part and decide what it's used for                                |
+| `/learn/digital-electronics` | Module 03 — Digital Electronics: 20 lessons, challenge/quiz/playground progress                      |
+| `/lab/digital`               | Logic Gate Playground: add gates, wire them, toggle A/B/C, live signal flow and truth table            |
+| `/lab/build-the-logic`       | "Build the Logic" challenge: AND → OR → NOT → XOR → half adder                                        |
+| `/quiz/[module]`             | End-of-module quiz (Digital Electronics: 36 questions, 10 topics, interactive circuit questions)     |
 | `/projects`                  | Project progression from LED Circuit to Robotics + AI                                                |
 | `/projects/led-circuit`      | Full beginner build guide with wiring diagram, resistor calculation and steps                         |
 | `/roadmap`                   | The complete journey (11 stages) and the planned platform features                                    |
@@ -95,6 +99,29 @@ Every lesson follows **See the component → understand its behaviour → intera
 
 Progress tracks lessons, knowledge-check scores, game scores (`games/*`) and challenge attempts and completion (`challenges`). Modules can declare tracked `activities`, which the module page shows with their results.
 
+### Module 03 — Digital Electronics
+
+Electricity → signals → 0/1 → logic gates → digital circuits → memory → computers. Every lesson follows toggle → observe → predict → experiment → understand.
+
+| # | Lesson | Main interactive (`components/digital`) |
+|---|--------|------------------|
+| 1 | Analog vs Digital | `AnalogVsDigital` (animated waveform, switch analog/digital, live value vs live bit) |
+| 2 | What Is a Digital Signal? | `DigitalSignalExplorer` (frequency, duty cycle, HIGH/LOW voltage; labelled edges, period, HIGH time) |
+| 3 | Binary — 0 and 1 | `BinaryConverter` (toggle bits ⇄ decimal, 4 or 8 bits, step-by-step decimal → binary) |
+| 4 | Logic HIGH and LOW | `LogicLevelsExplorer` (simple view, then device-dependent voltage ranges with the undefined gap) |
+| 5 | Logic Gates | `GateExplorer`, `SameInputsAllGates` |
+| 6–12 | NOT, AND, OR, NAND, NOR, XOR, XNOR | `GateDemo` (symbol, switches, output, highlighted truth table), `GatePredict`, `GateComposition` (NAND/NOR/XNOR = gate + NOT), `NandUniversal` |
+| 13 | Truth Tables | `TruthTableBuilder` (1–3 inputs, any gate, generated table) |
+| 14 | Combining Logic Gates | `LogicPlayground` |
+| 15 | Half Adder | `HalfAdder` (SUM = XOR, CARRY = AND) |
+| 16 | Full Adder | `FullAdder` (concept first, gates on request), `RippleAdder` (4-bit) |
+| 17 | What Is Memory? | `MemoryDemo` (no feedback vs a feedback latch) |
+| 18 | Flip-Flops | `SrLatchDemo`, `DFlipFlopDemo` (clock pulses, auto clock, timing diagram) |
+| 19 | Registers | `RegisterDemo` (4-bit register, 4-address memory) |
+| 20 | Digital Circuits in Computers | `ComputerStack` (animated transistors → computer ladder) |
+
+Shared building blocks: `LogicGate` (distinctive-shape symbols), `SignalWire` (glowing HIGH lines with a pulse that ripples on 0 → 1), `DigitalIndicator`, `GateInput`, `GateOutput`, `TruthTable`, `LogicCircuitView` (renders any small gate network) and `MomentaryButton`. All logic lives in `lib/logic.ts` (gates, truth tables, binary, adders, latches, network evaluation with cycle/floating detection).
+
 ## Project structure
 
 ```
@@ -110,6 +137,7 @@ src/
 │   ├── explorer/            # Component explorer, symbol library, experiment registry, deep-dives
 │   ├── component-lab/       # Module 02 interactives + ComponentQuiz, ComponentComparison, ComponentSpecification…
 │   ├── visuals/             # ResistorVisual, LEDVisual… aliases for the component illustrations
+│   ├── digital/             # Module 03: logic-gate visual language, playground, challenge, memory demos
 │   ├── learn/               # Dashboard cards and progress
 │   ├── home/                # Landing-page sections
 │   ├── projects/            # Project timeline and build diagrams
@@ -119,7 +147,8 @@ src/
 └── lib/
     ├── electronics.ts       # Pure physics: Ohm's law, series/parallel solvers, RC, LED resistor, E12
     ├── circuit-sim.ts       # Single-loop solver: switches, breaks, LEDs, fuses, shorts, node voltages
-    ├── digital.ts           # Logic levels and thresholds (3.3 V / 5 V) — groundwork for Digital Electronics
+    ├── digital.ts           # Logic levels and thresholds (3.3 V / 5 V examples)
+    ├── logic.ts             # Pure digital logic: gates, truth tables, binary, adders, flip-flops, gate networks
     ├── format.ts            # SI-prefix formatting (20 mA, 4.7 kΩ…)
     ├── progress/            # Progress store interface + localStorage implementation + hook
     └── navigation.ts        # Nav config and site metadata
@@ -168,10 +197,9 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 
 ## What's next
 
-1. Module 04 — Digital Electronics: logic levels (`lib/digital.ts`), gates and truth tables, reusing `ComponentQuiz`, `TransistorSwitch` and `PushButton`
-2. Module 03 — Circuits (currently a preview): Kirchhoff's laws, dividers and RC timing
-3. More lab experiments: voltage divider, RC charging, LED driver, logic gates (already listed as coming soon)
-4. A drag-and-drop circuit builder (the Component Challenge's slot board is a first step) on top of the circuit visual language and `lib/electronics.ts`
-5. Unit tests for `lib/electronics.ts` and component tests for the lab
+1. Module 05 — Microcontrollers: connect GPIO HIGH/LOW, clocks, registers and binary to real programmable hardware (Arduino/ESP32 simulation)
+2. Module 04 — Circuits (currently a preview): Kirchhoff's laws, dividers and RC timing
+3. More lab experiments: voltage divider, RC charging, LED driver
+4. A drag-and-drop circuit builder (the Component Challenge board and Logic Playground are first steps)
+5. Unit tests for `lib/electronics.ts` and `lib/logic.ts`, and component tests for the lab
 6. Accounts and synced progress, implementing `ProgressStore` against an API
-7. Microcontroller simulation (Arduino/ESP32 GPIO, PWM, ADC) for Module 05

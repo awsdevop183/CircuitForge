@@ -26,18 +26,18 @@ export const ROADMAP: readonly RoadmapStage[] = [
     moduleSlug: "components",
   },
   {
+    title: "Digital Electronics",
+    description: "Signals, binary, logic gates, adders, flip-flops and registers.",
+    outcome: "Understand how circuits represent, process and store information.",
+    icon: "binary",
+    moduleSlug: "digital-electronics",
+  },
+  {
     title: "Circuits",
     description: "Series, parallel, dividers, switching and timing.",
     outcome: "Design and debug small practical circuits.",
     icon: "circuit",
     moduleSlug: "circuits",
-  },
-  {
-    title: "Digital Electronics",
-    description: "Binary, logic gates, clocks and memory.",
-    outcome: "Understand how circuits compute.",
-    icon: "binary",
-    moduleSlug: "digital-electronics",
   },
   {
     title: "Microcontrollers",

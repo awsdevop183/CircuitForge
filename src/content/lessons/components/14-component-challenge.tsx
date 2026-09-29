@@ -72,8 +72,8 @@ export const componentChallenge: LessonContent = {
   ],
   next: {
     title: "Module complete — next: Digital Electronics",
-    description: "You can now see, understand and use the core components. Keep practising with the Symbol Trainer and Identify game while the next module — Digital Electronics — is on its way.",
-    href: "/components/symbol-trainer",
-    cta: "Practise with the Symbol Trainer",
+    description: "You can now see, understand and use the core components. Next: how circuits represent, process and store information using just 0 and 1.",
+    href: "/learn/digital-electronics/analog-vs-digital",
+    cta: "Start Module 03: Digital Electronics",
   },
 };

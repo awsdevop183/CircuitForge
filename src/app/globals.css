@@ -33,6 +33,11 @@
   --color-negative: #f87171;
   --color-copper: #d08a4f;
 
+  /* Digital electronics: logic HIGH glow and clock signals */
+  --color-logic: #a3e635;
+  --color-logic-soft: #d9f99d;
+  --color-clock: #a78bfa;
+
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -118,6 +123,15 @@
   background-size: 20px 20px;
 }
 
+/* Digital-circuit board: a fine square grid with a faint phosphor tint. */
+@utility bg-logic-grid {
+  background-color: var(--color-surface-raised);
+  background-image:
+    linear-gradient(to right, rgb(163 230 53 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(163 230 53 / 0.05) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 /* Glass / brushed-metal panel */
 @utility panel {
   position: relative;
@@ -165,6 +179,14 @@
 
 .circuit-part:focus-visible .circuit-part__focus,
 .circuit-part:has(:focus-visible) .circuit-part__focus {
+  opacity: 1;
+}
+
+.logic-switch__focus {
+  opacity: 0;
+}
+
+.logic-switch:focus-visible .logic-switch__focus {
   opacity: 1;
 }
 
@@ -297,7 +319,22 @@
 /* Reduced motion                                                      */
 /* ------------------------------------------------------------------ */
 
+/* Digital signal lines: data "marching" along a HIGH wire. */
+@keyframes logic-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+.logic-flow {
+  animation: logic-flow 0.9s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .logic-flow {
+    animation: none;
+  }
+
   html {
     scroll-behavior: auto;
   }

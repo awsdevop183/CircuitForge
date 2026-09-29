@@ -16,6 +16,10 @@ interface ComponentQuizProps {
   progressKey: string;
   /** How many questions per round (default: all). */
   roundLength?: number;
+  /** Offer a choice of round lengths on the start screen, e.g. [15, 32]. Overrides roundLength. */
+  roundOptions?: readonly number[];
+  /** Accent for the start button, default cyan. */
+  accent?: "cyan" | "logic";
 }
 
 function shuffle<T>(items: readonly T[]): T[] {
@@ -32,7 +36,7 @@ function shuffle<T>(items: readonly T[]): T[] {
  * round starts (on click, so server and client render the same start screen),
  * and every answer is explained before moving on.
  */
-export function ComponentQuiz({ title, intro, questions, progressKey, roundLength }: ComponentQuizProps) {
+export function ComponentQuiz({ title, intro, questions, progressKey, roundLength, roundOptions, accent = "cyan" }: ComponentQuizProps) {
   const { quizResult, recordQuizResult } = useProgress();
   const best = quizResult(progressKey);
   const [round, setRound] = useState<QuizQuestion[] | null>(null);
@@ -41,8 +45,11 @@ export function ComponentQuiz({ title, intro, questions, progressKey, roundLengt
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
+  const [length, setLength] = useState(roundOptions?.[0] ?? roundLength ?? questions.length);
+  const primary = accent === "logic" ? "bg-logic text-void hover:bg-logic-soft" : "bg-cyan text-void hover:bg-cyan-soft";
+
   const start = () => {
-    const chosen = shuffle(questions).slice(0, roundLength ?? questions.length);
+    const chosen = shuffle(questions).slice(0, length);
     setRound(chosen.map((q) => ({ ...q, options: q.type === "true-false" ? q.options : shuffle(q.options) })));
     setIndex(0);
     setPicked(null);
@@ -55,11 +62,27 @@ export function ComponentQuiz({ title, intro, questions, progressKey, roundLengt
       <div className="flex flex-col items-start gap-4 p-5 sm:p-8">
         <h2 className="text-2xl font-semibold text-ink">{title}</h2>
         <p className="max-w-xl text-ink-muted">{intro}</p>
+        {roundOptions ? (
+          <div role="radiogroup" aria-label="Round length" className="flex flex-wrap gap-2">
+            {roundOptions.map((n) => (
+              <button
+                key={n}
+                type="button"
+                role="radio"
+                aria-checked={length === n}
+                onClick={() => setLength(n)}
+                className={cn("min-h-11 rounded-lg border px-4 text-sm font-medium", length === n ? "border-cyan/60 bg-cyan/10 text-ink" : "border-line-strong text-ink-muted hover:text-ink")}
+              >
+                {n === questions.length ? `All ${n} questions` : `${n} random questions`}
+              </button>
+            ))}
+          </div>
+        ) : null}
         <p className="font-mono text-sm text-ink-subtle">
-          {roundLength ?? questions.length} questions · random order
-          {best ? ` · best score ${best.correct}/${best.total}` : ""}
+          {length} questions · random order
+          {best ? ` · last score ${best.correct}/${best.total}` : ""}
         </p>
-        <button type="button" onClick={start} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-cyan px-5 text-sm font-semibold text-void hover:bg-cyan-soft">
+        <button type="button" onClick={start} className={cn("inline-flex min-h-11 items-center gap-2 rounded-lg px-5 text-sm font-semibold", primary)}>
           <Play className="size-4" aria-hidden="true" />
           Start
         </button>
@@ -82,7 +105,7 @@ export function ComponentQuiz({ title, intro, questions, progressKey, roundLengt
               ? "Great work. Play again to lock in the ones you missed."
               : "Every round makes these more familiar. Read the explanations and try again."}
         </p>
-        <button type="button" onClick={start} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-cyan px-5 text-sm font-semibold text-void hover:bg-cyan-soft">
+        <button type="button" onClick={start} className={cn("inline-flex min-h-11 items-center gap-2 rounded-lg px-5 text-sm font-semibold", primary)}>
           <RotateCcw className="size-4" aria-hidden="true" />
           Play again
         </button>
@@ -118,11 +141,12 @@ export function ComponentQuiz({ title, intro, questions, progressKey, roundLengt
       <div className="flex items-center justify-between gap-3">
         <p className="font-mono text-xs text-ink-subtle">
           Question {index + 1} / {round.length}
+          {question.topic ? <span className="text-clock"> · {question.topic}</span> : null}
         </p>
         <p className="font-mono text-xs text-ink-subtle">Score {score}</p>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
-        <motion.div className="h-full origin-left rounded-full bg-cyan" initial={false} animate={{ scaleX: (index + (answered ? 1 : 0)) / round.length }} />
+        <motion.div className={cn("h-full origin-left rounded-full", accent === "logic" ? "bg-logic" : "bg-cyan")} initial={false} animate={{ scaleX: (index + (answered ? 1 : 0)) / round.length }} />
       </div>
       <AnimatePresence mode="wait">
         <motion.fieldset key={question.id} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.2 }} className="mt-5">
@@ -160,7 +184,7 @@ export function ComponentQuiz({ title, intro, questions, progressKey, roundLengt
                 <strong className={correct ? "text-positive" : "text-negative"}>{correct ? "Correct. " : `Not quite — it's “${correctLabel}”. `}</strong>
                 {question.explanation}
               </p>
-              <button type="button" onClick={advance} autoFocus className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-lg bg-cyan px-4 text-sm font-semibold text-void hover:bg-cyan-soft">
+              <button type="button" onClick={advance} autoFocus className={cn("inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-lg px-4 text-sm font-semibold", primary)}>
                 {last ? "See your score" : "Next question"}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </button>
