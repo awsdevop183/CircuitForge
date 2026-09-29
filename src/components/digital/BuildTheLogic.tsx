@@ -123,7 +123,7 @@ export function BuildTheLogic() {
         <p className="mt-1 text-lg font-semibold text-ink">{level.goal}</p>
       </div>
 
-      <div className="grid gap-px bg-line lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.4fr_1fr]">
         <div className="bg-logic-grid p-3 sm:p-5">
           <LogicCircuitView
             inputs={level.inputs.map((id, i) => ({ id, label: id, x: 60, y: single ? 90 : outputsCount === 2 ? [50, 150][i]! : [60, 120][i]! }))}

@@ -52,7 +52,7 @@ export function ComponentJobs() {
           <Led x={RIGHT} y={MID_Y} rotation={90} brightness={on ? 0.8 : 0} color="#fb7185" highlighted={selected === "led"} labelPlacement="left" labelOffset={32} />
         </CircuitCanvas>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr]">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr]">
         <div>
           <p className="mb-2 text-sm font-medium text-ink">Select a component to see its job:</p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-3" role="group" aria-label="Components">

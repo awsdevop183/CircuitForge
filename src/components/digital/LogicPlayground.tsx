@@ -218,7 +218,7 @@ export function LogicPlayground({ initialPreset = "and-or", compact = false }: L
         ) : null}
       </div>
 
-      <div className="grid gap-px border-t border-line bg-line lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-px border-t border-line bg-line lg:grid-cols-[1.4fr_1fr]">
         {/* Editor */}
         <div className="bg-surface-raised p-4 sm:p-5">
           <p className="eyebrow text-ink-subtle">Add a gate ({gates.length}/{MAX_GATES})</p>

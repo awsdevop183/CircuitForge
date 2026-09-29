@@ -96,7 +96,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
+      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
         <section aria-labelledby="parts-heading" className="panel rounded-2xl p-6">
           <h2 id="parts-heading" className="flex items-center gap-2 text-xl font-semibold text-ink">
             <Package className="size-5 text-amber" aria-hidden="true" />

@@ -90,7 +90,7 @@ export function LedDeepDive() {
         title="Light it safely"
         description="Choose an LED and a supply. CircuitForge calculates the series resistor, picks the nearest standard value, and shows you the result. Then try breaking the rules."
       >
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
           <div className="space-y-4">
             <div className="panel-raised bg-breadboard rounded-2xl px-2 py-4 sm:px-6">
               <CircuitCanvas
@@ -250,9 +250,9 @@ function ToggleButton({
 /** LED legs, markings and forward voltage, with the realistic LED illustration. */
 export function LedAnatomy({ color = "#ef4444", label = "Red", forwardVoltage = 2 }: { color?: string; label?: string; forwardVoltage?: number }) {
   return (
-    <div className="grid items-center gap-6 md:grid-cols-[1fr_1.2fr]">
+    <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_1.2fr]">
       <div className="panel-raised flex justify-center rounded-2xl p-6">
-        <LedIllustration lit color={color} className="h-56 w-auto" />
+        <LedIllustration lit color={color} className="h-auto w-full max-w-72" />
       </div>
       <ul className="space-y-3">
         {[

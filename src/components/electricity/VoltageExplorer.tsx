@@ -49,7 +49,7 @@ export function VoltageExplorer() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
         <div className="bg-breadboard px-2 py-4 sm:px-6">
           <CircuitCanvas
             viewBox="0 0 460 300"
@@ -86,7 +86,7 @@ export function VoltageExplorer() {
         </div>
       </div>
 
-      <div className="grid gap-4 border-t border-line p-4 sm:grid-cols-[1fr_auto] sm:items-end sm:p-5">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:grid-cols-[1fr_auto] sm:items-end sm:p-5">
         <SegmentedControl
           label="Battery voltage"
           options={VOLTAGE_STEPS.map((v) => ({ value: v, label: `${v} V` }))}

@@ -20,7 +20,7 @@ export function VoltageDivider() {
   const vout = (SUPPLY * r2) / (r1 + r2);
 
   return (
-    <div className="grid gap-px bg-line md:grid-cols-[1.2fr_1fr]">
+    <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1.2fr_1fr]">
       <div className="bg-breadboard px-2 py-4 sm:px-5">
         <CircuitCanvas viewBox="0 0 440 290" interactive title="Voltage divider" description={`${SUPPLY} volts across R1 ${formatOhms(r1)} and R2 ${formatOhms(r2)}. The output between the resistors is ${formatFixed(vout, 2)} volts.`} className="mx-auto max-w-md">
           <Wire d={rectLoop(LEFT, TOP, RIGHT, BOTTOM, 12)} energized />

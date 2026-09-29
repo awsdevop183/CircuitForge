@@ -46,7 +46,7 @@ export function DcAcExplorer() {
 
   return (
     <div ref={containerRef}>
-      <div className="grid gap-px bg-line lg:grid-cols-[1fr_1.25fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1fr_1.25fr]">
         <div className="bg-breadboard flex items-center px-2 py-4 sm:px-5">
           <CircuitCanvas
             viewBox="0 0 380 240"
@@ -93,7 +93,7 @@ export function DcAcExplorer() {
         </div>
       </div>
 
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1fr_auto] md:items-end">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1fr_auto] md:items-end">
         <SegmentedControl
           label="Type of current"
           options={[

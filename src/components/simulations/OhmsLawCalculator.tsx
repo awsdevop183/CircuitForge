@@ -134,7 +134,7 @@ export function OhmsLawCalculator() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-5 lg:grid-cols-[1.25fr_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.25fr_1fr]">
         <InteractivePanel title="Live circuit" bodyClassName="p-0">
           <div className="bg-breadboard px-2 py-4 sm:px-6">
             <OhmsLawCircuit
@@ -223,7 +223,7 @@ export function OhmsLawCalculator() {
       </AnimatePresence>
 
       <InteractivePanel title="Preset experiments" aside={<FlaskConical className="size-4 text-amber" aria-hidden="true" />}>
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {OHMS_PRESETS.map((p) => {
             const active = p.id === presetId;
             const presetCurrent = currentFrom(p.voltage, p.resistance);

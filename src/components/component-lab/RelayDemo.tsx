@@ -91,7 +91,7 @@ export function RelayDemo() {
           </g>
         </CircuitCanvas>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr] md:items-end">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr] md:items-end">
         <button
           type="button"
           aria-pressed={coilOn}
@@ -112,7 +112,7 @@ export function RelayDemo() {
           size="sm"
         />
       </div>
-      <div className="grid gap-2 border-t border-line p-4 font-mono text-sm sm:grid-cols-3 sm:p-5" aria-live="polite">
+      <div className="grid grid-cols-1 gap-2 border-t border-line p-4 font-mono text-sm sm:grid-cols-3 sm:p-5" aria-live="polite">
         <p className="rounded-lg border border-line bg-void/40 px-3 py-2 text-ink-muted">
           Coil: <span className={coilOn ? "text-cyan" : "text-ink"}>{coilOn ? "ON" : "OFF"}</span>
         </p>

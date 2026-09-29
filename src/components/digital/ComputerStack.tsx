@@ -38,7 +38,7 @@ export function ComputerStack() {
   const reversed = [...LEVELS].reverse();
 
   return (
-    <div className="grid gap-px bg-line md:grid-cols-[1fr_1.1fr]">
+    <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1fr_1.1fr]">
       <div className="relative bg-logic-grid p-4 sm:p-6">
         {/* Spine with a climbing pulse */}
         <div className="absolute bottom-10 left-9 top-10 w-0.5 bg-line-strong sm:left-11" aria-hidden="true">

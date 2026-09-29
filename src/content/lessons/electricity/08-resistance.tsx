@@ -82,7 +82,7 @@ export const resistance: LessonContent = {
       stage: "real-world",
       title: "Resistance at work",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Lightbulb} title="Protecting an LED">
             A resistor in series limits the current so the LED doesn&apos;t burn out.
           </RealWorldCard>

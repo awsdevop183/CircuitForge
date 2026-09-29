@@ -9,7 +9,7 @@ const STEPS = [
 /** Why chargers exist: mains AC in, low-voltage DC out. */
 export function AcToDcChain() {
   return (
-    <ol className="grid items-center gap-3 p-5 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:p-6">
+    <ol className="grid grid-cols-1 items-center gap-3 p-5 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:p-6">
       {STEPS.map((step, index) => (
         <li key={step.title} className="contents">
           <div className={`flex flex-col items-center rounded-xl border bg-void/40 p-4 text-center ${step.tone}`}>

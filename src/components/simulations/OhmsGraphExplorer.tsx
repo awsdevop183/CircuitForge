@@ -12,7 +12,7 @@ export function OhmsGraphExplorer() {
   const [resistance, setResistance] = useState(40);
   const current = currentFrom(voltage, resistance);
   return (
-    <div className="grid gap-6 p-5 sm:p-6 md:grid-cols-[1.3fr_1fr] md:items-center">
+    <div className="grid grid-cols-1 gap-6 p-5 sm:p-6 md:grid-cols-[1.3fr_1fr] md:items-center">
       <IVGraph voltage={voltage} resistance={resistance} maxVoltage={12} maxCurrent={0.5} />
       <div className="space-y-5">
         <InteractiveSlider label="Voltage" value={voltage} min={0} max={12} step={0.5} onChange={setVoltage} format={(v) => `${formatFixed(v, 1)} V`} color="var(--color-amber)" />

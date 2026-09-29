@@ -14,7 +14,7 @@ export function ComponentIntro({ slug, showSpecs = false }: { slug: string; show
   if (!component) return null;
   return (
     <div className="my-8">
-      <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[1.2fr_1fr_1.3fr]">
+      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[1.2fr_1fr_1.3fr]">
         <figure className="flex flex-col items-center justify-center bg-surface-raised p-5">
           <ComponentIllustration slug={slug} className="h-28 w-auto max-w-full" />
           <figcaption className="eyebrow mt-3 text-ink-subtle">What it looks like</figcaption>

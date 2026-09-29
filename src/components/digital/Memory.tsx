@@ -46,7 +46,7 @@ export function MemoryDemo() {
   const notR = invert(R);
 
   return (
-    <div className="grid gap-px bg-line lg:grid-cols-[1fr_1.6fr]">
+    <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1fr_1.6fr]">
       <div className="flex flex-col items-center gap-4 bg-surface-raised p-5">
         <p className="eyebrow self-start text-ink-subtle">No feedback</p>
         <MomentaryButton label="BUTTON" pressed={plain} onPressChange={setPlain} />
@@ -140,7 +140,7 @@ export function SrLatchDemo() {
   };
 
   return (
-    <div className="grid gap-px bg-line md:grid-cols-[1.2fr_1fr]">
+    <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1.2fr_1fr]">
       <div className="flex flex-col items-center justify-center gap-4 bg-logic-grid p-5">
         <div className="flex items-center gap-4">
           <div className="flex flex-col gap-3">
@@ -242,7 +242,7 @@ export function DFlipFlopDemo() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line md:grid-cols-[auto_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[auto_1fr]">
         <div className="flex flex-col gap-3 bg-surface-raised p-5">
           <GateInput label="D" value={d} onToggle={toggleD} />
           <button
@@ -341,7 +341,7 @@ export function RegisterDemo() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-2">
         <div className="bg-logic-grid p-4 sm:p-5">
           <p className="eyebrow text-ink-subtle">Data inputs (D3 … D0)</p>
           <BinaryDisplay bits={inputs} onToggle={(i) => setInputs((prev) => prev.map((v, j) => (j === i ? invert(v) : v)))} bitLabel={(i) => `Data input D${3 - i}`} className="mt-3" />

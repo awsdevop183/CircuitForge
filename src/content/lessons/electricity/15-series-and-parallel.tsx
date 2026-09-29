@@ -90,7 +90,7 @@ export const seriesAndParallel: LessonContent = {
       stage: "real-world",
       title: "Series and parallel around you",
       content: (
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <RealWorldCard icon={Flashlight} title="Batteries in a torch">
             Cells stacked in series add their voltages: two 1.5 V cells make 3 V.
           </RealWorldCard>

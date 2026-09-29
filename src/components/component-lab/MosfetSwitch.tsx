@@ -24,7 +24,7 @@ export function MosfetSwitch() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.35fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.35fr_1fr]">
         <div className="bg-breadboard px-2 py-4 sm:px-5">
           <CircuitCanvas
             viewBox="0 0 470 360"

@@ -35,11 +35,11 @@ export function TruthTableBuilder() {
 
   return (
     <div>
-      <div className="grid gap-4 border-b border-line p-4 sm:p-5 lg:grid-cols-[auto_1fr]">
+      <div className="grid grid-cols-1 gap-4 border-b border-line p-4 sm:p-5 lg:grid-cols-[auto_1fr]">
         <SegmentedControl label="Number of inputs" options={[1, 2, 3].map((n) => ({ value: n, label: String(n) }))} value={count} onChange={changeCount} size="sm" />
         <SegmentedControl label="Logic gate" options={available.map((g) => ({ value: g, label: g, ariaLabel: GATE_INFO[g].name }))} value={activeGate} onChange={setGate} size="sm" />
       </div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
         <div className="bg-logic-grid p-3 sm:p-5">
           <LogicCircuitView
             inputs={labels.map((l, i) => ({ id: l, label: l, x: 60, y: Y[count]![i]! }))}

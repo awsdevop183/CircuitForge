@@ -40,7 +40,7 @@ export function PotentiometerLab() {
           size="sm"
         />
       </div>
-      <div className="grid gap-px bg-line md:grid-cols-[auto_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[auto_1fr]">
         <div className="flex flex-col items-center justify-center gap-3 bg-surface-raised p-5">
           <RotaryKnob
             value={position}
@@ -83,7 +83,7 @@ export function PotentiometerLab() {
           )}
         </div>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr] md:items-center">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr] md:items-center">
         {mode === "divider" ? (
           <>
             <div className="grid grid-cols-2 gap-2">

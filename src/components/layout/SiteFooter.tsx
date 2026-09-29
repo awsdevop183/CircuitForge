@@ -24,7 +24,7 @@ export function SiteFooter() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/50 to-transparent"
         aria-hidden="true"
       />
-      <Container className="grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <Container className="grid grid-cols-1 gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">
             <LogoMark />

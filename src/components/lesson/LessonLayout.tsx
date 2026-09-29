@@ -58,7 +58,7 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
       <ReadingProgress />
       <LessonHeader location={location} content={content} stageAnchors={stageAnchors} />
 
-      <Container className="grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_16rem] xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <Container className="grid grid-cols-1 gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_16rem] xl:grid-cols-[minmax(0,1fr)_18rem]">
         <article aria-labelledby="lesson-title" className="min-w-0">
           <h2 id="lesson-title" className="sr-only">
             {lesson.title}
@@ -97,7 +97,7 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
             <NextLesson next={content.next} />
           </LessonSectionBlock>
 
-          <nav aria-label="Lesson pagination" className="mt-4 grid gap-3 border-t border-line pt-8 sm:grid-cols-2">
+          <nav aria-label="Lesson pagination" className="mt-4 grid grid-cols-1 gap-3 border-t border-line pt-8 sm:grid-cols-2">
             {previous ? (
               <PagerLink href={lessonHref(previous.module.slug, previous.lesson.slug)} label="Previous lesson" title={previous.lesson.title} direction="previous" />
             ) : (

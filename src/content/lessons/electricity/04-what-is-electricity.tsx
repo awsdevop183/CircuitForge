@@ -84,7 +84,7 @@ export const whatIsElectricity: LessonContent = {
       stage: "real-world",
       title: "Electricity in action",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Flashlight} title="A torch">
             Charge carries chemical energy from the batteries to the bulb, where it becomes light.
           </RealWorldCard>

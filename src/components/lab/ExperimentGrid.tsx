@@ -5,7 +5,7 @@ import { ExperimentCard } from "./ExperimentCard";
 export function ExperimentGrid({ category, exclude = [] }: { category: LabCategory; exclude?: readonly string[] }) {
   const experiments = experimentsIn(category).filter((e) => !exclude.includes(e.slug));
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {experiments.map((experiment, index) => (
         <li key={experiment.slug}>
           <ExperimentCard experiment={experiment} index={index} />

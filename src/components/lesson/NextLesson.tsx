@@ -7,7 +7,7 @@ export function NextLesson({ next }: { next: NextConcept }) {
     <div className="panel-raised relative overflow-hidden rounded-2xl p-6 sm:p-8">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan via-amber to-transparent" aria-hidden="true" />
       <p className="max-w-xl text-ink-muted">{next.description}</p>
-      <ButtonLink href={next.href} className="mt-6">
+      <ButtonLink href={next.href} className="mt-6 h-auto min-h-11 whitespace-normal py-2.5 text-left">
         {next.cta}
         <ArrowRight className="size-4" aria-hidden="true" />
       </ButtonLink>

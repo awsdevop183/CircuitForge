@@ -17,7 +17,7 @@ export function ProgressOverview() {
 
   return (
     <div className="panel-raised rounded-2xl p-5 sm:p-6">
-      <ul className="grid gap-6 md:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {available.map((m) => (
           <li key={m.slug}>
             <p className="font-mono text-xs text-ink-subtle">Module {m.number}</p>

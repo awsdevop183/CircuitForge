@@ -55,7 +55,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           </Link>
         </nav>
 
-        <header className="mt-6 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        <header className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div>
             <p className="font-mono text-sm text-ink-subtle">
               {component.designator} · {component.tags.map((tag) => COMPONENT_TAG_LABELS[tag]).join(" · ")}
@@ -86,7 +86,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           </div>
         </header>
 
-        <section aria-labelledby="how-heading" className="mt-14 grid gap-4 rounded-2xl border border-line bg-surface p-6 md:grid-cols-[auto_1fr] md:items-center">
+        <section aria-labelledby="how-heading" className="mt-14 grid grid-cols-1 gap-4 rounded-2xl border border-line bg-surface p-6 md:grid-cols-[auto_1fr] md:items-center">
           <Cog className="size-8 text-cyan" aria-hidden="true" />
           <div>
             <h2 id="how-heading" className="text-xl font-semibold text-ink">
@@ -115,7 +115,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             <MapPin className="size-4" aria-hidden="true" />
             Real-world applications
           </h2>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {component.uses.map((use) => (
               <li key={use} className="flex items-center gap-3 text-sm text-ink-muted">
                 <span className="size-1.5 shrink-0 rounded-full bg-amber" aria-hidden="true" />
@@ -137,7 +137,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             <CircleAlert className="size-5" aria-hidden="true" />
             Common beginner mistakes
           </h2>
-          <ul className="mt-4 grid gap-3 md:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
             {component.mistakes.map((m) => (
               <li key={m.mistake} className="rounded-xl border border-line bg-surface/70 p-4">
                 <p className="font-medium text-ink">{m.mistake}</p>
@@ -176,7 +176,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           <h2 id="related-heading" className="eyebrow text-cyan">
             Related components and concepts
           </h2>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {related.map((c) => (
               <li key={c.slug}>
                 <Link href={`/components/${c.slug}`} className="panel group flex items-center gap-4 rounded-xl p-4 transition-colors hover:border-cyan/45">
@@ -204,7 +204,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           </div>
         </section>
 
-        <nav aria-label="More components" className="mt-16 grid gap-3 border-t border-line pt-8 sm:grid-cols-2">
+        <nav aria-label="More components" className="mt-16 grid grid-cols-1 gap-3 border-t border-line pt-8 sm:grid-cols-2">
           {previous ? (
             <Link href={`/components/${previous.slug}`} className="panel group rounded-xl p-4 transition-colors hover:border-cyan/45">
               <span className="flex items-center gap-1.5 text-xs text-ink-subtle">

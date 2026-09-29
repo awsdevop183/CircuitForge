@@ -69,7 +69,7 @@ export function GroundTypes() {
           onChange={setKind}
         />
       </div>
-      <div className="grid gap-px bg-line md:grid-cols-[1.3fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1.3fr_1fr]">
         <div className="bg-breadboard flex items-center px-2 py-4 sm:px-5">
           <AnimatePresence mode="wait">
             <motion.div key={kind} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">

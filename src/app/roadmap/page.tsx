@@ -111,7 +111,7 @@ export default function RoadmapPage() {
             title="What's coming to CircuitForge"
             description="Today CircuitForge covers the first three modules, the Interactive Lab and quizzes. These features are planned next — none of them are live yet."
           />
-          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PLATFORM_FEATURES.map((feature) => (
               <li key={feature.title} className="panel rounded-xl p-5">
                 <feature.icon className="size-5 text-cyan" aria-hidden="true" />

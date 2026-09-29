@@ -33,7 +33,7 @@ export function GateDemo({ type, showRule = true }: GateDemoProps) {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.4fr_1fr]">
         <div className="bg-logic-grid p-3 sm:p-5">
           <LogicCircuitView
             inputs={labels.map((l, i) => ({ id: l, label: l, x: 60, y: ys[i]! }))}
@@ -119,7 +119,7 @@ export function GatePredict({ type }: { type: GateType }) {
           </button>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-[auto_1fr] sm:items-center">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr] sm:items-center">
           <div className="flex items-center gap-3 font-mono text-2xl">
             {row.inputs.map((v, i) => (
               <span key={i} className="flex flex-col items-center">

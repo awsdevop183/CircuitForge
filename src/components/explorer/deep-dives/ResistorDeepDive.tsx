@@ -51,7 +51,7 @@ export function ResistorColorCodeReader() {
   const foundTarget = ohms === TARGET_OHMS;
 
   return (
-        <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr]">
           <div className="panel-raised flex flex-col items-center justify-center rounded-2xl p-6">
             <ResistorIllustration
               bands={bands.map((band) => band.hex)}
@@ -123,7 +123,7 @@ function ResistorInCircuit() {
       title="More resistance, less current"
       description="With a fixed 5 V supply, drag the resistance and watch the charge slow down. This is exactly how a resistor protects an LED."
     >
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="panel-raised bg-breadboard rounded-2xl px-2 py-4 sm:px-6">
           <OhmsLawCircuit voltage={voltage} resistance={resistance} current={current} power={powerFrom(voltage, current)} maxCurrent={voltage / 50} />
         </div>

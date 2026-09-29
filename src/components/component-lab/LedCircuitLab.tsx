@@ -92,7 +92,7 @@ export function LedCircuitLab() {
         </CircuitCanvas>
       </div>
 
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
         <InteractiveSlider label="Battery voltage" value={voltage} min={1.5} max={12} step={0.5} onChange={setVoltage} format={(v) => `${formatFixed(v, 1)} V`} color="var(--color-amber)" />
         <InteractiveSlider
           label="Resistance"
@@ -128,7 +128,7 @@ export function LedCircuitLab() {
         </button>
       </div>
 
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.4fr]">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.4fr]">
         <div className="grid grid-cols-2 gap-2">
           <Readout label="Current" value={destroyed ? "≫ 30 mA" : formatAmps(current, 2)} tone={destroyed ? "negative" : "cyan"} size="sm" />
           <Readout label="Brightness" value={Math.round(brightness * 100)} unit="%" tone="amber" size="sm" />

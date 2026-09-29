@@ -24,7 +24,7 @@ export function HeroSection() {
       <div className="absolute left-[-10%] top-[-20%] -z-10 h-[36rem] w-[36rem] rounded-full bg-cyan/10 blur-[120px]" aria-hidden="true" />
       <div className="absolute bottom-[-30%] right-[-10%] -z-10 h-[30rem] w-[30rem] rounded-full bg-amber/[0.06] blur-[120px]" aria-hidden="true" />
 
-      <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-28">
+      <Container className="grid grid-cols-1 items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-28">
         <div>
           <p className="eyebrow mb-6 inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/5 px-3 py-1.5 text-cyan-soft">
             <span className="size-1.5 rounded-full bg-cyan shadow-[0_0_8px_#22d3ee]" aria-hidden="true" />

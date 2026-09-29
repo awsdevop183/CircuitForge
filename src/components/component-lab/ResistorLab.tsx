@@ -28,7 +28,7 @@ export function ResistorLab() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
         <div className="bg-breadboard px-2 py-4 sm:px-6">
           <OhmsLawCircuit voltage={voltage} resistance={resistance} current={current} power={power} maxCurrent={12 / 10} />
         </div>
@@ -52,7 +52,7 @@ export function ResistorLab() {
             return (
               <li key={`${r}-${index}`} className={cn("grid grid-cols-[5.5rem_1fr_4.5rem] items-center gap-3 rounded-lg px-2 py-1.5", yours && "bg-cyan/10")}>
                 <span className="font-mono text-sm text-ink">{yours ? "Yours" : formatOhms(r)}</span>
-                <BlockMeter fraction={logFraction(i)} label={`${formatOhms(r)}: ${formatAmps(i)}`} className="overflow-hidden text-sm sm:text-base" />
+                <BlockMeter fraction={logFraction(i)} blocks={10} label={`${formatOhms(r)}: ${formatAmps(i)}`} className="text-sm sm:text-base" />
                 <span className="text-right font-mono text-xs text-cyan">{formatAmps(i, 2)}</span>
               </li>
             );

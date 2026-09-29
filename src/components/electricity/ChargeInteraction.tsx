@@ -25,7 +25,7 @@ export function ChargeInteraction() {
         <Charge sign={right} x={gap} />
       </svg>
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
         <SignPicker label="Left charge" value={left} onChange={setLeft} />
         <motion.p
           key={String(attract)}

@@ -23,7 +23,7 @@ export function WaterTankAnalogy() {
   const levelY = (level: number) => TANK_BOTTOM - level * TANK_HEIGHT;
 
   return (
-    <div className="grid gap-6 p-5 sm:p-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+    <div className="grid grid-cols-1 gap-6 p-5 sm:p-8 md:grid-cols-[1.4fr_1fr] md:items-center">
       <CircuitCanvas
         viewBox="0 0 420 220"
         title="Water tank analogy for voltage"

@@ -18,7 +18,7 @@ export function SeriesParallelWorkedExample() {
   const parallel = solveParallel(SUPPLY, LOADS);
 
   return (
-    <div className="grid gap-px bg-line md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
       <figure className="bg-surface-raised p-4 sm:p-5">
         <figcaption className="eyebrow mb-2 text-amber">Series — one path</figcaption>
         <CircuitCanvas viewBox="0 0 320 200" title="Series example" description={`${SUPPLY} volts across ${R1} and ${R2} ohms in series.`}>

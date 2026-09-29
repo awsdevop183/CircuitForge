@@ -77,7 +77,7 @@ export function SwitchLab() {
           <CircuitLabel x={(LEFT + RIGHT) / 2} y={BOTTOM + 34} text={closed ? "CLOSED — LED ON" : "OPEN — LED OFF"} tone={closed ? "cyan" : "amber"} size={13} decorative />
         </CircuitCanvas>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-2 md:items-center">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-2 md:items-center">
         <div>
           {type === "toggle" ? (
             <button

@@ -47,7 +47,7 @@ export function LessonHeader({ location, content, stageAnchors }: LessonHeaderPr
           </ol>
         </nav>
 
-        <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
+        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
           <div>
             <p className="eyebrow text-cyan">
               Lesson {index + 1} of {module.lessons.length}

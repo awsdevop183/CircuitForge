@@ -20,7 +20,7 @@ interface GateLessonConfig extends Omit<LessonContent, "moduleSlug" | "sections"
 /** One gate symbol + its rule, as a "meet the gate" card. */
 function GateCard({ type }: { type: GateType }) {
   return (
-    <div className="my-6 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[auto_1fr]">
+    <div className="my-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[auto_1fr]">
       <div className="flex items-center justify-center bg-logic-grid px-8 py-6">
         <GateSymbolVisual type={type} />
       </div>

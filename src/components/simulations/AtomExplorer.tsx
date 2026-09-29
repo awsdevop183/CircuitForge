@@ -89,7 +89,7 @@ export function AtomExplorer() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line md:grid-cols-[1.2fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1.2fr_1fr]">
         <div className="bg-breadboard flex flex-col items-center justify-center p-4 sm:p-6">
           <svg viewBox="-120 -120 240 240" className="h-auto w-full max-w-sm" role="group" aria-label={`Lithium atom with ${PROTONS} protons, 4 neutrons and ${electrons} electrons (${status.toLowerCase()}). Shown as the ${model === "orbits" ? "simplified orbit" : "electron cloud"} model.`}>
             {model === "orbits" ? (

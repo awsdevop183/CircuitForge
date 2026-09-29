@@ -15,7 +15,7 @@ const PX_PER_AMP = 30;
  */
 export function PowerRectangles() {
   return (
-    <div className="grid gap-4 p-5 sm:grid-cols-3 sm:p-6">
+    <div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-3 sm:p-6">
       {COMBINATIONS.map(({ v, i }) => (
         <figure key={v} className="flex flex-col items-center">
           <svg viewBox="0 0 220 150" className="h-auto w-full max-w-[14rem]" role="img" aria-label={`${v} volts times ${i} amps equals ${v * i} watts, drawn as a rectangle ${v} units wide and ${i} units tall.`}>

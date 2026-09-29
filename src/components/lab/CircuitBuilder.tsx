@@ -77,11 +77,11 @@ export function CircuitBuilder() {
           className="mx-auto max-w-2xl"
         />
       </div>
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
         <InteractiveSlider label="Battery voltage" value={voltage} min={1.5} max={12} step={0.5} onChange={setVoltage} format={(v) => `${formatFixed(v, 1)} V`} color="var(--color-amber)" />
         <InteractiveSlider label="Resistor" value={ohms} min={10} max={10_000} scale="log" onChange={setOhms} format={(r) => formatOhms(r)} color="var(--color-electric)" />
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr]">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr]">
         <Readout label="Loop current" value={formatAmps(solution.current, 2)} tone="cyan" />
         <table className="w-full text-left text-sm">
           <caption className="sr-only">Voltage across each part</caption>

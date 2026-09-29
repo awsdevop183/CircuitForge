@@ -9,7 +9,7 @@ import { useProgress } from "@/lib/progress/use-progress";
 export function ModuleActivities({ activities }: { activities: readonly ModuleActivity[] }) {
   const { challengeResult, quizResult } = useProgress();
   return (
-    <ul className="grid gap-3 sm:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       {activities.map((activity) => {
         let done = false;
         let status = "Not tried yet";

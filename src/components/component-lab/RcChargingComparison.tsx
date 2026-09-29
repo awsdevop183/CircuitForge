@@ -42,7 +42,7 @@ export function RcChargingComparison() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
         <figure className="bg-surface-raised p-4 sm:p-5">
           <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Capacitor charging curve. Time constant ${formatSeconds(tau)}: 63% charged after ${formatSeconds(tau)}, about 99% after ${formatSeconds(5 * tau)}.${pinned ? ` Pinned comparison curve: ${pinned.label}.` : ""}`}>
             {[0, SUPPLY * 0.632, SUPPLY].map((v) => (

@@ -57,7 +57,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
           Learning dashboard
         </Link>
 
-        <header className="mt-6 grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
+        <header className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
           <div>
             <div className="flex items-center gap-3">
               <span className="flex size-12 items-center justify-center rounded-xl border border-cyan/40 bg-cyan/10 text-cyan">
@@ -128,7 +128,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
               Explore now
             </h2>
             <p className="mt-2 text-ink-muted">Hands-on tools related to this module that you can use today.</p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {learningModule.resources.map((resource) => {
                 const ResourceIcon = RESOURCE_ICONS[resource.kind];
                 return (
@@ -145,7 +145,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
           </section>
         ) : null}
 
-        <nav aria-label="Other modules" className="mt-16 grid gap-3 border-t border-line pt-8 sm:grid-cols-2">
+        <nav aria-label="Other modules" className="mt-16 grid grid-cols-1 gap-3 border-t border-line pt-8 sm:grid-cols-2">
           {previous ? (
             <Link href={`/learn/${previous.slug}`} className="panel group rounded-xl p-4 transition-colors hover:border-cyan/45">
               <span className="flex items-center gap-1.5 text-xs text-ink-subtle">

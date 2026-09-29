@@ -68,7 +68,7 @@ export function CircuitBoardEditor({ board, onChange, tray }: CircuitBoardEditor
           );
         })}
       </div>
-      <ul className="grid gap-2 p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
         {board.map((part, slot) => (
           <li key={slot} className="flex items-stretch gap-2">
             <button

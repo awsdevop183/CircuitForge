@@ -11,7 +11,7 @@ export function KeyTakeaway({ headline, items }: { headline: string; items: read
         </p>
         <p className="mt-3 text-balance font-display text-xl font-semibold leading-snug text-ink sm:text-2xl">{headline}</p>
       </div>
-      <ol className="grid gap-3 sm:grid-cols-2">
+      <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {items.map((item, index) => (
           <li key={item} className="panel flex gap-3 rounded-xl p-4">
             <span className="font-mono text-xs text-amber">{String(index + 1).padStart(2, "0")}</span>

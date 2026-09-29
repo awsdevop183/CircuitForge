@@ -48,7 +48,7 @@ export function HalfAdder() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
         <div className="bg-logic-grid p-3 sm:p-5">
           <LogicCircuitView
             inputs={[
@@ -127,7 +127,7 @@ export function FullAdder() {
             <motion.span key={i} animate={{ scale: i < ones ? 1 : 0.7, opacity: i < ones ? 1 : 0.25 }} className="size-8 rounded-full border-2 border-logic bg-logic/40 shadow-[0_0_16px_rgb(163_230_53/0.6)]" />
           ))}
         </div>
-        <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
           <BitSum terms={[{ label: "A", value: a }, { label: "B", value: b }, { label: "Cin", value: cin }]} carry={result.carryOut} sum={result.sum} />
           <div className="flex justify-center gap-3">
             <GateOutput label="Sum" value={result.sum} />
@@ -152,7 +152,7 @@ export function FullAdder() {
         <AnimatePresence initial={false}>
           {showGates ? (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-              <div className="grid gap-px bg-line lg:grid-cols-[1.6fr_1fr]">
+              <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.6fr_1fr]">
                 <div className="bg-logic-grid p-3 sm:p-5">
                   <LogicCircuitView
                     inputs={[

@@ -79,7 +79,7 @@ export const electricalPower: LessonContent = {
       title: "Watts in everyday life",
       content: (
         <>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <RealWorldCard icon={Plug} title="Charger labels">
               “5 V ⎓ 3 A” on a charger means it can deliver up to 5 × 3 = 15 W.
             </RealWorldCard>

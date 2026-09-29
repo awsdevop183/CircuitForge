@@ -44,7 +44,7 @@ export function LogicLevelsExplorer() {
         />
       </div>
       {view === "simple" ? (
-        <div className="grid gap-4 bg-logic-grid p-5 sm:grid-cols-2 sm:p-8">
+        <div className="grid grid-cols-1 gap-4 bg-logic-grid p-5 sm:grid-cols-2 sm:p-8">
           <div className="flex items-center gap-4 rounded-2xl border border-line-strong bg-void/50 p-5">
             <span className="font-mono text-xl font-bold text-ink-muted">LOW</span>
             <span className="text-ink-subtle" aria-hidden="true">→</span>
@@ -62,7 +62,7 @@ export function LogicLevelsExplorer() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-px bg-line md:grid-cols-[auto_1fr]">
+        <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[auto_1fr]">
           <div className="flex justify-center bg-logic-grid p-4 sm:p-6">
             <svg viewBox={`0 0 260 ${H}`} className="h-72 w-auto" role="img" aria-label={`Input voltage ranges for ${family.name}: LOW up to ${family.inputLowMax} volts, HIGH from ${family.inputHighMin} volts. ${formatFixed(v, 2)} volts reads as ${reading === "UNDEFINED" ? "not guaranteed" : reading}.`}>
               {/* Zones */}

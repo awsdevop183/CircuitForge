@@ -99,7 +99,7 @@ export function SeriesParallelExperiment() {
   const insight = INSIGHTS[mode];
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.35fr_1fr]">
       <div className="space-y-5">
         <InteractivePanel
           title="Circuit"

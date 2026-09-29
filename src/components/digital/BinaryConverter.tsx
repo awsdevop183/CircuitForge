@@ -68,7 +68,7 @@ export function BinaryConverter({ initialValue = 5, initialWidth = 4 }: { initia
       </div>
 
       {/* Decimal → binary */}
-      <div className="grid gap-5 border-t border-line p-4 sm:p-6 md:grid-cols-[auto_1fr] md:items-start">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-6 md:grid-cols-[auto_1fr] md:items-start">
         <div>
           <p className="eyebrow text-ink-subtle">Decimal → binary</p>
           <div className="mt-3 flex items-center gap-2">

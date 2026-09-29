@@ -291,7 +291,7 @@ export function CircuitExplorer({
         </div>
       ) : null}
 
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
         {hasSwitch ? (
           <button
             type="button"

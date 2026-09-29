@@ -50,7 +50,7 @@ export function ChargeCounter() {
         </text>
       </CircuitCanvas>
 
-      <div className="mt-6 grid gap-5 md:grid-cols-[1fr_1.2fr] md:items-end">
+      <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-[1fr_1.2fr] md:items-end">
         <InteractiveSlider
           label="Current"
           value={amps}

@@ -118,7 +118,7 @@ export function CapacitorLab() {
 
   return (
     <div>
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4">
           <div className="panel-raised bg-breadboard rounded-2xl px-2 py-4 sm:px-6">
             <CircuitCanvas

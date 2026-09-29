@@ -87,7 +87,7 @@ export const matterAndCharge: LessonContent = {
       stage: "real-world",
       title: "Where you've already seen charge",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Wind} title="A balloon on your hair">
             Rubbing moves electrons from your hair onto the balloon. Now they have opposite charges — so your hair stands up towards it.
           </RealWorldCard>

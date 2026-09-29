@@ -52,14 +52,15 @@ export function SegmentedControl<T extends string | number>({
   };
 
   return (
-    <div className={className}>
+    <div className={cn("min-w-0", className)}>
       <p id={groupId} className={cn("mb-2 text-sm font-medium text-ink", hideLabel && "sr-only")}>
         {label}
       </p>
       <div
         role="radiogroup"
         aria-labelledby={groupId}
-        className="relative inline-flex w-full rounded-xl border border-line-strong bg-void/60 p-1"
+        // Options wrap onto a second row on very narrow screens instead of overflowing the page.
+        className="relative flex w-full flex-wrap gap-y-1 rounded-xl border border-line-strong bg-void/60 p-1"
       >
         {options.map((option, index) => {
           const selected = index === selectedIndex;
@@ -77,7 +78,7 @@ export function SegmentedControl<T extends string | number>({
               onClick={() => onChange(option.value)}
               onKeyDown={(event) => handleKeyDown(event, index)}
               className={cn(
-                "relative flex-1 rounded-lg font-mono font-semibold transition-colors duration-200",
+                "relative flex-1 whitespace-nowrap rounded-lg font-mono font-semibold transition-colors duration-200",
                 size === "sm" ? "min-h-9 px-2 text-xs" : "min-h-11 px-3 text-sm",
                 selected ? "text-void" : "text-ink-muted hover:text-ink",
               )}

@@ -74,7 +74,7 @@ export function AnalogVsDigital() {
         />
         <p className="text-sm text-ink-muted">{mode === "analog" ? "Continuously varying: any value is possible." : "Discrete states: only LOW (0) or HIGH (1)."}</p>
       </div>
-      <div className="grid gap-px bg-line md:grid-cols-[1fr_auto]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1fr_auto]">
         <div className={cn("p-3 sm:p-5", mode === "digital" ? "bg-logic-grid" : "bg-breadboard")}>
           <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={mode === "analog" ? "Analog waveform: a smooth, continuously changing voltage." : "Digital waveform: a voltage that jumps between two levels, carrying bits."}>
             {[0, 1, 2, 3, 4, 5].map((v) => (
@@ -116,7 +116,7 @@ export function AnalogVsDigital() {
         </div>
       </div>
       <AnimatePresence mode="wait">
-        <motion.ul key={mode} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid gap-2 border-t border-line p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
+        <motion.ul key={mode} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-1 gap-2 border-t border-line p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
           {EXAMPLES[mode].map((example) => (
             <li key={example.title} className={cn("rounded-xl border p-3", mode === "analog" ? "border-amber/30 bg-amber/5" : "border-logic/30 bg-logic/5")}>
               <p className="font-semibold text-ink">{example.title}</p>

@@ -56,7 +56,7 @@ export function RegulatorDemo() {
 
   return (
     <div ref={ref}>
-      <div className="grid gap-px bg-line lg:grid-cols-[1fr_1.1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col items-center gap-2 bg-breadboard p-5">
           <Waveform title={`Input: ${formatFixed(vin, 1)} V (wobbly)`} samples={samples(false)} min={0} max={16} color="#f5a524" guides={guide} width={300} height={90} className="max-w-sm" />
           <ArrowDown className="size-5 text-ink-subtle" aria-hidden="true" />

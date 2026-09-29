@@ -116,7 +116,7 @@ export function PotentialDifference() {
         </CircuitCanvas>
       </div>
 
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
         <InteractiveSlider label="Potential at point A" value={a} min={0} max={MAX_VOLTS} step={0.5} onChange={setA} format={(v) => `${formatFixed(v, 1)} V`} color="var(--color-amber)" />
         <InteractiveSlider label="Potential at point B" value={b} min={0} max={MAX_VOLTS} step={0.5} onChange={setB} format={(v) => `${formatFixed(v, 1)} V`} color="var(--color-electric)" />
         <div className="flex flex-wrap gap-2 md:col-span-2" role="group" aria-label="Presets">
@@ -148,7 +148,7 @@ export function PotentialDifference() {
         </div>
       </div>
 
-      <div className="grid gap-2 border-t border-line p-4 font-mono text-sm sm:grid-cols-3 sm:p-5" aria-live="polite">
+      <div className="grid grid-cols-1 gap-2 border-t border-line p-4 font-mono text-sm sm:grid-cols-3 sm:p-5" aria-live="polite">
         <p className="rounded-lg border border-line bg-void/40 px-3 py-2 text-ink-muted">
           Point A: <span className="text-amber">{formatFixed(a, 1)} V</span>
         </p>

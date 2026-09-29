@@ -90,7 +90,7 @@ export const whatIsACircuit: LessonContent = {
       stage: "real-world",
       title: "Circuits you use every day",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Flashlight} title="A torch">
             Batteries (source), metal strips (path), bulb (load) and a slide switch (control) — the same four parts.
           </RealWorldCard>

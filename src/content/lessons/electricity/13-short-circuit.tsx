@@ -83,7 +83,7 @@ export const shortCircuit: LessonContent = {
       title: "Shorts in the real world",
       content: (
         <>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <RealWorldCard icon={Coins} title="Batteries in a pocket">
               Keys or coins bridging a 9 V battery&apos;s terminals can make it hot enough to burn.
             </RealWorldCard>

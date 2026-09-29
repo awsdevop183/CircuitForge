@@ -91,7 +91,7 @@ export const ohmsLaw: LessonContent = {
       title: "Ohm's law in real projects",
       content: (
         <>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <RealWorldCard icon={Lightbulb} title="Choosing an LED resistor">
               9 V supply, LED uses 2 V, you want 15 mA: R = 7 V ÷ 0.015 A ≈ 470 Ω.
             </RealWorldCard>

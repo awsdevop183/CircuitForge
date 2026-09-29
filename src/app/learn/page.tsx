@@ -22,7 +22,7 @@ export default function LearnPage() {
         <ContinueLearning />
       </PageHeader>
       <Container className="py-14">
-        <ol className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <ol className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {MODULES.map((module, index) => (
             <li key={module.slug}>
               <Reveal delay={(index % 3) * 0.06} className="h-full">

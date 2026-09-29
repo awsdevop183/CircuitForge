@@ -20,7 +20,7 @@ export function ContinueLearning() {
   const focusModule = next?.module ?? all[all.length - 1]?.module ?? MODULES[0]!;
 
   return (
-    <div className="panel-raised grid gap-6 rounded-2xl p-5 sm:p-6 md:grid-cols-[1fr_1.3fr] md:items-center">
+    <div className="panel-raised grid grid-cols-1 gap-6 rounded-2xl p-5 sm:p-6 md:grid-cols-[1fr_1.3fr] md:items-center">
       <div>
         <ModuleProgress module={focusModule} variant="full" />
         <p className="mt-3 font-mono text-xs text-ink-subtle">

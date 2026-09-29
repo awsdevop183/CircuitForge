@@ -23,7 +23,7 @@ export function LabTeaserSection() {
     <section aria-labelledby="lab-teaser-heading" className="py-16 sm:py-24">
       <Container>
         <div className="panel-raised overflow-hidden rounded-3xl">
-          <div className="grid lg:grid-cols-[1fr_1.25fr]">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.25fr]">
             <div className="flex flex-col justify-center gap-6 border-b border-line p-6 sm:p-10 lg:border-b-0 lg:border-r">
               <SectionHeading
                 id="lab-teaser-heading"

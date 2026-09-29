@@ -53,7 +53,7 @@ export function DiodeLab() {
           <CircuitLabel x={(LEFT + RIGHT) / 2} y={TOP - 26} text={reversed ? "REVERSE: BLOCKS" : "FORWARD: CONDUCTS"} tone={reversed ? "amber" : "cyan"} decorative />
         </CircuitCanvas>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr] md:items-center">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[auto_1fr] md:items-center">
         <button
           type="button"
           aria-pressed={reversed}
@@ -115,7 +115,7 @@ export function HalfWaveRectifier() {
         onChange={setWithDiode}
         size="sm"
       />
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Waveform title="Input: AC" samples={samples(false)} min={-1.2} max={1.2} color="#22d3ee" zeroLine />
         <Waveform title={withDiode === "yes" ? "Output: positive halves only" : "Output: still AC"} samples={samples(withDiode === "yes")} min={-1.2} max={1.2} color="#f5a524" zeroLine />
       </div>

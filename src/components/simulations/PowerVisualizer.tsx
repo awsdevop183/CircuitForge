@@ -81,7 +81,7 @@ export function PowerVisualizer() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1fr_1.2fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1fr_1.2fr]">
         <div className="bg-breadboard flex items-center px-2 py-4 sm:px-6">
           <CircuitCanvas
             viewBox="0 0 360 240"

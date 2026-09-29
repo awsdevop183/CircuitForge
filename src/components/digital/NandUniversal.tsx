@@ -54,7 +54,7 @@ export function NandUniversal() {
       <div className="border-b border-line p-4 sm:p-5">
         <SegmentedControl label="Build this gate from NANDs only" options={(["NOT", "AND", "OR"] as Target[]).map((t) => ({ value: t, label: t }))} value={target} onChange={setTarget} size="sm" />
       </div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
         <div className="bg-logic-grid p-3 sm:p-5">
           <LogicCircuitView
             inputs={build.inputs.map((id, i) => ({ id, label: id, x: 50, y: count === 1 ? 80 : [40, 120][i]! }))}

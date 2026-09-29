@@ -134,7 +134,7 @@ export function ShortCircuitDemo() {
         </CircuitCanvas>
       </div>
 
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_auto] md:items-end">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_auto] md:items-end">
         <SegmentedControl
           label="Circuit"
           options={[

@@ -94,7 +94,7 @@ export function GroundReference() {
           })}
         </CircuitCanvas>
       </div>
-      <div className="grid gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr] md:items-center">
+      <div className="grid grid-cols-1 gap-4 border-t border-line p-4 sm:p-5 md:grid-cols-[1fr_1.2fr] md:items-center">
         <SegmentedControl
           label="Place ground (0 V) at…"
           options={(Object.keys(NODES) as NodeId[]).map((node) => ({ value: node, label: `Node ${node}`, ariaLabel: `Node ${node}, ${NODES[node].where}` }))}

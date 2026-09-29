@@ -8,7 +8,7 @@ export function LogicPlaygroundLab() {
       <div className="panel-raised overflow-hidden rounded-2xl">
         <LogicPlayground />
       </div>
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {[
           { title: "Try this", text: "Load “(A AND B) OR C”. Which input combinations turn Y on? Check your answer in the truth table." },
           { title: "Then this", text: "Load “XOR from 4 NANDs” and prove it matches a single XOR gate on every row." },

@@ -14,7 +14,7 @@ export function ProjectsPreviewSection() {
     <section aria-labelledby="projects-heading" className="py-16 sm:py-24">
       <Container>
         <SectionHeading id="projects-heading" eyebrow="Build projects" title="From your first LED to intelligent machines." description="Each project uses what you've just learned. Start with safe, low-voltage builds; the rest unlock as new modules arrive." />
-        <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {PROJECTS.map((project) => {
             const body = (
               <>

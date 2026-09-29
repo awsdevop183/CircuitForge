@@ -90,7 +90,7 @@ export const conductorsAndInsulators: LessonContent = {
       stage: "real-world",
       title: "Conductors and insulators around you",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Cable} title="Charging cables">
             Copper strands to carry current; soft plastic around them so you can hold the cable safely.
           </RealWorldCard>

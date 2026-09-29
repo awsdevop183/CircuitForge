@@ -54,7 +54,7 @@ export function ResistanceExplorer() {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.3fr_1fr]">
         <div className="bg-breadboard px-2 py-4 sm:px-5">
           <ResistancePassage resistancePosition={rPos} current={current} />
           <OhmsLawCircuit voltage={voltage} resistance={resistance} current={current} power={powerFrom(voltage, current)} maxCurrent={I_MAX} />
@@ -96,7 +96,7 @@ export function ResistanceExplorer() {
         </div>
       </div>
 
-      <div className="grid gap-2 border-t border-line p-4 sm:grid-cols-2 sm:p-5" aria-live="polite">
+      <div className="grid grid-cols-1 gap-2 border-t border-line p-4 sm:grid-cols-2 sm:p-5" aria-live="polite">
         {rules.map((rule) => (
           <div
             key={rule.id}
@@ -195,7 +195,7 @@ export function WireResistanceFactors() {
   const baseline = 2; // 2 m medium wire = 1×
 
   return (
-    <div className="grid gap-6 p-5 sm:p-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+    <div className="grid grid-cols-1 gap-6 p-5 sm:p-8 md:grid-cols-[1.4fr_1fr] md:items-center">
       <svg viewBox="0 0 420 120" className="h-auto w-full" role="img" aria-label={`A ${length} metre ${THICKNESS_OPTIONS.find((t) => t.value === thickness)?.label.toLowerCase()} wire with ${(relative / baseline).toFixed(2)} times the resistance of the reference wire.`}>
         <motion.rect
           x={20}

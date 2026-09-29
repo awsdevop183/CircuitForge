@@ -30,7 +30,7 @@ export default function ComponentsPage() {
           <h2 id="practice-heading" className="text-2xl font-semibold text-ink">
             Practise and compare
           </h2>
-          <ul className="mt-5 grid gap-4 md:grid-cols-3">
+          <ul className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
             {PRACTICE.map(({ href, title, description, Icon }) => (
               <li key={href}>
                 <Link href={href} className="panel group flex h-full flex-col rounded-2xl p-5 transition-colors hover:border-cyan/45">

@@ -79,7 +79,7 @@ export const openVsClosedCircuits: LessonContent = {
       stage: "real-world",
       title: "Open and closed around you",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={ToggleRight} title="Light switches">
             On = closed circuit; off = open circuit.
           </RealWorldCard>

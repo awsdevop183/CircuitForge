@@ -5,7 +5,7 @@ import { SafetyNotice, type SafetyTopic } from "@/components/ui/SafetyNotice";
 /** "Where you'll find it" — everyday places the component turns up. */
 export function WhereYoullFindIt({ places }: { places: readonly WhereFound[] }) {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {places.map(({ icon: Icon, place, detail }) => (
         <li key={place} className="panel flex gap-4 rounded-xl p-4">
           <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-amber/35 bg-amber/10 text-amber">
@@ -33,7 +33,7 @@ export function BeginnerMistakes({ id, mistakes, safety }: { id: string; mistake
         <h2 id={`${id}-heading`} className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">
           Common beginner mistakes
         </h2>
-        <ol className="mt-6 grid gap-3 md:grid-cols-2">
+        <ol className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
           {mistakes.map((m, i) => (
             <li key={m.mistake} className="rounded-xl border border-line bg-surface/80 p-4">
               <p className="flex gap-2 font-semibold text-ink">

@@ -58,7 +58,7 @@ export function BatteryModel() {
       <div className="border-b border-line p-4 sm:p-5">
         <SegmentedControl label="Battery" options={BATTERY_TYPES.map((b) => ({ value: b.id, label: b.name, ariaLabel: `${b.name} ${b.chemistry}` }))} value={typeId} onChange={setTypeId} size="sm" />
       </div>
-      <div className="grid gap-px bg-line md:grid-cols-[1fr_1.2fr]">
+      <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-[1fr_1.2fr]">
         {/* Battery visual: voltage vs capacity */}
         <div className="flex items-center justify-center bg-surface-raised p-5">
           <svg viewBox="0 0 220 240" className="h-auto w-full max-w-[16rem]" role="img" aria-label={`${battery.name} ${battery.chemistry} battery: ${battery.voltage} volts, ${battery.capacity} milliamp-hours, ${battery.rechargeable ? "rechargeable" : "not rechargeable"}.`}>

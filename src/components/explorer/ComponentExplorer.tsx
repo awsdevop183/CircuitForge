@@ -79,7 +79,7 @@ export function ComponentExplorer() {
         {category !== "all" ? <span className="text-ink-muted"> · {COMPONENT_TAG_LABELS[category]}: {COMPONENT_TAG_DESCRIPTIONS[category]}</span> : null}
       </p>
 
-      <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout" initial={false}>
           {results.map((component) => (
             <motion.li

@@ -38,7 +38,7 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
       <h2 className="mt-2 text-xl font-semibold text-ink sm:text-2xl">{project.title}</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-muted">{project.summary}</p>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <p className="eyebrow text-[0.65rem] text-ink-subtle">Skills</p>
           <ul className="mt-1.5 flex flex-wrap gap-1.5">

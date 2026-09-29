@@ -34,7 +34,7 @@ export function PillarsSection() {
           title="Don't just read electronics. See it. Experiment. Build it."
           description="Every concept moves through the same loop — so understanding comes from what you see and do, not from memorising definitions."
         />
-        <ol className="mt-12 grid gap-4 md:grid-cols-3">
+        <ol className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
           {PILLARS.map((pillar, index) => (
             <li key={pillar.step}>
               <Reveal delay={index * 0.08} className="h-full">

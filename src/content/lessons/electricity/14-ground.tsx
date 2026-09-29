@@ -96,7 +96,7 @@ export const ground: LessonContent = {
       stage: "real-world",
       title: "Ground around you",
       content: (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <RealWorldCard icon={Usb} title="USB cables">
             One of the pins is labelled GND — the 0 V reference shared by your computer and the device.
           </RealWorldCard>

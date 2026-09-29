@@ -27,7 +27,7 @@ export function GateComposition({ type }: { type: "NAND" | "NOR" | "XNOR" }) {
 
   return (
     <div>
-      <div className="grid gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-1 gap-px bg-line lg:grid-cols-[1.5fr_1fr]">
         <div className="space-y-2 bg-logic-grid p-3 sm:p-5">
           <p className="eyebrow text-ink-subtle">
             {base} followed by NOT

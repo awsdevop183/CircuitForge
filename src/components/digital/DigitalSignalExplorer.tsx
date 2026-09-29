@@ -106,7 +106,7 @@ export function DigitalSignalExplorer() {
         </div>
         <p className="mt-2 text-xs text-ink-subtle">Slowed right down so you can see it. Real digital signals switch thousands to billions of times per second.</p>
       </div>
-      <div className="grid gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 border-t border-line p-4 sm:p-5 md:grid-cols-2">
         <div className="space-y-4">
           <InteractiveSlider label="Frequency" value={frequency} min={0.5} max={3} step={0.1} onChange={setFrequency} format={(v) => `${formatFixed(v, 1)} Hz`} color="var(--color-clock)" hint="Cycles per second" />
           <InteractiveSlider label="Duty cycle" value={duty} min={10} max={90} step={5} onChange={setDuty} format={(v) => `${v}%`} color="var(--color-logic)" hint="Percentage of each cycle spent HIGH" />
