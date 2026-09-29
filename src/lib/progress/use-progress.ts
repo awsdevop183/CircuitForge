@@ -31,6 +31,8 @@ export function useProgress() {
     quizResult,
     challengeResult,
     recordChallengeAttempt: progressStore.recordChallengeAttempt,
+    hasVisitedExperiment: (slug: string) => Boolean(state.experiments[slug]),
+    recordExperimentVisit: progressStore.recordExperimentVisit,
     currentLessonKey: state.currentLessonKey,
     markLessonComplete: progressStore.markLessonComplete,
     markLessonIncomplete: progressStore.markLessonIncomplete,

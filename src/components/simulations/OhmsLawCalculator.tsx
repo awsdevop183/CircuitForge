@@ -3,7 +3,7 @@
 import { useId, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CircleCheck, Flame, FlaskConical, TriangleAlert } from "lucide-react";
-import { ExperimentPanel } from "@/components/lab/ExperimentPanel";
+import { InteractivePanel } from "@/components/ui/InteractivePanel";
 import { FormulaDisplay, type FormulaTerm } from "@/components/lab/FormulaDisplay";
 import { OhmsLawCircuit } from "@/components/lab/OhmsLawCircuit";
 import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
@@ -135,7 +135,7 @@ export function OhmsLawCalculator() {
   return (
     <div className="space-y-5">
       <div className="grid gap-5 lg:grid-cols-[1.25fr_1fr]">
-        <ExperimentPanel title="Live circuit" bodyClassName="p-0">
+        <InteractivePanel title="Live circuit" bodyClassName="p-0">
           <div className="bg-breadboard px-2 py-4 sm:px-6">
             <OhmsLawCircuit
               voltage={V}
@@ -167,9 +167,9 @@ export function OhmsLawCalculator() {
           />
 
           </div>
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Solve Ohm's law">
+        <InteractivePanel title="Solve Ohm's law">
           <div className="grid grid-cols-[7.5rem_1fr] items-center gap-4 sm:grid-cols-[9rem_1fr]">
             <OhmsTriangle unknown={solveFor} onSelect={chooseUnknown} />
             <SegmentedControl
@@ -188,7 +188,7 @@ export function OhmsLawCalculator() {
               <KnownInput key={quantity} quantity={quantity} value={quantity === "V" ? voltage : quantity === "I" ? current : resistance} onChange={setters[quantity]} />
             ))}
           </div>
-        </ExperimentPanel>
+        </InteractivePanel>
       </div>
 
       <AnimatePresence initial={false}>
@@ -222,7 +222,7 @@ export function OhmsLawCalculator() {
         )}
       </AnimatePresence>
 
-      <ExperimentPanel title="Preset experiments" aside={<FlaskConical className="size-4 text-amber" aria-hidden="true" />}>
+      <InteractivePanel title="Preset experiments" aside={<FlaskConical className="size-4 text-amber" aria-hidden="true" />}>
         <div className="grid gap-3 md:grid-cols-3">
           {OHMS_PRESETS.map((p) => {
             const active = p.id === presetId;
@@ -257,7 +257,7 @@ export function OhmsLawCalculator() {
             </motion.p>
           )}
         </AnimatePresence>
-      </ExperimentPanel>
+      </InteractivePanel>
     </div>
   );
 }

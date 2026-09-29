@@ -5,6 +5,7 @@ import { ArrowDown } from "lucide-react";
 import { useSimulationClock } from "@/components/simulations/use-simulation-clock";
 import { VoltageRegulatorVisual } from "@/components/visuals";
 import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
+import { Waveform } from "@/components/ui/Waveform";
 import { Readout } from "@/components/ui/Readout";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { formatAmps, formatFixed, formatWatts } from "@/lib/format";
@@ -44,23 +45,20 @@ export function RegulatorDemo() {
   const load = loadMilliamps / 1000;
   const result = regulate(kind, vin, load);
 
-  // Traces: input wobbles; output is flat while regulating, otherwise follows the input.
-  const W = 300;
-  const H = 90;
-  const scale = (v: number) => H - 10 - (v / 16) * (H - 20);
-  const trace = (output: boolean) =>
+  // Samples: the input wobbles; the output is flat while regulating, otherwise it follows the input.
+  const samples = (output: boolean) =>
     Array.from({ length: 101 }, (_, i) => {
       const t = time - (1 - i / 100) * 2.5;
       const input = vin + RIPPLE * Math.sin(2 * Math.PI * 1.2 * t);
-      const value = output ? (result.regulating ? TARGET : Math.max(0, input - DROPOUT[kind])) : input;
-      return `${i === 0 ? "M" : "L"} ${(i / 100) * W} ${scale(value).toFixed(1)}`;
-    }).join(" ");
+      return output ? (result.regulating ? TARGET : Math.max(0, input - DROPOUT[kind])) : input;
+    });
+  const guide = [{ value: TARGET, label: "5 V", color: "#34d399" }];
 
   return (
     <div ref={ref}>
       <div className="grid gap-px bg-line lg:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col items-center gap-2 bg-breadboard p-5">
-          <Trace title={`Input: ${formatFixed(vin, 1)} V (wobbly)`} d={trace(false)} color="#f5a524" w={W} h={H} y5={scale(TARGET)} />
+          <Waveform title={`Input: ${formatFixed(vin, 1)} V (wobbly)`} samples={samples(false)} min={0} max={16} color="#f5a524" guides={guide} width={300} height={90} className="max-w-sm" />
           <ArrowDown className="size-5 text-ink-subtle" aria-hidden="true" />
           <div className="flex items-center gap-3 rounded-xl border border-line-strong bg-void/50 px-4 py-2">
             <VoltageRegulatorVisual className="h-16 w-auto" />
@@ -70,7 +68,7 @@ export function RegulatorDemo() {
             </div>
           </div>
           <ArrowDown className="size-5 text-ink-subtle" aria-hidden="true" />
-          <Trace title={`Output: ${formatFixed(result.vout, 2)} V ${result.regulating ? "(steady)" : "(dropping out!)"}`} d={trace(true)} color={result.regulating ? "#22d3ee" : "#f87171"} w={W} h={H} y5={scale(TARGET)} />
+          <Waveform title={`Output: ${formatFixed(result.vout, 2)} V ${result.regulating ? "(steady)" : "(dropping out!)"}`} samples={samples(true)} min={0} max={16} color={result.regulating ? "#22d3ee" : "#f87171"} guides={guide} width={300} height={90} className="max-w-sm" />
         </div>
         <div className="space-y-5 bg-surface-raised p-5">
           <SegmentedControl
@@ -110,17 +108,3 @@ export function RegulatorDemo() {
     </div>
   );
 }
-
-function Trace({ title, d, color, w, h, y5 }: { title: string; d: string; color: string; w: number; h: number; y5: number }) {
-  return (
-    <figure className="w-full max-w-sm">
-      <figcaption className="mb-1 font-mono text-xs text-ink-muted">{title}</figcaption>
-      <svg viewBox={`0 0 ${w} ${h}`} className="h-auto w-full rounded-lg border border-line bg-void/50" role="img" aria-label={title}>
-        <line x1={0} x2={w} y1={y5} y2={y5} stroke="#34d399" strokeDasharray="3 5" strokeOpacity={0.5} />
-        <text x={w - 4} y={y5 - 4} textAnchor="end" fontSize={9} fill="#34d399" fontFamily="var(--font-mono)">5 V</text>
-        <path d={d} fill="none" stroke={color} strokeWidth={2.5} />
-      </svg>
-    </figure>
-  );
-}
-

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ComponentQuiz } from "@/components/component-lab/ComponentQuiz";
+import { Quiz } from "@/components/quiz/Quiz";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Container } from "@/components/ui/Container";
 import { SYMBOL_TRAINER_QUESTIONS } from "@/content/component-games";
@@ -19,7 +19,7 @@ export default function SymbolTrainerPage() {
       />
       <Container className="py-12">
         <div className="panel-raised mx-auto max-w-3xl overflow-hidden rounded-2xl">
-          <ComponentQuiz
+          <Quiz
             title="Name that symbol"
             intro="You'll see a schematic symbol. Pick the component it represents. The order is different every round."
             questions={SYMBOL_TRAINER_QUESTIONS}

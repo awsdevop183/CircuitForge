@@ -6,7 +6,7 @@ CircuitForge is an interactive platform for learning electronics — from voltag
 
 > Don't just read electronics. See it. Interact with it. Experiment with it. Build it.
 
-This first version is frontend-only: all content is static and local. There's no backend, authentication or database yet. Learner progress is saved in the browser.
+This version is frontend-only: all content is static and local. There's no backend, authentication or database yet. Learner progress is saved in the browser.
 
 ## Getting started
 
@@ -27,34 +27,28 @@ npm run dev        # http://localhost:3000
 
 ## What's included
 
-| Route                        | What it is                                                                                           |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `/`                          | Landing page: animated live circuit hero, the learning method, the 9-stage path, a lab teaser        |
-| `/learn`                     | Learning dashboard: module cards with progress and a "continue where you left off" card              |
-| `/learn/[module]`            | Module overview: lessons, status, and related tools you can use now                                   |
-| `/learn/fundamentals`        | Module 01 — Electronics Fundamentals: progress, lesson path with quiz scores, safety guidance          |
-| `/learn/fundamentals/*`      | 15 full lessons, from matter and charge through Ohm's law, power, AC/DC, ground and series/parallel   |
-| `/lab`                       | Interactive lab index                                                                                |
-| `/lab/ohms-law`              | Ohm's Law Lab (solve for V, I or R, presets, warnings) plus free exploration with challenges          |
-| `/lab/series-parallel`       | Switch between series and parallel wiring, adjust bulbs, remove a bulb, compare measurements          |
-| `/learn/components`          | Module 02 — Electronic Components: lesson path, challenge and game results                            |
-| `/learn/components/*`        | 14 lessons: 12 components, "Build Your First Circuit" and the Component Challenge                     |
-| `/components`                | Library of 11 components, filterable by Passive / Active / Electromechanical / Power / Input / Output |
-| `/components/[slug]`         | Every component: symbol, visual, interactive demo, specs, uses, beginner mistakes, safety, related     |
-| `/components/compare`        | Resistor vs potentiometer, diode vs LED, transistor vs MOSFET, transistor vs relay                   |
-| `/components/symbol-trainer` | Symbol Trainer: 15 random questions per round from 21 symbols, explained after every answer           |
-| `/components/identify`       | Identify the Component: see a real part and decide what it's used for                                |
-| `/learn/digital-electronics` | Module 03 — Digital Electronics: 20 lessons, challenge/quiz/playground progress                      |
-| `/lab/digital`               | Logic Gate Playground: add gates, wire them, toggle A/B/C, live signal flow and truth table            |
-| `/lab/build-the-logic`       | "Build the Logic" challenge: AND → OR → NOT → XOR → half adder                                        |
-| `/quiz/[module]`             | End-of-module quiz (Digital Electronics: 36 questions, 10 topics, interactive circuit questions)     |
-| `/projects`                  | Project progression from LED Circuit to Robotics + AI                                                |
-| `/projects/led-circuit`      | Full beginner build guide with wiring diagram, resistor calculation and steps                         |
-| `/roadmap`                   | The complete journey (11 stages) and the planned platform features                                    |
+| Route                          | What it is                                                                                          |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `/`                            | Home: live Battery → Resistor → LED hero, Why CircuitForge, learning journey, lab and project previews, your progress |
+| `/learn`                       | Learning path (12 modules) with "continue where you left off"                                       |
+| `/learn/electricity`           | Module 01 — Electricity & Fundamentals (15 lessons). `/learn/fundamentals/*` redirects here           |
+| `/learn/components`            | Module 02 — Electronic Components (14 lessons, challenge and games)                                 |
+| `/learn/digital-electronics`   | Module 03 — Digital Electronics (20 lessons, quiz, challenge, playground)                            |
+| `/learn/[module]` (04–12)      | Coming-soon pages for Microcontrollers → AI + Intelligent Hardware (no placeholder lessons)          |
+| `/components`                  | Component Explorer: 11 components, filters Passive / Active / Semiconductor / Electromechanical / Power / Input / Output |
+| `/components/[slug]`           | What it is → symbol → visual → how it works → interactive demo → applications → specs → mistakes → safety → related |
+| `/components/compare`, `/symbol-trainer`, `/identify` | Side-by-side comparisons; symbol quiz (21 symbols); identification game (22 questions) |
+| `/lab`                         | Interactive Lab: Electricity Lab and Digital Lab (18 experiments)                                    |
+| `/lab/electronics`             | Electricity Lab: Ohm's law, voltage, current, resistance, power, series/parallel, LED, capacitor, divider, Circuit Builder |
+| `/lab/digital`                 | Digital Lab: all seven gates, the logic playground, and truth tables, binary, adders, signals, Build the Logic |
+| `/lab/[experiment]`            | Each experiment, with its educational-model note and a link to the lesson behind it                 |
+| `/quiz/[module]`               | End-of-module quiz (Digital Electronics: 36 questions)                                               |
+| `/projects`, `/projects/led-circuit` | Project journey (LED Circuit → Robot); only the LED Circuit build guide is live                 |
+| `/roadmap`                     | The 12-module journey, derived from the curriculum                                                  |
 
-Every lesson follows the same learning loop: **Concept → Visual Explanation → Interactive Experiment → Real-World Example → Quick Check → Next Concept**. Each also has a learning objective, "builds on" prerequisites, a real-world analogy that says where it breaks down, a key takeaway, "Try it yourself" prompts, an estimated time and difficulty, a scroll-spy outline and previous/next navigation.
+Every lesson follows the same learning loop: **Learning objective → visual explanation → interactive demonstration → real-world example → try it yourself → knowledge check → key takeaway → next lesson**. Each also has a learning objective, "builds on" prerequisites, a real-world analogy that says where it breaks down, a key takeaway, "Try it yourself" prompts, an estimated time and difficulty, a scroll-spy outline and previous/next navigation.
 
-### Module 01 — Electronics Fundamentals
+### Module 01 — Electricity & Fundamentals
 
 | # | Lesson | Main interactive |
 |---|--------|------------------|
@@ -132,7 +126,8 @@ src/
 │   ├── illustrations/       # Real-world component artwork (SVG)
 │   ├── lesson/              # Lesson layout: stages, outline, quick check, takeaways, completion
 │   ├── simulations/         # Reusable interactive simulations (CircuitExplorer, OhmsLawCalculator, …)
-│   ├── lessons/             # Smaller lesson visuals (per topic + shared)
+│   ├── electricity/         # Module 01 lesson visuals (charge, voltage, current…)
+│   ├── quiz/                # Quiz and QuizQuestionCard (one quiz system)
 │   ├── lab/                 # Lab framework (panels, challenges, graphs) and experiments
 │   ├── explorer/            # Component explorer, symbol library, experiment registry, deep-dives
 │   ├── component-lab/       # Module 02 interactives + ComponentQuiz, ComponentComparison, ComponentSpecification…
@@ -143,10 +138,12 @@ src/
 │   ├── projects/            # Project timeline and build diagrams
 │   ├── layout/              # Header, mobile menu, footer, page header
 │   └── ui/                  # Design-system primitives (Button, Badge, Slider, SegmentedControl…)
-├── content/                 # Typed content: curriculum, lessons (content/lessons/fundamentals/*), components, experiments, projects, roadmap
+├── content/                 # Typed content: curriculum, lessons (content/lessons/{electricity,components,digital}), components, experiments, quizzes, projects, roadmap
 └── lib/
     ├── electronics.ts       # Pure physics: Ohm's law, series/parallel solvers, RC, LED resistor, E12
     ├── circuit-sim.ts       # Single-loop solver: switches, breaks, LEDs, fuses, shorts, node voltages
+    ├── series-board.ts      # Circuit engine: parts-in-slots boards → solved circuit state
+    ├── use-frame.ts         # Frame loop for every simulation clock
     ├── digital.ts           # Logic levels and thresholds (3.3 V / 5 V examples)
     ├── logic.ts             # Pure digital logic: gates, truth tables, binary, adders, flip-flops, gate networks
     ├── format.ts            # SI-prefix formatting (20 mA, 4.7 kΩ…)
@@ -179,10 +176,13 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 ## Architecture notes (built to extend)
 
 - **Content is data.** Modules, lessons, components, experiments and projects are typed objects in `src/content`. Only lesson bodies contain JSX, and they're kept in one file per lesson, so moving to MDX or a CMS later is mechanical.
-- **Registries map slugs to interactive implementations.** See `content/lessons/index.ts`, `components/lab/registry.tsx`, `components/explorer/experiments.tsx` and `components/explorer/deep-dives/registry.tsx`. The schematic `SYMBOL_LIBRARY` (`explorer/ComponentSymbol.tsx`) feeds both the explorer and the Symbol Trainer.
+- **Registries map slugs to interactive implementations.** See `content/lessons/index.ts`, `components/lab/experiments`, `components/explorer/experiments.tsx` and `components/explorer/deep-dives/registry.tsx`. The schematic `SYMBOL_LIBRARY` (`explorer/ComponentSymbol.tsx`) feeds both the explorer and the Symbol Trainer.
 - **Games are data.** `ComponentQuiz` runs any `QuizQuestion[]` one at a time, shuffled on start, with explanations and saved scores. The next module can reuse it for logic-gate and truth-table games. To add an experiment: add data in `content/experiments.ts`, build the component, and register it.
+- **Circuit engine.** `lib/series-board.ts` describes a series circuit as data (parts in slots) and solves it with `lib/circuit-sim.ts`; `components/circuit/SeriesCircuit` renders any board with live state and current flow, and `components/lab/CircuitBoardEditor` lets learners build one. The Component Challenge and the Circuit Builder both use it. Simplifications are disclosed with `ModelNote` ("Educational model: …").
+- **One of each building block.** `InteractivePanel` (every framed interactive), `Quiz` + `QuizQuestionCard` (lesson checks, games and module quizzes share one question renderer), `ProgressBar`, `Waveform`, `DigitalSignal`, `BinaryDisplay`, `LogicGate`, `TruthTable`.
+- **Simulation time.** Every animation loop uses `lib/use-frame.ts` (its own `requestAnimationFrame` loop), so simulated time always matches real time.
 - **Circuit behaviour lives in one place.** `lib/circuit-sim.ts` solves every single-loop simulation, so the circuit explorer, short-circuit demo and ground lesson can't disagree.
-- **Progress is behind an interface** (`lib/progress/types.ts`). Today it's `localStorage`, tracking completed lessons, the current lesson and knowledge-check results. An account-backed store can implement the same `ProgressStore` interface without changing any UI. Older `electricity/*` progress keys are migrated automatically, and old URLs redirect.
+- **Progress is behind an interface** (`lib/progress/types.ts`). Today it's `localStorage`, tracking completed lessons, the current lesson, quiz and knowledge-check results, challenges and lab experiments explored. An account-backed store can implement the same `ProgressStore` interface without changing any UI. Progress saved under the old `fundamentals/*` keys is migrated to `electricity/*` automatically, and old URLs redirect.
 - **Lesson building blocks:** `LessonLayout`, `LessonHeader`, `LearningObjective`, `ConceptCard`, `AnalogyCard`, `KnowledgeCheck`, `KeyTakeaway`, `NextLesson`, `InteractiveSlider` (linear or logarithmic), `SafetyNotice`.
 - **Physics is pure and UI-free** (`lib/electronics.ts`), ready for unit tests and future simulators.
 - **Quick checks are data** (`QuizQuestion[]`), ready for a future quiz/assessment engine.
@@ -197,9 +197,7 @@ All diagrams are composed from reusable parts in `src/components/circuit`. Diagr
 
 ## What's next
 
-1. Module 05 — Microcontrollers: connect GPIO HIGH/LOW, clocks, registers and binary to real programmable hardware (Arduino/ESP32 simulation)
-2. Module 04 — Circuits (currently a preview): Kirchhoff's laws, dividers and RC timing
-3. More lab experiments: voltage divider, RC charging, LED driver
-4. A drag-and-drop circuit builder (the Component Challenge board and Logic Playground are first steps)
-5. Unit tests for `lib/electronics.ts` and `lib/logic.ts`, and component tests for the lab
-6. Accounts and synced progress, implementing `ProgressStore` against an API
+1. Module 04 — Microcontrollers: GPIO HIGH/LOW, PWM, ADC and serial, simulated first, building on Modules 02–03
+2. A drag-and-drop circuit builder with branches (parallel paths), extending `lib/series-board.ts` to small networks
+3. Unit tests in the repo (the logic engine, circuit engine and electronics maths are already pure functions)
+4. Accounts and synced progress, implementing `ProgressStore` against an API

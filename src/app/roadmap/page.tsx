@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Award, Bot, Cloud, Cpu, ListChecks, MessageSquareText, Puzzle, Trophy, UserRound, Workflow } from "lucide-react";
+import { ArrowDown, ArrowRight, Award, Bot, Cloud, Cpu, MessageSquareText, Puzzle, Trophy, UserRound, Workflow } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Badge, ComingSoonBadge, PreviewBadge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
@@ -18,8 +18,7 @@ export const metadata: Metadata = {
 
 const PLATFORM_FEATURES = [
   { icon: UserRound, title: "Accounts & synced progress", body: "Pick up on any device." },
-  { icon: ListChecks, title: "Quizzes & assessments", body: "Deeper checks at the end of each module." },
-  { icon: Workflow, title: "Circuit builder", body: "Drag parts onto a canvas and simulate your own designs." },
+  { icon: Workflow, title: "Drag-and-drop circuit builder", body: "Place any parts anywhere and simulate your own designs." },
   { icon: Cpu, title: "Arduino & ESP32 labs", body: "Write code and watch simulated pins respond." },
   { icon: Cloud, title: "AWS IoT integration", body: "Send real device data to the cloud." },
   { icon: MessageSquareText, title: "AI-assisted learning", body: "Ask questions about any circuit you're looking at." },
@@ -62,7 +61,7 @@ export default function RoadmapPage() {
                     </span>
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-mono text-xs text-ink-subtle">Stage {String(index + 1).padStart(2, "0")}</span>
+                        <span className="font-mono text-xs text-ink-subtle">Module {stage.number}</span>
                         {status === "available" ? <Badge tone="positive">Available</Badge> : status === "preview" ? <PreviewBadge /> : <ComingSoonBadge />}
                       </div>
                       <h2 className="mt-1.5 text-xl font-semibold text-ink sm:text-2xl">{stage.title}</h2>
@@ -74,7 +73,7 @@ export default function RoadmapPage() {
                           {stage.outcome}
                         </span>
                       </p>
-                      {stageModule ? (
+                      {stageModule && status === "available" ? (
                         <Link href={`/learn/${stageModule.slug}`} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-cyan hover:underline">
                           Module {stageModule.number}: {stageModule.title}
                           <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -110,7 +109,7 @@ export default function RoadmapPage() {
             id="platform-heading"
             eyebrow="Platform roadmap"
             title="What's coming to CircuitForge"
-            description="This first release focuses on electricity fundamentals and the lab. These features are planned next — none of them are live yet."
+            description="Today CircuitForge covers the first three modules, the Interactive Lab and quizzes. These features are planned next — none of them are live yet."
           />
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {PLATFORM_FEATURES.map((feature) => (

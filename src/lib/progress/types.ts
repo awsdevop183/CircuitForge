@@ -26,6 +26,8 @@ export interface ProgressState {
   currentLessonKey: string | null;
   /** Challenge id → attempts and completion (e.g. "components/component-challenge"). */
   challenges: Readonly<Record<string, ChallengeResult>>;
+  /** Lab experiment slug → ISO timestamp of the first visit. */
+  experiments: Readonly<Record<string, string>>;
 }
 
 export interface ProgressStore {
@@ -37,6 +39,7 @@ export interface ProgressStore {
   recordQuizResult(key: string, correct: number, total: number): void;
   setCurrentLesson(key: string): void;
   recordChallengeAttempt(id: string, solved: boolean): void;
+  recordExperimentVisit(slug: string): void;
   reset(): void;
 }
 
@@ -45,4 +48,5 @@ export const EMPTY_PROGRESS: ProgressState = {
   quizResults: {},
   currentLessonKey: null,
   challenges: {},
+  experiments: {},
 };

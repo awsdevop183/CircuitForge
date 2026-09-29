@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, type RefObject } from "react";
-import { useAnimationFrame, useInView, useReducedMotion } from "framer-motion";
+import { useInView, useReducedMotion } from "framer-motion";
+import { useFrame } from "@/lib/use-frame";
 
 /**
  * Seconds elapsed while `running`, the element is on screen and the user
@@ -14,7 +15,7 @@ export function useSimulationClock<T extends Element>(running = true): [number, 
   const reduceMotion = useReducedMotion();
   const [time, setTime] = useState(0);
 
-  useAnimationFrame((_, delta) => {
+  useFrame((_, delta) => {
     if (!running || !inView || reduceMotion) return;
     setTime((t) => t + Math.min(delta, 64) / 1000);
   });

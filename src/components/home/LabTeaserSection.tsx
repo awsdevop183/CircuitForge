@@ -48,10 +48,16 @@ export function LabTeaserSection() {
                 <Readout label="R" value={RESISTANCE} unit="Ω" size="sm" />
                 <Readout label="I" value={formatAmps(current, 2)} tone="cyan" size="sm" />
               </div>
-              <ButtonLink href="/lab" variant="secondary" className="self-start">
-                Open the full lab
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </ButtonLink>
+              <div className="flex flex-wrap gap-2">
+                <ButtonLink href="/lab/electronics" variant="secondary" className="self-start">
+                  Electricity Lab
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </ButtonLink>
+                <ButtonLink href="/lab/digital" variant="secondary" className="self-start">
+                  Digital Lab
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </ButtonLink>
+              </div>
             </div>
             <div className="bg-breadboard flex items-center px-2 py-6 sm:px-8">
               <OhmsLawCircuit

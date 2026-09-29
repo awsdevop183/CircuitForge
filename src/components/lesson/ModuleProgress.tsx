@@ -4,6 +4,7 @@ import { availableLessons, lessonKey } from "@/content/curriculum";
 import type { LearningModule } from "@/content/types";
 import { useProgress } from "@/lib/progress/use-progress";
 import { cn } from "@/lib/cn";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 
 interface ModuleProgressProps {
   module: LearningModule;
@@ -27,26 +28,14 @@ export function ModuleProgress({ module, className, variant = "compact" }: Modul
           <p className="font-mono text-2xl font-semibold text-cyan tabular-nums">{percent}%</p>
         </div>
       ) : null}
-      <div
-        role="progressbar"
-        aria-label={`${module.title} progress`}
-        aria-valuemin={0}
-        aria-valuemax={lessons.length}
-        aria-valuenow={done}
-        aria-valuetext={`${done} of ${lessons.length} lessons completed`}
-        className={cn("flex gap-[3px]", variant === "full" ? "h-3" : "h-1.5")}
-      >
-        {/* One segment per lesson, like a row of LEDs lighting up */}
-        {lessons.map((lesson) => (
-          <span
-            key={lesson.slug}
-            className={cn(
-              "flex-1 rounded-sm transition-colors duration-500",
-              isComplete(lessonKey(module.slug, lesson.slug)) ? "bg-cyan shadow-[0_0_8px_rgb(34_211_238/0.7)]" : "bg-line",
-            )}
-          />
-        ))}
-      </div>
+      <ProgressBar
+        label={`${module.title} progress`}
+        valueText={`${done} of ${lessons.length} lessons completed`}
+        value={done}
+        max={lessons.length}
+        segments={lessons.map((lesson) => isComplete(lessonKey(module.slug, lesson.slug)))}
+        size={variant === "full" ? "md" : "sm"}
+      />
       <p className="mt-2 flex justify-between text-xs text-ink-subtle">
         <span>
           <span className="font-mono text-ink-muted">

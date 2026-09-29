@@ -2,8 +2,11 @@ import { EMPTY_PROGRESS, type ProgressState, type ProgressStore } from "./types"
 
 const STORAGE_KEY = "circuitforge.progress.v1";
 
-/** Module slugs renamed since earlier releases, so old progress carries over. */
-const RENAMED_MODULES: Readonly<Record<string, string>> = { electricity: "fundamentals" };
+/**
+ * Module slugs renamed since earlier releases, so old progress carries over.
+ * (v0.2–v0.4 called Module 01 "fundamentals"; it is "electricity" again.)
+ */
+const RENAMED_MODULES: Readonly<Record<string, string>> = { fundamentals: "electricity" };
 
 function migrateKey(key: string): string {
   const [moduleSlug, ...rest] = key.split("/");
@@ -25,6 +28,7 @@ function normalize(value: unknown): ProgressState {
     quizResults: migrateRecord(raw.quizResults),
     currentLessonKey: typeof raw.currentLessonKey === "string" ? migrateKey(raw.currentLessonKey) : null,
     challenges: migrateRecord(raw.challenges),
+    experiments: migrateRecord<string>(raw.experiments),
   };
 }
 
@@ -122,6 +126,9 @@ export function createLocalProgressStore(): ProgressStore {
           },
         };
       });
+    },
+    recordExperimentVisit(slug) {
+      update((s) => (s.experiments[slug] ? null : { ...s, experiments: { ...s.experiments, [slug]: new Date().toISOString() } }));
     },
     setCurrentLesson(key) {
       update((s) => (s.currentLessonKey === key ? null : { ...s, currentLessonKey: key }));

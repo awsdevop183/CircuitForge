@@ -1,4 +1,4 @@
-import { Eye, FlaskConical, Hammer, MousePointerClick, type LucideIcon } from "lucide-react";
+import { Eye, FlaskConical, Hammer, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -7,26 +7,20 @@ const PILLARS: { icon: LucideIcon; step: string; title: string; body: string }[]
   {
     icon: Eye,
     step: "See it",
-    title: "Watch the invisible",
-    body: "Charge, current and voltage are animated so you can watch what a circuit is actually doing.",
-  },
-  {
-    icon: MousePointerClick,
-    step: "Interact",
-    title: "Touch every idea",
-    body: "Flip switches, drag sliders and swap parts. Every concept responds to you in real time.",
+    title: "Visual explanations",
+    body: "Charge, current, voltage and logic signals are animated, so you watch what a circuit is actually doing instead of imagining it.",
   },
   {
     icon: FlaskConical,
     step: "Experiment",
-    title: "Test it in the lab",
-    body: "Form a prediction, change one variable, and check the readout. Real physics, real numbers.",
+    title: "Interactive simulations",
+    body: "Flip switches, drag sliders, swap parts and toggle inputs. Predict, change one thing, and check the result — nothing can burn out here.",
   },
   {
     icon: Hammer,
-    step: "Build",
-    title: "Make it physical",
-    body: "Projects turn each concept into hardware on your bench — from a single LED to edge AI.",
+    step: "Build it",
+    title: "Practical projects",
+    body: "Projects turn each idea into safe, low-voltage hardware on your desk — from a single LED to connected, intelligent devices.",
   },
 ];
 
@@ -36,11 +30,11 @@ export function PillarsSection() {
       <Container>
         <SectionHeading
           id="pillars-heading"
-          eyebrow="The CircuitForge method"
-          title="Don't just read electronics."
+          eyebrow="Why CircuitForge?"
+          title="Don't just read electronics. See it. Experiment. Build it."
           description="Every concept moves through the same loop — so understanding comes from what you see and do, not from memorising definitions."
         />
-        <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-12 grid gap-4 md:grid-cols-3">
           {PILLARS.map((pillar, index) => (
             <li key={pillar.step}>
               <Reveal delay={index * 0.08} className="h-full">

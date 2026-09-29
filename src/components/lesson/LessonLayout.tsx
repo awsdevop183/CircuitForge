@@ -30,8 +30,8 @@ interface LessonLayoutProps {
 
 /**
  * Shared shell for every lesson: header and objective, the learning-loop
- * sections (with the analogy after the first concept), key takeaway,
- * knowledge check, next lesson and pager.
+ * sections (with the analogy after the first concept), knowledge check,
+ * key takeaway, next lesson and pager.
  */
 export function LessonLayout({ location, content }: LessonLayoutProps) {
   const { module, lesson, previous, next } = location;
@@ -41,8 +41,8 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
     ...content.sections.map((section) => ({ id: section.id, title: section.title, label: STAGES[section.stage].label })),
     ...(content.whereFound?.length ? [{ id: WHERE_ID, title: "Where you'll find it", label: STAGES["real-world"].label }] : []),
     ...(content.mistakes?.length ? [{ id: MISTAKES_ID, title: "Common beginner mistakes", label: "Avoid" }] : []),
-    { id: TAKEAWAY_ID, title: "Key takeaway", label: "Summary" },
     { id: QUICK_CHECK_ID, title: "Knowledge check", label: STAGES["quick-check"].label },
+    { id: TAKEAWAY_ID, title: "Key takeaway", label: "Summary" },
     { id: NEXT_ID, title: content.next.title, label: STAGES.next.label },
   ];
 
@@ -79,6 +79,10 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
 
           {content.mistakes?.length ? <BeginnerMistakes id={MISTAKES_ID} mistakes={content.mistakes} safety={content.safety} /> : null}
 
+          <LessonSectionBlock id={QUICK_CHECK_ID} stage="quick-check" title="Knowledge check">
+            <LessonCompletion progressKey={progressKey} questions={content.quickCheck} />
+          </LessonSectionBlock>
+
           <section id={TAKEAWAY_ID} aria-labelledby={`${TAKEAWAY_ID}-heading`} className="border-t border-line py-12 sm:py-14">
             <p className="eyebrow text-amber">Summary</p>
             <h2 id={`${TAKEAWAY_ID}-heading`} className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">
@@ -88,10 +92,6 @@ export function LessonLayout({ location, content }: LessonLayoutProps) {
               <KeyTakeaway headline={content.keyTakeaway} items={content.takeaways} />
             </div>
           </section>
-
-          <LessonSectionBlock id={QUICK_CHECK_ID} stage="quick-check" title="Knowledge check">
-            <LessonCompletion progressKey={progressKey} questions={content.quickCheck} />
-          </LessonSectionBlock>
 
           <LessonSectionBlock id={NEXT_ID} stage="next" title={content.next.title}>
             <NextLesson next={content.next} />

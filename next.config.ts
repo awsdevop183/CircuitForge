@@ -4,10 +4,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   async redirects() {
-    // Module 01 was renamed from "electricity" to "fundamentals" in v0.2.
+    // Module 01 lived at /learn/fundamentals in v0.2–v0.4; /learn/electricity is canonical.
     return [
-      { source: "/learn/electricity", destination: "/learn/fundamentals", permanent: true },
-      { source: "/learn/electricity/:lesson", destination: "/learn/fundamentals/:lesson", permanent: true },
+      { source: "/learn/fundamentals", destination: "/learn/electricity", permanent: true },
+      { source: "/learn/fundamentals/:lesson", destination: "/learn/electricity/:lesson", permanent: true },
     ];
   },
 };

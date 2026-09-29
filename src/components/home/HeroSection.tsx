@@ -1,14 +1,15 @@
 import { ArrowRight, FlaskConical } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { FIRST_LESSON_HREF } from "@/content/curriculum";
+import { FIRST_LESSON_HREF, MODULES } from "@/content/curriculum";
+import { EXPERIMENTS } from "@/content/experiments";
 import { SITE } from "@/lib/navigation";
 import { CircuitTraces } from "./CircuitTraces";
 import { HeroCircuit } from "./HeroCircuit";
 
 const HERO_FACTS = [
-  { value: "9", label: "stage learning path" },
-  { value: "Live", label: "circuit simulations" },
+  { value: String(MODULES.filter((m) => m.status === "available").length), label: "modules ready to learn" },
+  { value: String(EXPERIMENTS.length), label: "live lab experiments" },
   { value: "0", label: "walls of text" },
 ];
 
@@ -27,7 +28,7 @@ export function HeroSection() {
         <div>
           <p className="eyebrow mb-6 inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/5 px-3 py-1.5 text-cyan-soft">
             <span className="size-1.5 rounded-full bg-cyan shadow-[0_0_8px_#22d3ee]" aria-hidden="true" />
-            {SITE.tagline}
+            Interactive electronics laboratory
           </p>
           <h1
             id="hero-heading"
@@ -35,9 +36,10 @@ export function HeroSection() {
           >
             Learn Electronics by <span className="text-cyan">Seeing</span> How It Works.
           </h1>
-          <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink-muted">
-            CircuitForge takes you from voltage and current to circuits, microcontrollers, IoT, robotics, and
-            intelligent edge systems — one concept at a time.
+          <p className="mt-5 font-display text-2xl font-medium text-cyan-soft sm:text-3xl">{SITE.tagline}</p>
+          <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-ink-muted">
+            Watch current flow, flip switches, toggle logic gates and build circuits — then learn the words for what you just saw. Built for
+            curious students aged 10 and up.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={FIRST_LESSON_HREF} size="lg">
@@ -46,7 +48,7 @@ export function HeroSection() {
             </ButtonLink>
             <ButtonLink href="/lab" size="lg" variant="secondary">
               <FlaskConical className="size-5 text-amber" aria-hidden="true" />
-              Explore the Lab
+              Open Interactive Lab
             </ButtonLink>
           </div>
           <dl className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t border-line pt-6">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useReducer, useState } from "react";
-import { motion } from "framer-motion";
 import { Pause, Play, Timer, TriangleAlert, Upload } from "lucide-react";
 import { CircuitCanvas } from "@/components/circuit";
 import { pathThrough } from "@/components/circuit/geometry";
@@ -9,8 +8,10 @@ import { dFlipFlop, fromBits, invert, srLatch, type Bit } from "@/lib/logic";
 import { cn } from "@/lib/cn";
 import { LOGIC_COLORS } from "./constants";
 import { DigitalIndicator } from "./DigitalIndicator";
+import { DigitalSignal } from "./DigitalSignal";
 import { GateInput } from "./GateInput";
 import { LogicGate } from "./LogicGate";
+import { BinaryDisplay } from "./BinaryDisplay";
 import { MomentaryButton } from "./MomentaryButton";
 import { SignalWire } from "./SignalWire";
 
@@ -291,18 +292,6 @@ function TimingDiagram({ history }: { history: readonly Sample[] }) {
     { key: "d", label: "D", color: "#38bdf8" },
     { key: "q", label: "Q", color: LOGIC_COLORS.high },
   ];
-  const trace = (key: keyof Sample, row: number) => {
-    const hi = row * rowH + 12;
-    const lo = row * rowH + 36;
-    return history
-      .map((s, i) => {
-        const x = left + i * step;
-        const yv = s[key] ? hi : lo;
-        const prev = i > 0 ? (history[i - 1]![key] ? hi : lo) : yv;
-        return `${i === 0 ? `M ${x} ${yv}` : `L ${x} ${prev} L ${x} ${yv}`} L ${x + step} ${yv}`;
-      })
-      .join(" ");
-  };
   return (
     <div className="overflow-x-auto">
       <svg viewBox={`0 0 ${width} ${rows.length * rowH + 6}`} className="h-auto w-full min-w-[30rem]" role="img" aria-label={`Timing diagram of the last ${history.length} steps. Q is currently ${history[history.length - 1]?.q ?? 0}.`}>
@@ -312,12 +301,7 @@ function TimingDiagram({ history }: { history: readonly Sample[] }) {
           ) : null,
         )}
         {rows.map((row, r) => (
-          <g key={row.key}>
-            <text x={4} y={r * rowH + 28} fontSize={12} fontWeight={700} fill={row.color} fontFamily="var(--font-mono)">
-              {row.label}
-            </text>
-            <path d={trace(row.key, r)} fill="none" stroke={row.color} strokeWidth={2.5} strokeLinejoin="round" />
-          </g>
+          <DigitalSignal key={row.key} bits={history.map((s) => s[row.key])} label={row.label} color={row.color} y={r * rowH + 12} step={step} labelWidth={left} />
         ))}
       </svg>
     </div>
@@ -360,38 +344,14 @@ export function RegisterDemo() {
       <div className="grid gap-px bg-line lg:grid-cols-2">
         <div className="bg-logic-grid p-4 sm:p-5">
           <p className="eyebrow text-ink-subtle">Data inputs (D3 … D0)</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {inputs.map((b, i) => (
-              <button
-                key={i}
-                type="button"
-                role="switch"
-                aria-checked={b === 1}
-                aria-label={`Data input D${3 - i}`}
-                onClick={() => setInputs((prev) => prev.map((v, j) => (j === i ? invert(v) : v)))}
-                className={cn("size-12 rounded-lg border-2 font-mono text-xl font-bold", b ? "border-logic bg-logic/15 text-logic" : "border-line-strong text-ink-subtle")}
-              >
-                {b}
-              </button>
-            ))}
-          </div>
+          <BinaryDisplay bits={inputs} onToggle={(i) => setInputs((prev) => prev.map((v, j) => (j === i ? invert(v) : v)))} bitLabel={(i) => `Data input D${3 - i}`} className="mt-3" />
           <button type="button" onClick={load} className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-xl bg-clock px-4 font-semibold text-void hover:brightness-110">
             <Timer className="size-5" aria-hidden="true" />
             Clock pulse (load)
           </button>
           <p className="eyebrow mt-5 text-ink-subtle">4-bit register (stored)</p>
           <div className="mt-2 flex items-center gap-2">
-            {stored.map((b, i) => (
-              <motion.span
-                key={`${loads}-${i}`}
-                initial={{ rotateX: 90, opacity: 0.4 }}
-                animate={{ rotateX: 0, opacity: 1 }}
-                transition={{ delay: i * 0.06 }}
-                className={cn("flex size-14 items-center justify-center rounded-lg border-2 font-mono text-2xl font-bold", b ? "border-logic bg-logic/20 text-logic-soft shadow-[0_0_16px_-4px_rgb(163_230_53/0.8)]" : "border-line-strong bg-void/60 text-ink-subtle")}
-              >
-                {b}
-              </motion.span>
-            ))}
+            <BinaryDisplay bits={stored} loadKey={loads} />
             <span className="ml-2 font-mono text-ink-muted">= {fromBits(stored)}</span>
           </div>
           <p className="mt-3 text-sm text-ink-muted" aria-live="polite">

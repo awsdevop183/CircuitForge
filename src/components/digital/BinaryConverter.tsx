@@ -6,6 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { fromBits, invert, placeValues, toBits, type Bit } from "@/lib/logic";
 import { cn } from "@/lib/cn";
+import { BinaryDisplay } from "./BinaryDisplay";
 
 type Width = 4 | 8;
 
@@ -50,27 +51,7 @@ export function BinaryConverter({ initialValue = 5, initialWidth = 4 }: { initia
       <div className="bg-logic-grid p-4 sm:p-6">
         <p className="eyebrow text-ink-subtle">Binary → decimal: tap a bit to flip it</p>
         <div className="mt-4 overflow-x-auto pb-1">
-          <div className={cn("mx-auto grid w-max gap-2", width === 8 ? "grid-cols-8" : "grid-cols-4")}>
-            {places.map((place, i) => (
-              <div key={place} className="flex flex-col items-center gap-1.5">
-                <span className="font-mono text-xs text-ink-subtle sm:text-sm">{place}</span>
-                <button
-                  type="button"
-                  role="switch"
-                  aria-checked={bits[i] === 1}
-                  aria-label={`Bit worth ${place}`}
-                  onClick={() => toggle(i)}
-                  className={cn(
-                    "flex size-11 items-center justify-center rounded-xl border-2 font-mono text-2xl font-bold transition-all sm:size-14 sm:text-3xl",
-                    bits[i] ? "border-logic bg-logic/15 text-logic shadow-[0_0_18px_-4px_rgb(163_230_53/0.8)]" : "border-line-strong bg-void/60 text-ink-subtle hover:border-logic/50",
-                  )}
-                >
-                  {bits[i]}
-                </button>
-                <span className={cn("font-mono text-xs sm:text-sm", bits[i] ? "text-logic-soft" : "text-ink-subtle/60")}>{bits[i] ? `+${place}` : "0"}</span>
-              </div>
-            ))}
-          </div>
+          <BinaryDisplay bits={bits} onToggle={toggle} showPlaces showContributions size="lg" className="mx-auto" />
         </div>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-3 font-mono" aria-live="polite">
           <span className="text-lg text-ink-muted">{terms.length ? terms.join(" + ") : "0"}</span>

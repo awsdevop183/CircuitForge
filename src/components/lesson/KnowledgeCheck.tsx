@@ -1,17 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { CircleCheck, CircleX, RotateCcw } from "lucide-react";
-import type { QuestionType, QuizQuestion } from "@/content/lessons/types";
-import { cn } from "@/lib/cn";
-
-const TYPE_LABELS: Record<QuestionType, string> = {
-  "multiple-choice": "Multiple choice",
-  "true-false": "True or false",
-  identify: "Identify it",
-  predict: "Predict what happens",
-};
+import { RotateCcw } from "lucide-react";
+import { QUESTION_TYPE_LABELS, QuizQuestionCard } from "@/components/quiz/QuizQuestionCard";
+import type { QuizQuestion } from "@/content/lessons/types";
 
 interface KnowledgeCheckProps {
   questions: readonly QuizQuestion[];
@@ -41,12 +33,13 @@ export function KnowledgeCheck({ questions, onComplete }: KnowledgeCheckProps) {
   return (
     <div className="space-y-5">
       {questions.map((question, index) => (
-        <QuestionCard
+        <QuizQuestionCard
           key={question.id}
-          index={index}
           question={question}
+          eyebrow={`Q${index + 1} · ${QUESTION_TYPE_LABELS[question.type]}`}
           selected={answers[question.id]}
           onSelect={(optionId) => select(question.id, optionId)}
+          className="panel rounded-2xl p-5 sm:p-6"
         />
       ))}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -72,78 +65,5 @@ export function KnowledgeCheck({ questions, onComplete }: KnowledgeCheckProps) {
         ) : null}
       </div>
     </div>
-  );
-}
-
-interface QuestionCardProps {
-  index: number;
-  question: QuizQuestion;
-  selected?: string;
-  onSelect: (optionId: string) => void;
-}
-
-function QuestionCard({ index, question, selected, onSelect }: QuestionCardProps) {
-  const answered = selected !== undefined;
-  const correct = selected === question.correctOptionId;
-  const correctLabel = question.options.find((o) => o.id === question.correctOptionId)?.label;
-  const feedbackId = `${question.id}-feedback`;
-
-  return (
-    <fieldset className="panel rounded-2xl p-5 sm:p-6" aria-describedby={answered ? feedbackId : undefined}>
-      <legend className="sr-only">
-        Question {index + 1}, {TYPE_LABELS[question.type]}: {question.prompt}
-      </legend>
-      <p className="eyebrow text-amber" aria-hidden="true">
-        Q{index + 1} · {TYPE_LABELS[question.type]}
-      </p>
-      <p className="mt-2 text-lg font-medium text-ink" aria-hidden="true">
-        {question.prompt}
-      </p>
-      {question.visual ? <div className="mt-4 flex justify-center rounded-xl border border-line bg-void/40 p-4">{question.visual}</div> : null}
-      <div className={cn("mt-4 grid gap-2", question.type === "true-false" ? "grid-cols-2" : "sm:grid-cols-2")}>
-        {question.options.map((option) => {
-          const isSelected = selected === option.id;
-          const isCorrect = option.id === question.correctOptionId;
-          return (
-            <button
-              key={option.id}
-              type="button"
-              disabled={answered}
-              aria-pressed={isSelected}
-              onClick={() => onSelect(option.id)}
-              className={cn(
-                "flex min-h-12 items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-colors disabled:cursor-default",
-                !answered && "border-line-strong bg-void/40 text-ink hover:border-cyan/60 hover:bg-cyan/5",
-                answered && isCorrect && "border-positive/60 bg-positive/10 text-ink",
-                answered && isSelected && !isCorrect && "border-negative/60 bg-negative/10 text-ink",
-                answered && !isSelected && !isCorrect && "border-line bg-void/20 text-ink-subtle",
-              )}
-            >
-              <span>{option.label}</span>
-              {answered && isCorrect ? <CircleCheck className="size-5 shrink-0 text-positive" aria-label="Correct answer" /> : null}
-              {answered && isSelected && !isCorrect ? <CircleX className="size-5 shrink-0 text-negative" aria-label="Your answer, incorrect" /> : null}
-            </button>
-          );
-        })}
-      </div>
-      <AnimatePresence>
-        {answered ? (
-          <motion.div
-            id={feedbackId}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden"
-          >
-            <p className="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink-muted" role="status">
-              <strong className={correct ? "text-positive" : "text-negative"}>
-                {correct ? "Correct. " : `Not quite — the answer is “${correctLabel}”. `}
-              </strong>
-              {question.explanation}
-            </p>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </fieldset>
   );
 }

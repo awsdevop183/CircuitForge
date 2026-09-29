@@ -8,7 +8,7 @@ import { MODULES } from "@/content/curriculum";
 
 export const metadata: Metadata = {
   title: "Learn",
-  description: "The CircuitForge learning path: nine modules from electricity fundamentals to robotics and AI.",
+  description: "The CircuitForge learning path: twelve modules from electricity to AI-powered hardware.",
 };
 
 export default function LearnPage() {
@@ -17,7 +17,7 @@ export default function LearnPage() {
       <PageHeader
         eyebrow="Learning dashboard"
         title="Your path from electrons to intelligence."
-        description="Nine modules, each building on the last. Start with Electronics Fundamentals — every lesson is visual, interactive and short enough to finish in one sitting."
+        description="Twelve modules, each building on the last. Start with Electricity &amp; Fundamentals — every lesson is visual, interactive and short enough to finish in one sitting."
       >
         <ContinueLearning />
       </PageHeader>

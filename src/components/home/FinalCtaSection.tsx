@@ -1,7 +1,10 @@
 import { ArrowRight, Map as MapIcon } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { FIRST_LESSON_HREF } from "@/content/curriculum";
+import { FIRST_LESSON_HREF, MODULES } from "@/content/curriculum";
+
+const available = MODULES.filter((m) => m.status === "available");
+const lessonCount = available.reduce((n, m) => n + m.lessons.length, 0);
 
 export function FinalCtaSection() {
   return (
@@ -11,7 +14,9 @@ export function FinalCtaSection() {
           <div className="bg-circuit-grid absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" aria-hidden="true" />
           <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan to-transparent" aria-hidden="true" />
           <div className="relative">
-            <p className="eyebrow text-amber">2 modules · 29 lessons</p>
+            <p className="eyebrow text-amber">
+              {available.length} modules · {lessonCount} lessons · free
+            </p>
             <h2 id="final-cta-heading" className="mx-auto mt-4 max-w-2xl text-balance text-3xl font-semibold text-ink sm:text-5xl">
               Your first circuit is one click away.
             </h2>

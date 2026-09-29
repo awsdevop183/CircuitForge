@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useAnimationFrame } from "framer-motion";
-import { BatteryCharging, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { useFrame } from "@/lib/use-frame";
+import { BatteryCharging, Pause, Play, RotateCcw, Zap } from "lucide-react";
 import {
   Battery,
   Capacitor,
@@ -43,6 +44,22 @@ const CHARGE_PATH = `M ${LEFT} ${MID_Y - 40} L ${LEFT} ${TOP} L ${RIGHT} ${TOP} 
 const DISCHARGE_PATH = `M ${RIGHT} ${MID_Y - 40} L ${RIGHT} ${TOP} L ${SHUNT_X} ${TOP} L ${SHUNT_X} ${BOTTOM} L ${RIGHT} ${BOTTOM} L ${RIGHT} ${MID_Y + 40}`;
 
 export function CapacitorDeepDive() {
+  return (
+    <DeepDiveSection
+      eyebrow="Interactive"
+      title="Charge it. Discharge it. Time it."
+      description="A capacitor fills with charge through a resistor — quickly at first, then slower and slower. The resistor and capacitor together set the pace: τ = R × C."
+    >
+      <CapacitorLab />
+    </DeepDiveSection>
+  );
+}
+
+/**
+ * RC charging/discharging experiment: pick R and C, charge, pause, discharge
+ * or reset, and watch the voltage curve against the time constant.
+ */
+export function CapacitorLab() {
   const [resistance, setResistance] = useState(4_700);
   const [capacitance, setCapacitance] = useState(470e-6);
   const [phase, setPhase] = useState<Phase>("idle");
@@ -51,13 +68,14 @@ export function CapacitorDeepDive() {
 
   // Voltage at the start of the current phase; elapsed time is measured from there.
   const [startVoltage, setStartVoltage] = useState(0);
+  const [paused, setPaused] = useState(false);
   const elapsedRef = useRef(0);
 
   const tau = timeConstant(resistance, capacitance);
   const settled = elapsed >= tau * SETTLE_TAUS;
 
-  useAnimationFrame((_, delta) => {
-    if (phase === "idle" || settled) return;
+  useFrame((_, delta) => {
+    if (phase === "idle" || settled || paused) return;
     elapsedRef.current += Math.min(delta, 64) / 1000;
     const t = elapsedRef.current;
     setElapsed(t);
@@ -72,7 +90,17 @@ export function CapacitorDeepDive() {
     setStartVoltage(voltage);
     elapsedRef.current = 0;
     setElapsed(0);
+    setPaused(false);
     setPhase(next);
+  };
+
+  const reset = () => {
+    elapsedRef.current = 0;
+    setElapsed(0);
+    setStartVoltage(0);
+    setVoltage(0);
+    setPaused(false);
+    setPhase("idle");
   };
 
   /** Changing R or C mid-way continues from the present voltage. */
@@ -85,15 +113,11 @@ export function CapacitorDeepDive() {
 
   const current =
     phase === "charging" ? (SUPPLY - voltage) / resistance : phase === "discharging" ? voltage / resistance : 0;
-  const flowing = !settled && current > 1e-6;
+  const flowing = !settled && !paused && current > 1e-6;
   const maxCurrent = SUPPLY / RESISTOR_OPTIONS[0]!.value;
 
   return (
-    <DeepDiveSection
-      eyebrow="Interactive"
-      title="Charge it. Discharge it. Time it."
-      description="A capacitor fills with charge through a resistor — quickly at first, then slower and slower. The resistor and capacitor together set the pace: τ = R × C."
-    >
+    <div>
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4">
           <div className="panel-raised bg-breadboard rounded-2xl px-2 py-4 sm:px-6">
@@ -135,6 +159,14 @@ export function CapacitorDeepDive() {
               <Zap className="size-4" aria-hidden="true" />
               Discharge
             </Button>
+            <Button onClick={() => setPaused((p) => !p)} disabled={phase === "idle" || settled} variant="secondary" aria-pressed={paused}>
+              {paused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+              {paused ? "Resume" : "Stop"}
+            </Button>
+            <Button onClick={reset} variant="ghost">
+              <RotateCcw className="size-4" aria-hidden="true" />
+              Reset
+            </Button>
           </div>
           <SegmentedControl
             label="Resistance"
@@ -157,7 +189,9 @@ export function CapacitorDeepDive() {
             <Readout label="Charge level" value={Math.round((voltage / SUPPLY) * 100)} unit="%" />
           </div>
           <p className="text-sm text-ink-muted" aria-live="polite">
-            {phase === "idle"
+            {paused
+              ? `Stopped at ${voltage.toFixed(2)} V. Press Resume to carry on.`
+              : phase === "idle"
               ? "Press Charge to close the charge switch."
               : settled
                 ? `Settled after 5τ (${(tau * SETTLE_TAUS).toFixed(1)} s). The capacitor is ${phase === "charging" ? "fully charged — current has stopped" : "empty"}.`
@@ -167,7 +201,7 @@ export function CapacitorDeepDive() {
           </p>
         </div>
       </div>
-    </DeepDiveSection>
+    </div>
   );
 }
 

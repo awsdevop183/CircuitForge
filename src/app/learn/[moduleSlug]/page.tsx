@@ -87,10 +87,25 @@ export default async function ModulePage({ params }: ModulePageProps) {
           <h2 id="lessons-heading" className="text-2xl font-semibold text-ink">
             Lessons
           </h2>
-          <p className="mt-2 text-ink-muted">Each lesson builds on the one before it — work through them in order.</p>
-          <div className="mt-6">
-            <ModuleLessonPath module={learningModule} />
-          </div>
+          {hasLessons ? (
+            <>
+              <p className="mt-2 text-ink-muted">Each lesson builds on the one before it — work through them in order.</p>
+              <div className="mt-6">
+                <ModuleLessonPath module={learningModule} />
+              </div>
+            </>
+          ) : (
+            <div className="panel mt-6 rounded-2xl p-6">
+              <ComingSoonBadge />
+              <p className="mt-3 text-ink">This module is coming soon. Its lessons haven&apos;t been written yet.</p>
+              <p className="mt-1 text-sm text-ink-muted">
+                Planned topics: {learningModule.topics.join(", ")}. In the meantime, the first three modules build everything you&apos;ll need.
+              </p>
+              <Link href="/learn" className="mt-4 inline-flex text-sm font-medium text-cyan underline underline-offset-2">
+                Back to the learning path
+              </Link>
+            </div>
+          )}
         </section>
 
         {learningModule.activities?.length ? (

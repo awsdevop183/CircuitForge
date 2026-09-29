@@ -64,6 +64,8 @@ export interface LearningModule {
   slug: string;
   title: string;
   description: string;
+  /** What a learner can do after the module (shown on the roadmap). */
+  outcome: string;
   topics: string[];
   difficulty: Difficulty;
   status: ModuleStatus;

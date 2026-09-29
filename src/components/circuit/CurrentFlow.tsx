@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useAnimationFrame, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useFrame } from "@/lib/use-frame";
 import { CIRCUIT_COLORS, type FlowDirection } from "./constants";
 
 interface CurrentFlowProps {
@@ -55,7 +56,7 @@ export function CurrentFlow({
   const inView = useInView(pathRef, { margin: "80px" });
   const dotColor = color ?? (direction === "electron" ? CIRCUIT_COLORS.cyanSoft : CIRCUIT_COLORS.amber);
 
-  useAnimationFrame((_, delta) => {
+  useFrame((_, delta) => {
     const path = pathRef.current;
     if (!path || !active || reduceMotion || !inView) return;
     if (alternating) {

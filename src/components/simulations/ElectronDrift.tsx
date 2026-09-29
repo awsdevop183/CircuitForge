@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useAnimationFrame, useInView, useReducedMotion } from "framer-motion";
+import { useInView, useReducedMotion } from "framer-motion";
+import { useFrame } from "@/lib/use-frame";
 import { ArrowLeft, Plug, Unplug } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -46,7 +47,7 @@ export function ElectronDrift() {
   const inView = useInView(ref);
   const reduceMotion = useReducedMotion();
 
-  useAnimationFrame((_, delta) => {
+  useFrame((_, delta) => {
     if (!inView || reduceMotion) return;
     const dt = Math.min(delta, 50) / 1000;
     let crossed = 0;

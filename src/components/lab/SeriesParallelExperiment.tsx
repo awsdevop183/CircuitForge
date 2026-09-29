@@ -11,7 +11,7 @@ import { formatAmps, formatOhms, formatVolts, formatWatts } from "@/lib/format";
 import { clamp } from "@/lib/math";
 import { cn } from "@/lib/cn";
 import { ChallengeList } from "./ChallengeList";
-import { ExperimentPanel } from "./ExperimentPanel";
+import { InteractivePanel } from "@/components/ui/InteractivePanel";
 import { SeriesParallelCircuit, type CircuitMode } from "./SeriesParallelCircuit";
 
 /** Bulbs are modelled as fixed resistors rated for full brightness at 6 V. */
@@ -101,7 +101,7 @@ export function SeriesParallelExperiment() {
   return (
     <div className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
       <div className="space-y-5">
-        <ExperimentPanel
+        <InteractivePanel
           title="Circuit"
           aside={
             <span className={cn("eyebrow", mode === "series" ? "text-amber" : "text-cyan")}>
@@ -118,9 +118,9 @@ export function SeriesParallelExperiment() {
             lampConnected={connected}
             referenceCurrent={referenceCurrent}
           />
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Measurements">
+        <InteractivePanel title="Measurements">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
             <Readout label="Total R" value={formatOhms(result.totalResistance)} size="sm" />
             <Readout label="Total I" value={formatAmps(result.totalCurrent, 3)} tone="cyan" size="sm" />
@@ -169,11 +169,11 @@ export function SeriesParallelExperiment() {
               </motion.p>
             ) : null}
           </AnimatePresence>
-        </ExperimentPanel>
+        </InteractivePanel>
       </div>
 
       <div className="space-y-5">
-        <ExperimentPanel title="Controls">
+        <InteractivePanel title="Controls">
           <div className="space-y-6">
             <SegmentedControl label="Wiring" options={MODE_OPTIONS} value={mode} onChange={changeMode} />
             <SegmentedControl label="Supply voltage" options={SUPPLY_OPTIONS} value={supply} onChange={setSupply} size="sm" />
@@ -212,9 +212,9 @@ export function SeriesParallelExperiment() {
               {connected[1] ? "Remove bulb 2" : "Put bulb 2 back"}
             </button>
           </div>
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel
+        <InteractivePanel
           title="What you're seeing"
           aside={<GitMerge className="size-4 text-ink-subtle" aria-hidden="true" />}
         >
@@ -237,11 +237,11 @@ export function SeriesParallelExperiment() {
               </ul>
             </motion.div>
           </AnimatePresence>
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Your goals">
+        <InteractivePanel title="Your goals">
           <ChallengeList challenges={challenges} />
-        </ExperimentPanel>
+        </InteractivePanel>
       </div>
     </div>
   );

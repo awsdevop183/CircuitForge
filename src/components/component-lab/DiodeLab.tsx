@@ -5,6 +5,7 @@ import { FlipHorizontal2 } from "lucide-react";
 import { Battery, CircuitCanvas, CircuitLabel, CurrentFlow, Diode, Lamp, Wire, rectLoop } from "@/components/circuit";
 import { useSimulationClock } from "@/components/simulations/use-simulation-clock";
 import { Readout } from "@/components/ui/Readout";
+import { Waveform } from "@/components/ui/Waveform";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { solveLoop } from "@/lib/circuit-sim";
 import { formatAmps } from "@/lib/format";
@@ -96,17 +97,11 @@ export function DiodeLab() {
 export function HalfWaveRectifier() {
   const [withDiode, setWithDiode] = useState<"no" | "yes">("yes");
   const [time, ref] = useSimulationClock<HTMLDivElement>();
-  const W = 440;
-  const H = 110;
-  const mid = H / 2;
-  const amp = 38;
-  const trace = (rectify: boolean) =>
+  const samples = (rectify: boolean) =>
     Array.from({ length: 161 }, (_, i) => {
-      const t = time - (1 - i / 160) * 3;
-      const v = Math.sin(2 * Math.PI * 0.7 * t);
-      const out = rectify ? Math.max(0, v) : v;
-      return `${i === 0 ? "M" : "L"} ${(20 + (i / 160) * (W - 40)).toFixed(1)} ${(mid - out * amp).toFixed(1)}`;
-    }).join(" ");
+      const v = Math.sin(2 * Math.PI * 0.7 * (time - (1 - i / 160) * 3));
+      return rectify ? Math.max(0, v) : v;
+    });
 
   return (
     <div ref={ref} className="p-4 sm:p-5">
@@ -121,20 +116,8 @@ export function HalfWaveRectifier() {
         size="sm"
       />
       <div className="mt-4 grid gap-4 md:grid-cols-2">
-        {[
-          { title: "Input: AC", d: trace(false), color: "#22d3ee" },
-          { title: withDiode === "yes" ? "Output: positive halves only" : "Output: still AC", d: trace(withDiode === "yes"), color: "#f5a524" },
-        ].map((panel) => (
-          <figure key={panel.title} className="rounded-xl border border-line bg-void/40 p-3">
-            <figcaption className="eyebrow mb-1 text-ink-subtle">{panel.title}</figcaption>
-            <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={panel.title}>
-              <line x1={20} x2={W - 20} y1={mid} y2={mid} stroke="#34445a" />
-              <text x={14} y={mid - 30} fontSize={10} fill="#fca5a5" textAnchor="end" fontFamily="var(--font-mono)">+</text>
-              <text x={14} y={mid + 34} fontSize={10} fill="#93c5fd" textAnchor="end" fontFamily="var(--font-mono)">−</text>
-              <path d={panel.d} fill="none" stroke={panel.color} strokeWidth={2.5} />
-            </svg>
-          </figure>
-        ))}
+        <Waveform title="Input: AC" samples={samples(false)} min={-1.2} max={1.2} color="#22d3ee" zeroLine />
+        <Waveform title={withDiode === "yes" ? "Output: positive halves only" : "Output: still AC"} samples={samples(withDiode === "yes")} min={-1.2} max={1.2} color="#f5a524" zeroLine />
       </div>
       <p className="mt-3 text-sm text-ink-muted" aria-live="polite">
         {withDiode === "yes"

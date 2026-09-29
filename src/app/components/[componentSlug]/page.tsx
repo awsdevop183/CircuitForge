@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookOpen, CircleAlert, MapPin, ShieldAlert } from "lucide-react";
-import { ComponentExperiment } from "@/components/component-lab/ComponentExperiment";
+import { ArrowLeft, ArrowRight, BookOpen, CircleAlert, Cog, MapPin, ShieldAlert } from "lucide-react";
+import { InteractivePanel } from "@/components/ui/InteractivePanel";
 import { ComponentSpecification } from "@/components/component-lab/ComponentSpecification";
 import { ComponentSymbol } from "@/components/explorer/ComponentSymbol";
 import { DEEP_DIVES } from "@/components/explorer/deep-dives/registry";
@@ -86,6 +86,16 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           </div>
         </header>
 
+        <section aria-labelledby="how-heading" className="mt-14 grid gap-4 rounded-2xl border border-line bg-surface p-6 md:grid-cols-[auto_1fr] md:items-center">
+          <Cog className="size-8 text-cyan" aria-hidden="true" />
+          <div>
+            <h2 id="how-heading" className="text-xl font-semibold text-ink">
+              How it works
+            </h2>
+            <p className="mt-2 leading-relaxed text-ink-muted">{component.howItWorks}</p>
+          </div>
+        </section>
+
         <section aria-labelledby="try-heading" className="mt-14">
           <p className="eyebrow text-cyan">Interact</p>
           <h2 id="try-heading" className="mt-2 text-2xl font-semibold text-ink sm:text-3xl">
@@ -93,34 +103,33 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           </h2>
           <div className="mt-6 space-y-6">
             {experiments.map(({ title, prompt, Demo }) => (
-              <ComponentExperiment key={title} title={title} prompt={prompt}>
+              <InteractivePanel key={title} title={title} prompt={prompt} experiment bodyClassName="p-0">
                 <Demo />
-              </ComponentExperiment>
+              </InteractivePanel>
             ))}
           </div>
         </section>
 
-        <section aria-labelledby="specs-heading" className="mt-14 grid gap-4 lg:grid-cols-[1.3fr_1fr]">
-          <div>
-            <h2 id="specs-heading" className="eyebrow text-cyan">
-              Specifications that matter
-            </h2>
-            <ComponentSpecification specs={component.specs} className="mt-4" />
-          </div>
-          <div className="panel rounded-2xl p-6">
-            <h2 className="eyebrow flex items-center gap-2 text-amber">
-              <MapPin className="size-4" aria-hidden="true" />
-              Where you&apos;ll find it
-            </h2>
-            <ul className="mt-4 space-y-3">
-              {component.uses.map((use) => (
-                <li key={use} className="flex items-center gap-3 text-sm text-ink-muted">
-                  <span className="size-1.5 shrink-0 rounded-full bg-amber" aria-hidden="true" />
-                  {use}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <section aria-labelledby="uses-heading" className="panel mt-14 rounded-2xl p-6">
+          <h2 id="uses-heading" className="eyebrow flex items-center gap-2 text-amber">
+            <MapPin className="size-4" aria-hidden="true" />
+            Real-world applications
+          </h2>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {component.uses.map((use) => (
+              <li key={use} className="flex items-center gap-3 text-sm text-ink-muted">
+                <span className="size-1.5 shrink-0 rounded-full bg-amber" aria-hidden="true" />
+                {use}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="specs-heading" className="mt-10">
+          <h2 id="specs-heading" className="eyebrow text-cyan">
+            Specifications that matter
+          </h2>
+          <ComponentSpecification specs={component.specs} className="mt-4" />
         </section>
 
         <section aria-labelledby="mistakes-heading" className="mt-10 rounded-2xl border border-orange/40 bg-orange/5 p-6">
@@ -165,7 +174,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
         <section aria-labelledby="related-heading" className="mt-14">
           <h2 id="related-heading" className="eyebrow text-cyan">
-            Related components
+            Related components and concepts
           </h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-3">
             {related.map((c) => (
@@ -181,6 +190,11 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             ))}
           </ul>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            {lesson ? (
+              <Link href={lessonHref("components", lesson.slug)} className="text-cyan hover:underline">
+                Lesson: {lesson.title} →
+              </Link>
+            ) : null}
             <Link href="/components/compare" className="text-cyan hover:underline">
               Compare similar components →
             </Link>

@@ -9,7 +9,7 @@ import type { FlowDirection } from "@/components/circuit";
 import { currentFrom, powerFrom } from "@/lib/electronics";
 import { formatAmps, formatFixed, formatOhms, formatWatts } from "@/lib/format";
 import { ChallengeList } from "./ChallengeList";
-import { ExperimentPanel } from "./ExperimentPanel";
+import { InteractivePanel } from "@/components/ui/InteractivePanel";
 import { FormulaDisplay } from "./FormulaDisplay";
 import { IVGraph } from "./IVGraph";
 import { OhmsLawCircuit } from "./OhmsLawCircuit";
@@ -52,7 +52,7 @@ export function OhmsLawExperiment() {
   return (
     <div className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
       <div className="space-y-5">
-        <ExperimentPanel
+        <InteractivePanel
           title="Circuit"
           aside={
             <span className="font-mono text-xs text-ink-subtle" aria-hidden="true">
@@ -69,9 +69,9 @@ export function OhmsLawExperiment() {
             maxCurrent={MAX_CURRENT}
             direction={direction}
           />
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Ohm's law, live">
+        <InteractivePanel title="Ohm's law, live">
           <FormulaDisplay
             label="Ohm's law"
             result={{ symbol: "I", value: formatAmps(current, 3), tone: "cyan" }}
@@ -86,11 +86,11 @@ export function OhmsLawExperiment() {
             <Readout label="Resistance" value={formatFixed(resistance, 0)} unit="Ω" size="sm" />
             <Readout label="Current" value={formatFixed(current, current < 0.1 ? 3 : 2)} unit="A" tone="cyan" size="sm" />
           </div>
-        </ExperimentPanel>
+        </InteractivePanel>
       </div>
 
       <div className="space-y-5">
-        <ExperimentPanel title="Controls">
+        <InteractivePanel title="Controls">
           <div className="space-y-6">
             <InteractiveSlider
               label="Voltage"
@@ -120,9 +120,9 @@ export function OhmsLawExperiment() {
               size="sm"
             />
           </div>
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Power & heat">
+        <InteractivePanel title="Power & heat">
           <div className="flex items-center gap-4">
             <Readout label="Power (P = V × I)" value={formatWatts(power, 3)} tone={overRated ? "amber" : "neutral"} className="flex-1" />
           </div>
@@ -132,15 +132,15 @@ export function OhmsLawExperiment() {
               ? `A typical ¼ W resistor would overheat here — it is dissipating ${formatWatts(power, 2)}. Watch the resistor glow.`
               : "Within a typical ¼ W resistor's rating."}
           </p>
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="I–V graph">
+        <InteractivePanel title="I–V graph">
           <IVGraph voltage={voltage} resistance={resistance} maxVoltage={OHMS_LAW_LIMITS.voltage.max} maxCurrent={0.5} />
-        </ExperimentPanel>
+        </InteractivePanel>
 
-        <ExperimentPanel title="Your goals">
+        <InteractivePanel title="Your goals">
           <ChallengeList challenges={challenges} />
-        </ExperimentPanel>
+        </InteractivePanel>
       </div>
     </div>
   );

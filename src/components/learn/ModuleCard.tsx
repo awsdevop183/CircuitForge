@@ -48,10 +48,14 @@ export function ModuleCard({ module }: { module: LearningModule }) {
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <DifficultyBadge difficulty={module.difficulty} />
-        <Badge>
-          <BookOpen className="size-3" aria-hidden="true" />
-          {module.lessons.length} lessons
-        </Badge>
+        {module.lessons.length ? (
+          <Badge>
+            <BookOpen className="size-3" aria-hidden="true" />
+            {module.lessons.length} lessons
+          </Badge>
+        ) : (
+          <ComingSoonBadge />
+        )}
       </div>
 
       <div className="mt-auto pt-6">

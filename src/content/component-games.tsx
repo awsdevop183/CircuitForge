@@ -79,16 +79,47 @@ const IDENTIFY_FACTS: readonly IdentifyFact[] = [
   { slug: "voltage-regulator", answer: "Keeping a voltage steady", distractors: ["Making light", "Switching a motor on and off by hand", "Storing charge for later"], explanation: "That's a voltage regulator (like the 7805). It turns a higher, wobbly voltage into a steady one — for example 12 V into 5 V." },
 ];
 
-export const IDENTIFY_QUESTIONS: readonly QuizQuestion[] = IDENTIFY_FACTS.map((fact) => ({
-  id: `identify-${fact.slug}`,
-  type: "identify",
-  prompt: "What is this component used for?",
-  visual: (
-    <div role="img" aria-label="Illustration of a mystery component">
-      <ComponentIllustration slug={fact.slug} className="h-36 w-auto max-w-full" />
-    </div>
-  ),
-  options: options(fact.answer, fact.distractors),
-  correctOptionId: "a",
-  explanation: fact.explanation,
-}));
+const NAMES: Record<string, { name: string; distractors: [string, string, string]; clue: string }> = {
+  resistor: { name: "Resistor", distractors: ["Capacitor", "Diode", "Fuse"], clue: "Coloured bands painted around a small body are the giveaway: they encode its resistance." },
+  led: { name: "LED", distractors: ["Lamp", "Diode", "Capacitor"], clue: "A clear or coloured dome with one long and one short leg. The long leg is the anode (+)." },
+  capacitor: { name: "Electrolytic capacitor", distractors: ["Battery", "Resistor", "Relay"], clue: "A can shape with its value (µF) printed on, and a stripe marking the negative leg." },
+  diode: { name: "Diode", distractors: ["Resistor", "Fuse", "LED"], clue: "A small cylinder with a single band — the band marks the cathode." },
+  battery: { name: "Battery", distractors: ["Capacitor", "Voltage regulator", "Relay"], clue: "Marked + and − terminals and a voltage rating, like 1.5 V or 9 V." },
+  switch: { name: "Toggle switch", distractors: ["Potentiometer", "Relay", "Push button"], clue: "A lever you flip that stays where you leave it." },
+  transistor: { name: "Transistor", distractors: ["Voltage regulator", "Diode", "Capacitor"], clue: "A small black half-cylinder (TO-92) with three legs: collector, base and emitter." },
+  mosfet: { name: "MOSFET", distractors: ["Relay", "Resistor", "Battery"], clue: "A black body with a metal tab (TO-220) and three legs: gate, drain and source." },
+  relay: { name: "Relay", distractors: ["Battery", "Transistor", "Capacitor"], clue: "A box with a coil rating printed on it (e.g. 5 VDC) and contact ratings." },
+  potentiometer: { name: "Potentiometer", distractors: ["Switch", "Capacitor", "Motor"], clue: "A round body with a shaft to turn and three pins." },
+  "voltage-regulator": { name: "Voltage regulator", distractors: ["Transistor", "Relay", "Diode"], clue: "Looks like a power transistor, but it's marked with a voltage (like 7805 → 5 V) and its pins are IN, GND and OUT." },
+};
+
+const mystery = (slug: string) => (
+  <div role="img" aria-label="Illustration of a mystery component">
+    <ComponentIllustration slug={slug} className="h-36 w-auto max-w-full" />
+  </div>
+);
+
+/** Identify the Component: for each part, "what is it used for?" and "what is it called?" — 22 questions. */
+export const IDENTIFY_QUESTIONS: readonly QuizQuestion[] = IDENTIFY_FACTS.flatMap((fact) => {
+  const naming = NAMES[fact.slug]!;
+  return [
+    {
+      id: `identify-${fact.slug}`,
+      type: "identify" as const,
+      prompt: "What does this component primarily do?",
+      visual: mystery(fact.slug),
+      options: options(fact.answer, fact.distractors),
+      correctOptionId: "a",
+      explanation: fact.explanation,
+    },
+    {
+      id: `name-${fact.slug}`,
+      type: "identify" as const,
+      prompt: "Which component is this?",
+      visual: mystery(fact.slug),
+      options: options(naming.name, naming.distractors),
+      correctOptionId: "a",
+      explanation: `That is the ${naming.name}. ${naming.clue}`,
+    },
+  ];
+});

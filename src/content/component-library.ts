@@ -4,11 +4,12 @@ import type { Difficulty } from "./types";
  * Component families used by the explorer filters. A component can belong to
  * several (a potentiometer is both passive and an input device).
  */
-export type ComponentTag = "passive" | "active" | "electromechanical" | "power" | "input" | "output";
+export type ComponentTag = "passive" | "active" | "semiconductor" | "electromechanical" | "power" | "input" | "output";
 
 export const COMPONENT_TAG_LABELS: Record<ComponentTag, string> = {
   passive: "Passive",
   active: "Active",
+  semiconductor: "Semiconductor",
   electromechanical: "Electromechanical",
   power: "Power",
   input: "Input",
@@ -17,7 +18,8 @@ export const COMPONENT_TAG_LABELS: Record<ComponentTag, string> = {
 
 export const COMPONENT_TAG_DESCRIPTIONS: Record<ComponentTag, string> = {
   passive: "Can't amplify or switch on their own — they resist, store or release energy.",
-  active: "Semiconductors that control current, such as diodes, LEDs and transistors.",
+  active: "Can control current — switching, amplifying or regulating it — rather than just resisting or storing it.",
+  semiconductor: "Made from semiconductor materials like silicon: diodes, LEDs, transistors, MOSFETs and regulator chips.",
   electromechanical: "Moving metal contacts, operated by hand or by a magnet.",
   power: "Supply, store or condition the energy for a circuit.",
   input: "Let a person (or the world) send a signal into the circuit.",
@@ -49,6 +51,8 @@ export interface ElectronicComponent {
   job: string;
   /** One-sentence description of what it does. */
   summary: string;
+  /** How it works inside, in two or three plain sentences. */
+  howItWorks: string;
   /** Where you'll find it in everyday devices. */
   uses: string[];
   specs: ComponentSpecification[];
@@ -69,6 +73,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "beginner",
     job: "Limits current",
     summary: "Opposes the flow of current, setting how much current flows for a given voltage.",
+    howItWorks: "A resistor is made from a material that conducts, but not easily — often a thin carbon or metal film. Electrons bump into its atoms as they pass, so for a given voltage less current flows, and some energy becomes heat.",
     uses: ["LED circuits", "Computer and phone boards", "Sensor circuits", "Voltage dividers"],
     specs: [
       { label: "Resistance", value: "1 Ω – 10 MΩ", why: "Sets the current: I = V ÷ R." },
@@ -92,6 +97,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "beginner",
     job: "Stores charge",
     summary: "Stores electrical charge between two plates and releases it when needed.",
+    howItWorks: "Two metal plates sit very close together, separated by an insulator. Connect a voltage and charge builds up on the plates — positive on one, negative on the other — storing energy until the capacitor is discharged.",
     uses: ["Power supplies", "Motherboards", "Audio circuits", "Motor systems", "Timing circuits"],
     specs: [
       { label: "Capacitance", value: "pF – thousands of µF", why: "How much charge it holds per volt." },
@@ -114,10 +120,11 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     slug: "led",
     name: "LED",
     designator: "D",
-    tags: ["active", "output"],
+    tags: ["active", "semiconductor", "output"],
     difficulty: "beginner",
     job: "Makes light",
     summary: "A diode that emits light when current flows through it in the forward direction.",
+    howItWorks: "An LED is a diode made of special semiconductor layers. When current flows the right way, electrons drop into lower-energy states at the junction and give out the energy as light. The material sets the colour (and the forward voltage).",
     uses: ["Indicator lights", "Screens and displays", "Torches and lamps", "Remote controls (infrared)"],
     specs: [
       { label: "Forward voltage", value: "≈ 1.8 – 3.3 V", why: "Voltage it needs before it lights; depends on colour." },
@@ -137,10 +144,11 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     slug: "diode",
     name: "Diode",
     designator: "D",
-    tags: ["active", "power"],
+    tags: ["active", "semiconductor", "power"],
     difficulty: "beginner",
     job: "One-way valve",
     summary: "Lets current flow in one direction only — an electrical one-way valve.",
+    howItWorks: "A diode joins two kinds of silicon (P-type and N-type). The junction lets current through easily in one direction once about 0.7 V is applied, and blocks it the other way.",
     uses: ["Power supplies (rectifiers)", "Reverse-polarity protection", "Relay and motor protection", "Signal circuits"],
     specs: [
       { label: "Forward voltage", value: "≈ 0.7 V (silicon)", why: "Voltage it uses up while conducting." },
@@ -163,6 +171,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "beginner",
     job: "Supplies voltage",
     summary: "Converts stored chemical energy into a voltage that pushes current around a circuit.",
+    howItWorks: "A chemical reaction inside pushes electrons towards the negative terminal, creating a voltage between the terminals. Connect a circuit and the reaction supplies energy as current flows — until the chemicals are used up.",
     uses: ["Phones and laptops", "Remote controls", "Torches", "Backup and remote sensors"],
     specs: [
       { label: "Voltage", value: "e.g. 1.5 V, 3.7 V, 9 V", why: "The push it provides." },
@@ -189,6 +198,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "beginner",
     job: "Opens / closes a path",
     summary: "Opens or closes a circuit path mechanically, starting or stopping current flow.",
+    howItWorks: "Two metal contacts are pushed together (closed) or pulled apart (open) by a lever or button. Closed, they complete the path for current; open, they leave an air gap that current can't cross at low voltages.",
     uses: ["Power buttons", "Keyboards", "Door and limit sensors", "Microcontroller inputs"],
     specs: [
       { label: "Type", value: "Toggle, push button, slide", why: "Latching (stays) or momentary (springs back)." },
@@ -207,10 +217,11 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     slug: "transistor",
     name: "Transistor",
     designator: "Q",
-    tags: ["active"],
+    tags: ["active", "semiconductor"],
     difficulty: "intermediate",
     job: "Electronic switch / amplifier",
     summary: "Uses a small base current to control a much larger collector current — a switch or an amplifier.",
+    howItWorks: "A bipolar transistor has three layers of silicon. A small current into the base lets a much larger current flow from collector to emitter — so a tiny signal can switch or amplify a bigger one.",
     uses: ["CPUs (billions of them)", "Amplifiers", "Switching circuits", "Power electronics"],
     specs: [
       { label: "Pins", value: "Base, Collector, Emitter", why: "Base controls; collector–emitter carries the load." },
@@ -229,10 +240,11 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     slug: "mosfet",
     name: "MOSFET",
     designator: "Q",
-    tags: ["active", "power"],
+    tags: ["active", "semiconductor", "power"],
     difficulty: "intermediate",
     job: "Voltage-controlled switch",
     summary: "A voltage-controlled switch that can drive large currents with almost no control current.",
+    howItWorks: "A MOSFET's gate is insulated from the channel beneath it. A voltage on the gate creates an electric field that opens a conducting path between drain and source, so almost no gate current is needed.",
     uses: ["Motor drivers", "LED strips", "Power supplies", "Battery protection"],
     specs: [
       { label: "Pins", value: "Gate, Drain, Source", why: "Gate voltage controls the drain–source path." },
@@ -256,6 +268,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "intermediate",
     job: "Coil-operated switch",
     summary: "An electrically operated switch: a small coil current moves contacts that switch a separate circuit.",
+    howItWorks: "Current through a coil makes an electromagnet. The magnet pulls a springy metal arm, moving a set of contacts. When the coil current stops, the spring pulls the contacts back.",
     uses: ["Car lights and horns", "Industrial control panels", "Home automation modules", "Isolating two circuits"],
     specs: [
       { label: "Coil voltage", value: "e.g. 5 V, 12 V", why: "The control voltage needed to pull the contacts over." },
@@ -281,6 +294,7 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     difficulty: "beginner",
     job: "Adjustable resistor",
     summary: "A resistor with a movable wiper, used to adjust a voltage or a resistance by turning a knob.",
+    howItWorks: "A resistive track has a terminal at each end and a sliding contact — the wiper — in between. Turning the shaft moves the wiper, changing how the resistance is split and so the voltage at the wiper.",
     uses: ["Volume knobs", "Dimmers", "Joysticks", "Adjusting sensor thresholds"],
     specs: [
       { label: "Total resistance", value: "e.g. 10 kΩ", why: "Resistance between the two end pins." },
@@ -299,10 +313,11 @@ export const COMPONENTS: readonly ElectronicComponent[] = [
     slug: "voltage-regulator",
     name: "Voltage Regulator",
     designator: "U",
-    tags: ["power", "active"],
+    tags: ["power", "active", "semiconductor"],
     difficulty: "intermediate",
     job: "Keeps voltage steady",
     summary: "Takes a higher, possibly wobbly input voltage and produces a steady, lower output voltage.",
+    howItWorks: "The regulator measures its own output and constantly adjusts: a linear regulator 'burns off' the extra voltage as heat, while a switching regulator switches on and off very fast and smooths the result.",
     uses: ["Microcontroller boards", "Phone chargers", "USB power", "Sensor modules"],
     specs: [
       { label: "Output voltage", value: "e.g. 5 V, 3.3 V", why: "The steady voltage it produces." },

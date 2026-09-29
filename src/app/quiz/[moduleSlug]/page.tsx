@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { ComponentQuiz } from "@/components/component-lab/ComponentQuiz";
+import { Quiz } from "@/components/quiz/Quiz";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Container } from "@/components/ui/Container";
 import { getModule } from "@/content/curriculum";
@@ -40,7 +40,7 @@ export default async function QuizPage({ params }: QuizPageProps) {
       </PageHeader>
       <Container className="py-12">
         <div className="panel-raised mx-auto max-w-3xl overflow-hidden rounded-2xl">
-          <ComponentQuiz title={quiz.title} intro={quiz.intro} questions={quiz.questions} roundOptions={quiz.roundOptions} progressKey={`quiz/${moduleSlug}`} accent="logic" />
+          <Quiz title={quiz.title} intro={quiz.intro} questions={quiz.questions} roundOptions={quiz.roundOptions} progressKey={`quiz/${moduleSlug}`} accent="logic" />
         </div>
       </Container>
     </>

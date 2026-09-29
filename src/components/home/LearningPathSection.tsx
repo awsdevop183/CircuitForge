@@ -14,7 +14,7 @@ import type { LearningModule } from "@/content/types";
 import { cn } from "@/lib/cn";
 
 /**
- * The nine-stage learning path drawn as a single circuit trace. The trace
+ * The twelve-module learning path drawn as a single circuit trace. The trace
  * "conducts" as the learner scrolls and each stage node lights up in turn.
  */
 export function LearningPathSection() {
@@ -30,7 +30,7 @@ export function LearningPathSection() {
           <SectionHeading
             id="path-heading"
             eyebrow="Learning path"
-            title="One trace. Nine stages. From electrons to intelligence."
+            title="One trace. Twelve modules. From electrons to intelligence."
             description="Each stage builds directly on the one before it — the same way current flows through a circuit."
           />
           <ButtonLink href="/roadmap" variant="secondary" className="self-start md:self-auto">

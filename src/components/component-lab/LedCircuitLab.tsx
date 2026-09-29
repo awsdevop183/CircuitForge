@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Scissors } from "lucide-react";
-import { Battery, CircuitCanvas, CircuitLabel, CurrentFlow, Led, Resistor, Wire, rectLoop } from "@/components/circuit";
+import { Power, Scissors } from "lucide-react";
+import { Battery, CircuitCanvas, CircuitLabel, CurrentFlow, Led, Resistor, Switch, Wire, rectLoop } from "@/components/circuit";
 import { flowSpeedForCurrent } from "@/components/lab/flow-speed";
 import { InteractiveSlider } from "@/components/ui/InteractiveSlider";
 import { Readout } from "@/components/ui/Readout";
@@ -37,11 +37,14 @@ export function LedCircuitLab() {
   const [voltage, setVoltage] = useState(9);
   const [resistance, setResistance] = useState(470);
   const [resistorRemoved, setResistorRemoved] = useState(false);
+  const [closed, setClosed] = useState(true);
 
   const solution = solveLoop({ voltage, internalResistance: 0.5 }, [
     ...(resistorRemoved ? [] : [{ kind: "resistor" as const, id: "r", ohms: resistance }]),
     { kind: "led", id: "led", forwardVoltage: RED_LED_FORWARD_VOLTAGE },
+    { kind: "switch", id: "sw", closed },
   ]);
+  const switchOpen = solution.status === "open";
   const current = solution.current;
   const safety = safetyOf(current);
   const destroyed = safety === "destroyed";
@@ -55,7 +58,9 @@ export function LedCircuitLab() {
           interactive
           title="LED circuit"
           description={
-            destroyed
+            switchOpen
+              ? "The switch is open, so no current flows and the LED is off."
+              : destroyed
               ? `${resistorRemoved ? "With no resistor" : "With too little resistance"}, far more than 30 milliamps flows. A real LED would burn out.`
               : current > 0
                 ? `${formatFixed(voltage, 1)} volts through ${formatOhms(resistance)} gives ${formatAmps(current)} — the LED is lit.`
@@ -74,6 +79,7 @@ export function LedCircuitLab() {
             <Resistor x={(LEFT + RIGHT) / 2} y={TOP} detail={formatOhms(resistance)} energized={current > 0} labelPlacement="bottom" labelOffset={22} />
           )}
           <Led x={RIGHT} y={MID_Y} rotation={90} brightness={brightness} color={safety === "caution" ? "#fb923c" : "#fb7185"} detail="red, 2 V" labelPlacement="left" labelOffset={32} />
+          <Switch x={(LEFT + RIGHT) / 2} y={BOTTOM} rotation={180} closed={closed} onToggle={() => setClosed((c) => !c)} name="Switch" labelPlacement="bottom" labelOffset={24} />
           {destroyed ? (
             <motion.g initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} aria-hidden="true">
               <circle cx={RIGHT} cy={MID_Y} r={26} fill="#2a0b0b" stroke="#f87171" strokeWidth={2} />
@@ -101,10 +107,19 @@ export function LedCircuitLab() {
         />
         <button
           type="button"
+          aria-pressed={closed}
+          onClick={() => setClosed((c) => !c)}
+          className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold", closed ? "border border-line-strong text-ink" : "bg-cyan text-void hover:bg-cyan-soft")}
+        >
+          <Power className="size-4" aria-hidden="true" />
+          {closed ? "Switch OFF (open the circuit)" : "Switch ON (close the circuit)"}
+        </button>
+        <button
+          type="button"
           aria-pressed={resistorRemoved}
           onClick={() => setResistorRemoved((v) => !v)}
           className={cn(
-            "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold md:col-span-2",
+            "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold",
             resistorRemoved ? "border-negative/60 bg-negative/10 text-negative" : "border-line-strong text-ink hover:border-negative/60",
           )}
         >
@@ -121,7 +136,11 @@ export function LedCircuitLab() {
         <SafetyMeter current={current} />
       </div>
       <div className="border-t border-line p-4 sm:p-5">
-        {safety === "off" ? (
+        {switchOpen ? (
+          <StatusBanner level="info" title="Switch open — LED off.">
+            The circuit has a gap, so no current flows anywhere in the loop. Close the switch to complete it.
+          </StatusBanner>
+        ) : safety === "off" ? (
           <StatusBanner level="info" title="LED off — not enough voltage.">
             A red LED needs about {RED_LED_FORWARD_VOLTAGE} V before any current flows. Raise the battery voltage.
           </StatusBanner>

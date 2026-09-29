@@ -38,3 +38,4 @@ export { CircuitNode } from "./CircuitNode";
 export { CircuitLabel } from "./CircuitLabel";
 export { CIRCUIT_COLORS, PART_SPAN, HALF_SPAN, type Point, type FlowDirection } from "./constants";
 export { pathThrough, rectLoop, terminalsOf } from "./geometry";
+export { SeriesCircuit, SLOT_POSITIONS, PART_NAMES } from "./SeriesCircuit";
